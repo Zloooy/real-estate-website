@@ -1,0 +1,27 @@
+version: '3.5'
+
+services:
+  server:
+    build:
+      context: server
+    ports:
+      - "8009:8080"
+    depends_on:
+      - postgres
+    links:
+      - "postgres:postgres"
+  postgres:
+    hostname: postgres
+    build:
+      context: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=estate
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

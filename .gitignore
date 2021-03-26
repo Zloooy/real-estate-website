@@ -15,8 +15,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea/artifacts
-.idea/libraries
-.idea/**.xml
+.idea/librarie
 *.iws
 *.iml
 *.ipr
