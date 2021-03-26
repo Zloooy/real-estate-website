@@ -25,3 +25,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  frontend:
+    build:
+      context: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - server
