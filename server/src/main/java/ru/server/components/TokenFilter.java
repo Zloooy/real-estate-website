@@ -7,15 +7,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.GenericFilterBean;
 import ru.server.services.ITokenService;
 import ru.server.services.IUserService;
 
+import javax.security.sasl.AuthenticationException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static org.springframework.util.StringUtils.hasText;
@@ -31,17 +34,18 @@ public class TokenFilter extends GenericFilterBean {
     @Autowired
     private IUserService userDetailsService;
 
-    private final RequestMatcher requestMatcher = new AntPathRequestMatcher("/auth");
+    private final AntPathRequestMatcher matcher = new AntPathRequestMatcher("/auth");
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        logger.info("do filter...");
-        logger.info(requestMatcher.matches((HttpServletRequest) servletRequest));
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
         if (token != null && tokenService.validateToken(token)) {
             String userLogin = tokenService.getLoginFromToken(token);
             UserDetails userDetails = userDetailsService.loadUserByUsername(userLogin);
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
+        }
+        else if (!matcher.matches((HttpServletRequest) servletRequest)){
+            ((HttpServletResponse)servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }

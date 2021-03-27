@@ -22,12 +22,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private IUserService userService;
     @Autowired
     private TokenFilter tokenFilter;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .formLogin().disable()
                 .httpBasic().disable()
                 .csrf().disable()
                 .cors()
+                .and()
+                .authorizeRequests()
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
