@@ -1,6 +1,8 @@
 package ru.server.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -34,8 +36,8 @@ public class GreetingController {
 
    }
    @GetMapping("/greeting")
-   public Greeting greeting(@RequestHeader("Authorization") String token) {
+   public ResponseEntity<Greeting> greeting(@RequestHeader("Authorization") String token) {
       UserDetails u = userService.loadUserByUsername(tokenService.getLoginFromToken(token.substring(7)));
-      return new Greeting(String.format("Привет, %s", u.getUsername()));
+      return new ResponseEntity<>(new Greeting(String.format("Привет, %s", u.getUsername())), HttpStatus.OK);
    }
 }
