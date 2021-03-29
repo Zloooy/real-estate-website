@@ -41,9 +41,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    /*@Bean
-    public RequestRejectedHandler requestRejectedHandler() {
-        return new HttpStatusRequestRejectedHandler();
-    }
-    */
 }

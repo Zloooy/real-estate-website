@@ -1,6 +1,9 @@
 package ru.server.controllers;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +22,11 @@ public class AuthController {
     @Autowired
     PasswordEncoder passwordEncoder;
     @PostMapping("/auth")
-    public Auth.Response auth(@RequestBody Auth.Request request) {
+    public ResponseEntity<Auth.Response> auth(@RequestBody Auth.Request request) {
         UserDetails u = userService.loadUserByUsername(request.getLogin());
         if (passwordEncoder.matches(request.getPassword(), u.getPassword())) {
-            return new Auth.Response(tokenService.getToken(u.getUsername()));
+            return new ResponseEntity<Auth.Response>(new Auth.Response(tokenService.getToken(u.getUsername())), HttpStatus.OK);
         }
-        return null;
+        return new ResponseEntity<Auth.Response>((Auth.Response) null, HttpStatus.UNAUTHORIZED);
     }
 }
