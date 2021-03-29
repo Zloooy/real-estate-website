@@ -3,8 +3,8 @@
  <input ref="login-field" v-model="login"/>
  <input type="password" v-model="password"/>
   <button @click="enter">Войти</button>
-    <div>{{errorText}}</div>
-    HAHAHa
+    <div v-if="this.errorText">{{errorText}}</div>
+    <div v-else>{{successText}}</div>
   </div>
 </template>
 <script>
@@ -14,14 +14,18 @@
       return {
         login: "",
         password: "",
-        token: null
+        errorText: "",
+        successText: ""
       }
+    },
+    emits: {
+      token: null
     },
     methods: {
       enter(event) {
         console.debug("pressed enter", event);
         if (this.login && this.password) {
-          fetch("http://java-desktop:8009/auth",
+          fetch("http://localhost:8009/auth",
         {
               "method": "POST",
               "headers": {
@@ -32,24 +36,43 @@
                 "password": this.password
             })
           }).then(this.afterPost)
+              .then(this.emitToken, this.onWrongCredentials)
           .catch(this.onNetworkError);
         }
       },
       onNetworkError(error) {
         console.debug(error);
-        this.errorText="Ошибка соединения. Повторите попытку позже";
+        this.setErrorText("Ошибка соединения. Повторите попытку позже");
+      },
+      onWrongCredentials() {
+        this.setErrorText("Неверный логин или пароль");
+      },
+      emitToken(token) {
+        this.$emit('token', token.token);
       },
       afterPost(postResult) {
         console.debug("got body: ", postResult.body);
         console.debug(postResult.headers);
-        if (postResult.status===200) {
-          this.errorText = "";
-          this.token = postResult.body.json().token;
+        switch (postResult.status) {
+          case (200):
+            this.setSuccessText("Учётные данные верны");
+            return postResult.json();
+          case 401:
+            break;
+          default:
+            this.onNetworkError();
+            break;
         }
-        else {
-          this.errorText = "Неверный логин или пароль";
-        }
+        return Promise.reject();
+      },
+      setErrorText(text) {
+        this.errorText = text
+        this.successText = "";
+      },
+      setSuccessText(text) {
+        this.errorText = "";
+        this.successText = text;
       }
-    }
+    },
   }
 </script>
