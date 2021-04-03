@@ -31,6 +31,7 @@ public class User implements UserDetails {
     public User() {}
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.printf("returning authorities for %s number: %s\n", this.getLogin(), this.role.getAuthorities().size());
         return role.getAuthorities();
     }
 
@@ -162,8 +163,8 @@ public class User implements UserDetails {
            private Long id;
            @Column(name="name", nullable = false, unique = true)
            private String name;
-           @ManyToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-           private Set<Role> rolesWithAuthority;
+//           @ManyToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//           private Set<Role> rolesWithAuthority;
 
            public Authority(String name){
                this.name = name;
@@ -175,6 +176,7 @@ public class User implements UserDetails {
 
             @Override
            public String getAuthority() {
+                System.out.printf("returning authority %s\n", getName());
                return getName();
            }
 
@@ -194,9 +196,9 @@ public class User implements UserDetails {
                this.name = name;
            }
 
-            public Set<Role> getRolesWithAuthority() {
-                return rolesWithAuthority;
-            }
+//            public Set<Role> getRolesWithAuthority() {
+//                return rolesWithAuthority;
+//            }
         }
     }
 }

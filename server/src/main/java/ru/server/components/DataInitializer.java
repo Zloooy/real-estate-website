@@ -6,10 +6,12 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import ru.server.enums.Authority;
 import ru.server.models.User;
 import ru.server.repositories.IAuthorityRepository;
 import ru.server.repositories.IRoleRepository;
 import ru.server.repositories.IUserRepository;
+import ru.server.enums.UserRole;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -33,12 +35,12 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
     private static final List<String>
-            roleNames = Arrays.asList("Администратор", "Контент-менеджер"),
-            authorityNames = Arrays.asList("CAN_ENTER"),
-            userLogins=Arrays.asList("admin"),
-            userPasswords=Arrays.asList("password"),
-            userRoles=Arrays.asList("Администратор");
-    private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of("CAN_ENTER"), new HashSet<>());
+            roleNames = Arrays.asList(ru.server.enums.UserRole.ADMIN, UserRole.CONTENT_MANAGER, UserRole.REALTOR, UserRole.CLIENT),
+            authorityNames = Arrays.asList(Authority.CAN_ENTER),
+            userLogins=Arrays.asList("admin", "manager"),
+            userPasswords=Arrays.asList("password", "password"),
+            userRoles=Arrays.asList(UserRole.ADMIN, UserRole.CONTENT_MANAGER);
+    private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER), new HashSet<>(), new HashSet<>(), new HashSet<>());
     private static List<Set<User.Role.Authority>> authorityGroups;
     private static class ListInserter<T> {
         public <R extends CrudRepository<T, Long>> void insert(R repo, LongFunction<T> builder, long i) {
@@ -55,6 +57,7 @@ public class DataInitializer implements ApplicationRunner {
     public void run(ApplicationArguments args){
         addAuthorities();
         addRoles();
+        assert roleRepository.getByName(UserRole.ADMIN).getAuthorities().size() > 0;
         addUsers();
     }
     private void addAuthorities(){
@@ -72,7 +75,7 @@ public class DataInitializer implements ApplicationRunner {
     private void addUsers(){
         new ListInserter<User>().insert(
                 userRepository,
-                (int i)->new User(userLogins.get(i), passwordEncoder.encode(userPasswords.get(i)), roleRepository.getByName(userRoles.get(i))),
+                (int i)-> new User(userLogins.get(i), passwordEncoder.encode(userPasswords.get(i)), roleRepository.getByName(userRoles.get(i))),
                 userLogins.size()
         );
     }
