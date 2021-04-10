@@ -1,8 +1,12 @@
 package ru.server.data;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class Auth {
     public static class Request {
+        @ApiModelProperty(notes = "Логин")
         private String login;
+        @ApiModelProperty(notes = "Незашифрованный пароль")
         private String password;
 
         public Request(String login, String password) {
@@ -30,6 +34,7 @@ public class Auth {
         }
     }
     public static class Response {
+        @ApiModelProperty("Токен")
         private String token;
 
         public Response(String token) {

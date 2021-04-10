@@ -4,15 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.GenericFilterBean;
 import ru.server.services.ITokenService;
 import ru.server.services.IUserService;
 
-import javax.security.sasl.AuthenticationException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -34,7 +30,6 @@ public class TokenFilter extends GenericFilterBean {
     @Autowired
     private IUserService userDetailsService;
 
-    private final AntPathRequestMatcher matcher = new AntPathRequestMatcher("/auth");
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
@@ -44,8 +39,10 @@ public class TokenFilter extends GenericFilterBean {
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
-        else if (!matcher.matches((HttpServletRequest) servletRequest)){
+        else {
+            System.out.println("None of matcher matches");
             ((HttpServletResponse)servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }

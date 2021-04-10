@@ -1,5 +1,7 @@
 package ru.server.models;
 
+import io.swagger.annotations.ApiModelProperty;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,15 +14,20 @@ import java.util.stream.Collectors;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @ApiModelProperty(notes="Уникальный идентификатор")
     @Column(name="id")
     private Long id;
+    @ApiModelProperty(notes = "Логин")
     @Column(name="login", nullable = false, unique = true)
     private String login;
+    @ApiModelProperty(notes = "Хеш пароля")
+    @JsonIgnore
     @Column(name="password", nullable = false, unique = true)
     private String password;
 
     @ManyToOne(targetEntity = Role.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
+    @ApiModelProperty(notes = "Роль пользователя")
     private Role role;
     public User(String login, String password, Role role) {
        this.login = login;
@@ -31,7 +38,6 @@ public class User implements UserDetails {
     public User() {}
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.printf("returning authorities for %s number: %s\n", this.getLogin(), this.role.getAuthorities().size());
         return role.getAuthorities();
     }
 
@@ -99,12 +105,16 @@ public class User implements UserDetails {
     public static class Role {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
+        @ApiModelProperty(notes = "Уникальный идентификатор")
         @Column(name="id")
         private Long id;
+        @ApiModelProperty(notes = "Название роли")
         @Column(name="name", nullable = false, unique = true)
         private String name;
+        @ApiModelProperty(notes = "Список пользователей с ролью")
         @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY, orphanRemoval = true)
         private Set<User> users = new HashSet<>();
+        @ApiModelProperty(notes = "Список прав роли")
         @ManyToMany(fetch = FetchType.EAGER)
         private Set<Authority> authorities;
 
@@ -159,8 +169,10 @@ public class User implements UserDetails {
         public static class Authority implements GrantedAuthority {
            @Id
            @GeneratedValue(strategy = GenerationType.AUTO)
+           @ApiModelProperty(notes = "Уникальный идентификатор")
            @Column(name="id")
            private Long id;
+           @ApiModelProperty(notes = "Название права")
            @Column(name="name", nullable = false, unique = true)
            private String name;
 //           @ManyToMany(targetEntity = Role.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)

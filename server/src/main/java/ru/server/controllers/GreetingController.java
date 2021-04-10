@@ -38,8 +38,9 @@ public class GreetingController {
       }
 
    }
-   @GetMapping("/greeting")
+   @GetMapping("/api/greeting")
    public ResponseEntity<Greeting> greeting(@RequestHeader("Authorization") String token) {
+      System.out.println("Trying to start");
       UserDetails u = userService.loadUserByUsername(tokenService.getLoginFromToken(token.substring(7)));
       return new ResponseEntity<>(new Greeting(String.format("Привет, %s", u.getUsername())), HttpStatus.OK);
    }
