@@ -12,6 +12,8 @@
   import {Response} from "@/generated-api/data-contracts";
   import {Options, Vue} from "vue-class-component";
   import {HttpResponse} from "@/generated-api/http-client";
+  import {MutationTypes} from "@/store/mutation-types";
+  import {useStore} from "@/store";
 
   @Options( {
     name: "login-form",
@@ -20,11 +22,9 @@
         login: "",
         password: "",
         errorText: "",
-        successText: ""
+        successText: "",
+        store: useStore()
       }
-    },
-    emits: {
-      token: null
     },
     methods: {
       async enter() {
@@ -46,7 +46,7 @@
         this.setErrorText("Неверный логин или пароль");
       },
       emitToken(token: string) {
-        this.$emit('token', token);
+        this.store.commit(MutationTypes.SET_TOKEN, token);
       },
       afterFetch(result: HttpResponse<Response, void>): string | undefined {
         if (result.status !== 200) {

@@ -1,16 +1,14 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <login-form v-if="!this.token"
-              @token="this.setToken($event)"/>
-  <greeting v-else
-            :token="this.token"
-  />
+  <login-form v-if="!this.store.getters.authorization_set"/>
+  <greeting v-else/>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import LoginForm from "@/components/LoginForm.vue";
 import Greeting from "@/components/Greeting.vue";
+import {useStore} from "@/store";
 
 
 @Options({
@@ -18,16 +16,12 @@ import Greeting from "@/components/Greeting.vue";
     LoginForm,
     Greeting
   },
-  methods: {
-    setToken(token: string){
-      console.debug("Got token", token);
-      this.token = token;
-    }
-  },
   data() {
     return {
-      token: null
+      store: useStore()
     }
+  },
+  methods: {
   }
 })
 export default class App extends Vue {}

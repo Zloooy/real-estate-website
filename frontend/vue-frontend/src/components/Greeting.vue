@@ -9,31 +9,22 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import {Api} from "@/generated-api/Api";
+import {useStore} from "@/store";
 
 @Options (
     {
   name: "greeting",
-  props: {
-    token: null
-  },
   data() {
     return {
       greetingText: "",
-      errorText: ""
+      errorText: "",
+      store: useStore()
     };
   },
   mounted() {
-    new Api({
-      baseApiParams: {
-        headers: {
-          "Authorization": `Bearer ${this.token}`,
-        },
-        format: "json"
-      }
-    })
+    this.store.getters.api
     .greetingUsingGet()
-    .then((r)=>{
+    .then((r: any)=>{
       return r.data.text;
     })
     .then(this.setGreeting)
