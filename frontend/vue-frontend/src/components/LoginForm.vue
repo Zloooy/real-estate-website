@@ -1,14 +1,19 @@
 <template>
   <div id="login-form">
- <input ref="login-field" v-model="login"/>
- <input type="password" v-model="password"/>
-  <button @click="enter">Войти</button>
+    <input ref="login-field" v-model="this.login"/>
+    <input type="password" v-model="this.password"/>
+    <button @click="enter">Войти</button>
     <div v-if="this.errorText">{{errorText}}</div>
     <div v-else>{{successText}}</div>
   </div>
 </template>
-<script>
-  export default {
+<script lang="ts">
+  import {Auth} from "@/generated-api/Auth";
+  import {Response} from "@/generated-api/data-contracts";
+  import {Options, Vue} from "vue-class-component";
+  import {HttpResponse} from "@/generated-api/http-client";
+
+  @Options( {
     name: "login-form",
     data() {
       return {
@@ -22,57 +27,44 @@
       token: null
     },
     methods: {
-      enter(event) {
-        console.debug("pressed enter", event);
-        if (this.login && this.password) {
-          fetch("http://localhost:8009/auth",
-        {
-              "method": "POST",
-              "headers": {
-                "content-type": "application/json"
-              },
-              "body": JSON.stringify({
-                "login": this.login,
-                "password": this.password
-            })
-          }).then(this.afterPost)
-              .then(this.emitToken, this.onWrongCredentials)
-          .catch(this.onNetworkError);
-        }
+      async enter() {
+        new Auth().authUsingPost({
+              login: this.login,
+              password: this.password
+            }
+        ).then(this.afterFetch)
+        .then(this.emitToken);
       },
-      onNetworkError(error) {
+      onNetworkError(error: Error) {
         console.debug(error);
         this.setErrorText("Ошибка соединения. Повторите попытку позже");
+      },
+      onMatchCredentials() {
+        this.setSuccessText("Учётные данные верны");
       },
       onWrongCredentials() {
         this.setErrorText("Неверный логин или пароль");
       },
-      emitToken(token) {
-        this.$emit('token', token.token);
+      emitToken(token: string) {
+        this.$emit('token', token);
       },
-      afterPost(postResult) {
-        console.debug("got body: ", postResult.body);
-        console.debug(postResult.headers);
-        switch (postResult.status) {
-          case (200):
-            this.setSuccessText("Учётные данные верны");
-            return postResult.json();
-          case 401:
-            break;
-          default:
-            this.onNetworkError();
-            break;
+      afterFetch(result: HttpResponse<Response, void>): string | undefined {
+        if (result.status !== 200) {
+          Promise.reject();
+          return;
+        } else {
+          return result.data.token;
         }
-        return Promise.reject();
       },
-      setErrorText(text) {
+      setErrorText(text: string) {
         this.errorText = text
         this.successText = "";
       },
-      setSuccessText(text) {
+      setSuccessText(text: string) {
         this.errorText = "";
         this.successText = text;
       }
-    },
-  }
+    }
+    })
+  export default class LoginForm extends Vue {}
 </script>

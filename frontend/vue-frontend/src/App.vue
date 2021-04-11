@@ -1,36 +1,36 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <login-form v-if="!this.token"
-    @token="setToken($event)"/>
-    <greeting v-else
-    :token="this.token"
-    />
-  </div>
+  <img alt="Vue logo" src="./assets/logo.png">
+  <login-form v-if="!this.token"
+              @token="this.setToken($event)"/>
+  <greeting v-else
+            :token="this.token"
+  />
 </template>
 
-<script>
-import LoginForm from "@/components/LoginForm";
-import Greeting from "@/components/Greeting";
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
+import LoginForm from "@/components/LoginForm.vue";
+import Greeting from "@/components/Greeting.vue";
 
-export default {
-  name: 'App',
+
+@Options({
   components: {
     LoginForm,
-    Greeting,
+    Greeting
   },
   methods: {
-   setToken(token){
+    setToken(token: string){
       console.debug("Got token", token);
       this.token = token;
-   }
+    }
   },
   data() {
     return {
       token: null
     }
   }
-}
+})
+export default class App extends Vue {}
 </script>
 
 <style>

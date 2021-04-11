@@ -7,8 +7,12 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {Options, Vue} from "vue-class-component";
+import {Api} from "@/generated-api/Api";
+
+@Options (
+    {
   name: "greeting",
   props: {
     token: null
@@ -20,31 +24,34 @@ export default {
     };
   },
   mounted() {
-    fetch(
-        "http://localhost:8009/greeting",
-        {
-          "method": "GET",
-          "headers": {
-            "content-type": "application/json",
-            "authorization": `Bearer ${this.token}`
-          },
-        })
-        .then((r)=>r.json())
-        .then((j)=>j.text)
-        .then(this.setGreeting)
-        .catch(this.onNetworkError)
+    new Api({
+      baseApiParams: {
+        headers: {
+          "Authorization": `Bearer ${this.token}`,
+        },
+        format: "json"
+      }
+    })
+    .greetingUsingGet()
+    .then((r)=>{
+      return r.data.text;
+    })
+    .then(this.setGreeting)
+    .catch(this.onNetworkError);
   },
   methods: {
-    setGreeting(text) {
+    setGreeting: function (text: string){
       this.greetingText = text;
       this.errorText = "";
     },
     onNetworkError(){
       this.greetingText = "";
-     this.errorText = "Ошибка";
+     this.errorText = `Ошибка`;
     }
   }
-}
+  }
+)
+export default class Greeting extends Vue {}
 </script>
 
 <style scoped>
