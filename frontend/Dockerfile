@@ -9,7 +9,6 @@ ADD $app /$app
 RUN npm run build
 FROM nginx:1.19.8
 ENV app=vue-frontend
-#RUN rm /etc/nginx.conf.d/default.conf
 ADD nginx/nginx.conf /etc/nginx.conf.d
 COPY --from=0 $app/dist /usr/share/nginx/html
 EXPOSE 80

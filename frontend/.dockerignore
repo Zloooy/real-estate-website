@@ -1,0 +1,5 @@
+vue-frontend/node_modules
+vue-frontend/dist
+vue-frontend/.swagger-codegen
+frontend.iml
+vue-frontend/package-lock.json
