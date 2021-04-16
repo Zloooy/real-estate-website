@@ -26,8 +26,14 @@ services:
       timeout: 5s
       retries: 5
   frontend:
+    image: front:base
+    env_file:
+      - frontend/base.env
     build:
       context: frontend
+      #dockerfile: Dockerfile
+    environment:
+      APP: "vue-frontend"
     ports:
       - "80:80"
     depends_on:

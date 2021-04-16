@@ -1,0 +1,9 @@
+FROM front:base
+ADD $APP /$APP
+RUN npm run build --production
+FROM nginx:1.19.8
+ENV APP=vue-frontend
+ADD nginx/nginx.conf /etc/nginx.conf.d
+COPY --from=0 $APP/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
