@@ -1,0 +1,25 @@
+version: '3.5'
+
+services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile.dev
+    image: front:dev
+    container_name: dev.front
+    env_file:
+      - frontend/dev.env
+    environment:
+      NODE_ENV: "development"
+      APP: "vue-frontend"
+    volumes:
+    - "./frontend/vue-frontend:/vue-frontend"
+    ports:
+      - "81:8080"
+      - "9229:9229"
+    depends_on:
+      - server
+  server:
+    build:
+      context: server
+      dockerfile: Dockerfile

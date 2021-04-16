@@ -1,0 +1,6 @@
+FROM front:base
+WORKDIR /$APP
+RUN npm install --dev
+EXPOSE 8080
+EXPOSE 9229
+ENTRYPOINT ["node", "--inspect=0.0.0.0:9229", "./node_modules/@vue/cli-service/bin/vue-cli-service.js", "serve"]
