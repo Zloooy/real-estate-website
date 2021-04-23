@@ -5,11 +5,10 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+import {Options, Vue} from 'vue-class-component';
 import LoginForm from "@/components/LoginForm.vue";
 import Greeting from "@/components/Greeting.vue";
 import {useStore} from "@/store";
-
 
 @Options({
   components: {

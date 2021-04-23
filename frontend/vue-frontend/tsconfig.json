@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
@@ -12,15 +12,32 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": false,
+    "removeComments": true,
+    "noUnusedLocals": false,
+    "pretty": true,
+    "diagnostics": true,
+    "listFiles": true,
+    "listEmittedFiles": true,
+    "sourceRoot": ".",
+    "rootDirs": ["."],
     "sourceMap": true,
     "baseUrl": ".",
+    "strictFunctionTypes": true, // ?
     "types": [
       "webpack-env"
     ],
     "paths": {
       "@/*": [
-        "src/*"
-      ]
+        "./src/*"
+      ],
+      "*": [
+        "node_modules/"
+      ],
+      "vue":  [
+        "@vue/runtime-dom"
+        ]
     },
     "lib": [
       "esnext",
@@ -30,9 +47,9 @@
     ]
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],

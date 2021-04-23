@@ -8,11 +8,9 @@
   </div>
 </template>
 <script lang="ts">
-  import {Auth} from "@/generated-api/Auth";
   import {Response} from "@/generated-api/data-contracts";
   import {Options, Vue} from "vue-class-component";
   import {HttpResponse} from "@/generated-api/http-client";
-  import {MutationTypes} from "@/store/mutation-types";
   import {useStore} from "@/store";
 
   @Options( {
@@ -28,7 +26,8 @@
     },
     methods: {
       async enter() {
-        new Auth().authUsingPost({
+        this.store.getters.auth
+        .authUsingPost({
               login: this.login,
               password: this.password
             }
@@ -46,7 +45,7 @@
         this.setErrorText("Неверный логин или пароль");
       },
       emitToken(token: string) {
-        this.store.commit(MutationTypes.SET_TOKEN, token);
+        this.store.commit('SET_TOKEN', token);
       },
       afterFetch(result: HttpResponse<Response, void>): string | undefined {
         if (result.status !== 200) {

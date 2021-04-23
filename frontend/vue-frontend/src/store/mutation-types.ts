@@ -1,3 +1,1 @@
-export enum MutationTypes {
-    SET_TOKEN = 'SET_TOKEN'
-}
+export type MutationTypes = ('SET_TOKEN');
