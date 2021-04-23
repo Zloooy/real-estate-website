@@ -1,3 +1,14 @@
+export interface City {
+  /**
+   * Униклаьный идентификатор города
+   * @format int64
+   */
+  id?: number;
+
+  /** Название города */
+  name?: string;
+}
+
 export interface Greeting {
   text?: string;
 }
