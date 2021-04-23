@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/postgres/postgres.iml" filepath="$PROJECT_DIR$/postgres/postgres.iml" />
+      <module fileurl="file://$PROJECT_DIR$/real-estate-website.iml" filepath="$PROJECT_DIR$/real-estate-website.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/server.iml" filepath="$PROJECT_DIR$/server/server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vue-frontend/vue-frontend.iml" filepath="$PROJECT_DIR$/vue-frontend/vue-frontend.iml" />
+    </modules>
+  </component>
+</project>
