@@ -1,0 +1,6 @@
+FROM front:base
+WORKDIR /$APP
+RUN npm install --include=dev
+ADD $APP $APP/update-client.ts ./
+ADD $APP/babel.config.js $APP/tsconfig.json ./
+ENTRYPOINT ["npm", "run", "update-client"]

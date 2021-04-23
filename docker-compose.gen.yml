@@ -4,20 +4,17 @@ services:
   frontend:
     build:
       context: frontend
-      dockerfile: Dockerfile.dev
-    image: front:dev
-    container_name: dev.front
+      dockerfile: Dockerfile.gen
+    image: front:gen
+    container_name: gen.front
     env_file:
-      - frontend/dev.env
+      - frontend/gen.env
     environment:
       NODE_ENV: "development"
       APP: "vue-frontend"
     volumes:
     - "./frontend/vue-frontend/src:/vue-frontend/src"
     - "./frontend/vue-frontend/public:/vue-frontend/public"
-    ports:
-      - "81:8080"
-      - "9229:9229"
     depends_on:
       - server
   server:
