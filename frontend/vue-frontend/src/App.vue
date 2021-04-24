@@ -1,29 +1,47 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <login-form v-if="!this.store.getters.authorization_set"/>
-  <greeting v-else/>
+  <span class="top-line">
+    <dropdown-selector
+        nameFieldTitle="name"
+        :options="this.cities"
+        @select="setCity"
+    />
+  <span id="nav">
+    <router-link to="/tariffs">Тарифы</router-link>
+    <router-link to="/blog">Блог</router-link>
+    <router-link to="/phone">Телефон</router-link>
+  </span>
+  </span>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import LoginForm from "@/components/LoginForm.vue";
 import Greeting from "@/components/Greeting.vue";
-import {useStore} from "@/store";
+import {Store, useStore} from "@/store";
+import DropdownSelector from "@/components/DropdownSelector.vue";
+import {City} from "@/generated-api/data-contracts";
 
 @Options({
   components: {
     LoginForm,
-    Greeting
+    Greeting,
+    DropdownSelector
   },
-  data() {
-    return {
-      store: useStore()
+  computed: {
+    cities():City[] {
+      return this.store.state.cities;
     }
-  },
-  methods: {
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  store: Store = useStore();
+  mounted() {
+    this.store.dispatch('GET_CITIES',null);
+  }
+  setCity(city: City){
+    this.store.commit('SET_CITY', city);
+  }
+}
 </script>
 
 <style>

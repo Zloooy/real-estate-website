@@ -1,7 +1,7 @@
 import {Mutations} from "@/store/mutations";
-import {ActionContext} from "vuex";
-import {State} from "@/store/state";
-
+import {ActionContext, ActionTree} from "vuex";
+import {state, State} from "@/store/state";
+import {City} from "@/generated-api/data-contracts";
 
 
 type AugmentActionContext = {
@@ -12,6 +12,12 @@ type AugmentActionContext = {
 } & Omit<ActionContext<State, State>, 'commit'>
 
 export interface Actions {
+    GET_CITIES({ commit }: AugmentActionContext,
+    payload: null): Promise<City[]>
 }
-export const actions = {
+export const actions: ActionTree<State, State> & Actions = {
+    GET_CITIES({commit}: AugmentActionContext, payload: null): Promise<City[]> {
+        return state.public_api.getAllCitiesUsingGet().then(response => response.data).catch(err => [])
+            .then(d=>commit('SET_CITIES', d));
+    }
 }

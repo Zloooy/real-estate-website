@@ -1,2 +1,1 @@
-export enum ActionTypes {
-}
+export const ActionTypes = ('GET_CITIES')
