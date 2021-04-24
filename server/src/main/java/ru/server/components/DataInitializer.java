@@ -7,8 +7,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.server.enums.Authority;
+import ru.server.models.City;
 import ru.server.models.User;
 import ru.server.repositories.IAuthorityRepository;
+import ru.server.repositories.ICityRepository;
 import ru.server.repositories.IRoleRepository;
 import ru.server.repositories.IUserRepository;
 import ru.server.enums.UserRole;
@@ -33,13 +35,16 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private IUserRepository userRepository;
     @Autowired
+    private ICityRepository cityRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     private static final List<String>
             roleNames = Arrays.asList(ru.server.enums.UserRole.ADMIN, UserRole.CONTENT_MANAGER, UserRole.REALTOR, UserRole.CLIENT),
             authorityNames = Arrays.asList(Authority.CAN_ENTER),
             userLogins=Arrays.asList("admin", "manager"),
             userPasswords=Arrays.asList("password", "password"),
-            userRoles=Arrays.asList(UserRole.ADMIN, UserRole.CONTENT_MANAGER);
+            userRoles=Arrays.asList(UserRole.ADMIN, UserRole.CONTENT_MANAGER),
+            cityNames=Arrays.asList("Омск", "Санкт-Петербург");
     private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER), new HashSet<>(), new HashSet<>(), new HashSet<>());
     private static List<Set<User.Role.Authority>> authorityGroups;
     private static class ListInserter<T> {
@@ -59,6 +64,7 @@ public class DataInitializer implements ApplicationRunner {
         addRoles();
         assert roleRepository.getByName(UserRole.ADMIN).getAuthorities().size() > 0;
         addUsers();
+        addCities();
     }
     private void addAuthorities(){
         new ListInserter<User.Role.Authority>().insertFromList(authorityRepository, User.Role.Authority::new, authorityNames);
@@ -77,6 +83,13 @@ public class DataInitializer implements ApplicationRunner {
                 userRepository,
                 (int i)-> new User(userLogins.get(i), passwordEncoder.encode(userPasswords.get(i)), roleRepository.getByName(userRoles.get(i))),
                 userLogins.size()
+        );
+    }
+    private void addCities(){
+        new ListInserter<City>().insert(
+                cityRepository,
+                (int i)-> new City(cityNames.get(i)),
+                cityNames.size()
         );
     }
 }
