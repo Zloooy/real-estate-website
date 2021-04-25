@@ -1,45 +1,35 @@
 <template>
-  <span class="top-line">
-    <dropdown-selector
-        nameFieldTitle="name"
-        :options="this.cities"
-        @select="setCity"
-    />
-  <span id="nav">
-    <router-link to="/tariffs">Тарифы</router-link>
-    <router-link to="/blog">Блог</router-link>
-    <router-link to="/phone">Телефон</router-link>
-  </span>
-  </span>
+  <navigation-header/>
+  <horizontal-category-select
+      :categories="categories"
+      :firstSelectedIndex="1"
+  />
+  <intro-footer/>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
-import LoginForm from "@/components/LoginForm.vue";
-import Greeting from "@/components/Greeting.vue";
+import NavigationHeader from "@/components/NavigationHeader.vue";
 import {Store, useStore} from "@/store";
-import DropdownSelector from "@/components/DropdownSelector.vue";
-import {City} from "@/generated-api/data-contracts";
+import HorizontalCategorySelect from "@/components/HorizontalCategorySelect.vue";
+import IntroFooter from "@/components/IntroFooter.vue";
 
 @Options({
   components: {
-    LoginForm,
-    Greeting,
-    DropdownSelector
+    NavigationHeader,
+    HorizontalCategorySelect,
+    IntroFooter
   },
-  computed: {
-    cities():City[] {
-      return this.store.state.cities;
-    }
-  }
 })
 export default class App extends Vue {
+  categories: any = [
+      {name:"Новостройки"},
+    {name: "Вторичка"},
+    {name:"Аренда"}
+  ];
   store: Store = useStore();
   mounted() {
     this.store.dispatch('GET_CITIES',null);
-  }
-  setCity(city: City){
-    this.store.commit('SET_CITY', city);
   }
 }
 </script>

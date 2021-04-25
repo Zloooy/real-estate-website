@@ -15,7 +15,10 @@ import {Options, Vue} from "vue-class-component";
       type: String,
       default: "name"
     },
-    options: []
+    options: {
+      type: Array,
+      default: []
+    }
   },
   emits: [
     "select"

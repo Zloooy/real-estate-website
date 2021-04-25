@@ -10,6 +10,7 @@ export type Getters = {
     api(state: State): Api,
     public_api(state:State): PublicApi,
     authorization_set(state: State): boolean,
+    cities(state: State): City[]
 }
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -26,5 +27,8 @@ export const getters: GetterTree<State, State> & Getters = {
     },
     public_api(state: State): PublicApi {
         return new PublicApi();
+    },
+    cities(state: State): City[] {
+        return state.cities;
     }
 } as Getters;

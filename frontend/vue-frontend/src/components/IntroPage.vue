@@ -26,7 +26,7 @@
   </div>
   </div>
 
-  <footer clas="footer">
+  <footer class="footer">
   <div class="container">
     <div class="footer__inner">
       <div class="footer__col footer__col--first">
@@ -65,7 +65,7 @@
   </footer>
 </template>
 
-<script lang="TS">
+<script lang="ts">
 import {Options, Vue} from "vue-class-component";
 @Options({
   name:"intro-page"
