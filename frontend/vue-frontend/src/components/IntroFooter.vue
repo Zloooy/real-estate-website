@@ -32,11 +32,12 @@
 </template>
 
 <script>
+import {Vue, Options} from "vue-class-component";
+
 @Options({
   name: "intro-footer"
 })
-export default class IntroFooter{
-
+export default class IntroFooter extends Vue {
 }
 </script>
 
