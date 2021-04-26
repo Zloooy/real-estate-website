@@ -23,10 +23,10 @@ public class ComplexService implements IComplexService{
         return (complex, cq, cb)-> cb.or(isNull(cb, fieldValue), cb.like(complex.get(fieldName), enTemp(fieldValue)));
     }
     private Specification<Complex> fieldBetween(String fieldName, Integer minVal, Integer maxVal) {
-        return (complex, cq, cb)-> cb.or(cb.and(isNull(cb, minVal).isNull(), cb.literal(maxVal).isNull()), cb.between( complex.get(fieldName), minVal, maxVal));
+        return (complex, cq, cb)-> cb.or(cb.and(isNull(cb, minVal), cb.literal(maxVal).isNull()), cb.between( complex.get(fieldName), minVal, maxVal));
     }
     private Specification<Complex> fieldBetween(String fieldName, Long minVal, Long maxVal) {
-        return (complex, cq, cb)-> cb.or(cb.literal(minVal == null && maxVal == null), cb.between( complex.get(fieldName), minVal, maxVal));
+        return (complex, cq, cb)-> cb.or(cb.and(isNull(cb, minVal), isNull(cb, maxVal)), cb.between( complex.get(fieldName), minVal, maxVal));
     }
     private <T> Specification<Complex> fieldMatches(String fieldName, T value){
         return (complex, cq, cb)-> cb.or(isNull(cb, value), cb.equal(complex.get(fieldName), value));
@@ -48,20 +48,22 @@ public class ComplexService implements IComplexService{
 private Specification<Complex> generateSpecification(ComplexQuery query){
         return Specification.where(and(
                 fieldLike("name", query.getName()),
-                fieldMatches("id", query.getId())
-//                fieldMatches("estateType", query.getEstateType()),
-//                fieldMatches("category", query.getEstateCategory()),
-//                fieldMatches("advertized", query.getAdvertized())
+                fieldMatches("id", query.getId()),
+                fieldMatches("estateType", query.getEstateType()),
+                fieldMatches("category", query.getEstateCategory()),
+                fieldMatches("advertized", query.getAdvertized())
                 //@TODO add all filters
         ));
 }
     @Override
     public List<Complex> findAdvertizedByQuery(ComplexQuery query) {
+        query.setAdvertized(true);
         return repository.findAll(generateSpecification(query));
     }
 
     @Override
     public Page<Complex> findComplexByQuery(ComplexQuery query, Pageable pageable) {
+        query.setAdvertized(null);
         return repository.findAll(generateSpecification(query), pageable);
     }
 }

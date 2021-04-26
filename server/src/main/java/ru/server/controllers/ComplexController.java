@@ -23,13 +23,11 @@ public class ComplexController {
     @ApiOperation(value = "Получение рекламируемых городов")
     @PostMapping("/public_api/advertized_complexes/")
     public ResponseEntity<List<Complex>> getAdvertized(@RequestBody ComplexQuery query){
-        query.setAdvertized(true);
         return ResponseEntity.ok(complexService.findAdvertizedByQuery(query));
     }
     @ApiOperation(value = "Получение страниц с городами")
     @PostMapping("/public_api/complexes")
     public ResponseEntity<Page<Complex>> getComplexes(@RequestBody ComplexQuery query, Pageable pageable){
-        query.setAdvertized(null);
         return ResponseEntity.ok(complexService.findComplexByQuery(query, pageable));
     }
 }
