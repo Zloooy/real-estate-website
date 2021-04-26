@@ -1,3 +1,4 @@
+import { ModelAndView } from "./data-contracts";
 import { HttpClient, RequestParams } from "./http-client";
 
 export class Error<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -5,12 +6,12 @@ export class Error<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags basic-error-controller
-   * @name ErrorUsingGet
-   * @summary error
+   * @name ErrorHtmlUsingGet
+   * @summary errorHtml
    * @request GET:/error
    */
-  errorUsingGet = (params: RequestParams = {}) =>
-    this.request<Record<string, object>, void>({
+  errorHtmlUsingGet = (params: RequestParams = {}) =>
+    this.request<ModelAndView, void>({
       path: `/error`,
       method: "GET",
       ...params,
@@ -19,12 +20,12 @@ export class Error<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags basic-error-controller
-   * @name ErrorUsingPut
-   * @summary error
+   * @name ErrorHtmlUsingPut
+   * @summary errorHtml
    * @request PUT:/error
    */
-  errorUsingPut = (params: RequestParams = {}) =>
-    this.request<Record<string, object>, void>({
+  errorHtmlUsingPut = (params: RequestParams = {}) =>
+    this.request<ModelAndView, void>({
       path: `/error`,
       method: "PUT",
       ...params,
@@ -33,12 +34,12 @@ export class Error<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags basic-error-controller
-   * @name ErrorUsingPost
-   * @summary error
+   * @name ErrorHtmlUsingPost
+   * @summary errorHtml
    * @request POST:/error
    */
-  errorUsingPost = (params: RequestParams = {}) =>
-    this.request<Record<string, object>, void>({
+  errorHtmlUsingPost = (params: RequestParams = {}) =>
+    this.request<ModelAndView, void>({
       path: `/error`,
       method: "POST",
       ...params,
@@ -47,12 +48,12 @@ export class Error<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags basic-error-controller
-   * @name ErrorUsingDelete
-   * @summary error
+   * @name ErrorHtmlUsingDelete
+   * @summary errorHtml
    * @request DELETE:/error
    */
-  errorUsingDelete = (params: RequestParams = {}) =>
-    this.request<Record<string, object>, void>({
+  errorHtmlUsingDelete = (params: RequestParams = {}) =>
+    this.request<ModelAndView, void>({
       path: `/error`,
       method: "DELETE",
       ...params,
@@ -61,12 +62,12 @@ export class Error<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags basic-error-controller
-   * @name ErrorUsingOptions
-   * @summary error
+   * @name ErrorHtmlUsingOptions
+   * @summary errorHtml
    * @request OPTIONS:/error
    */
-  errorUsingOptions = (params: RequestParams = {}) =>
-    this.request<Record<string, object>, void>({
+  errorHtmlUsingOptions = (params: RequestParams = {}) =>
+    this.request<ModelAndView, void>({
       path: `/error`,
       method: "OPTIONS",
       ...params,
@@ -75,12 +76,12 @@ export class Error<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags basic-error-controller
-   * @name ErrorUsingHead
-   * @summary error
+   * @name ErrorHtmlUsingHead
+   * @summary errorHtml
    * @request HEAD:/error
    */
-  errorUsingHead = (params: RequestParams = {}) =>
-    this.request<Record<string, object>, void>({
+  errorHtmlUsingHead = (params: RequestParams = {}) =>
+    this.request<ModelAndView, void>({
       path: `/error`,
       method: "HEAD",
       ...params,
@@ -89,12 +90,12 @@ export class Error<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags basic-error-controller
-   * @name ErrorUsingPatch
-   * @summary error
+   * @name ErrorHtmlUsingPatch
+   * @summary errorHtml
    * @request PATCH:/error
    */
-  errorUsingPatch = (params: RequestParams = {}) =>
-    this.request<Record<string, object>, void>({
+  errorHtmlUsingPatch = (params: RequestParams = {}) =>
+    this.request<ModelAndView, void>({
       path: `/error`,
       method: "PATCH",
       ...params,
@@ -103,12 +104,12 @@ export class Error<SecurityDataType = unknown> extends HttpClient<SecurityDataTy
    * No description
    *
    * @tags basic-error-controller
-   * @name ErrorUsingTrace
-   * @summary error
+   * @name ErrorHtmlUsingTrace
+   * @summary errorHtml
    * @request TRACE:/error
    */
-  errorUsingTrace = (params: RequestParams = {}) =>
-    this.request<Record<string, object>, void>({
+  errorHtmlUsingTrace = (params: RequestParams = {}) =>
+    this.request<ModelAndView, void>({
       path: `/error`,
       method: "TRACE",
       ...params,

@@ -43,28 +43,31 @@ export default class MyCard extends Vue {
 
 <style scoped>
 
-.card{
+.card {
+  height: 400px;
   border: 3px solid black;
-  margin-top: 60px;
-  width: 30%;
-  height: 300px;
-  margin-bottom: 30px;
   text-align:center;
+  overflow: hidden;
+  margin: 5px 5px;
 }
 
 .card__image{
 }
 .card__image img{
 	max-width: 100%;
+  max-height: 300px;
 }
 
 .card__desk{
-text-align: left;
-padding-left: 5px;
-padding-top: 5px;
+  max-width:95%;
+  text-align: left;
+  padding: 5px;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 
 .title{
+  max-width: 10%;
   font-size: 25px ;
   font-weight: 700;
 

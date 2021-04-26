@@ -39,5 +39,10 @@ export default class App extends Vue {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  padding-left:5%;
+  padding-right:5%;
+}
+ul {
+  padding-inline-start: 0;
 }
 </style>

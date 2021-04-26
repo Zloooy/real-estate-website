@@ -56,21 +56,19 @@ export default class HorizontalCategorySelect extends Vue {
 <style scoped>
 .horizontal-category-select {
   display: inline-block;
+  margin: 60px auto 1px
 }
 .category-button {
   display: inline-block;
   vertical-align: top;
   padding: 10px 15px;
-
-  margin: 60px auto 0;
   border: 3px solid black;
-
   font-size: 15px;
   font-weight: bold;
   color: black;
-
   text-transform: uppercase;
   transition: color 0.2s linear;
+  margin: 0 2px;
 }
 .category-button:hover {
   color: lightsalmon;

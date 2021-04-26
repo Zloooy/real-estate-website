@@ -62,9 +62,18 @@ export default class NavigationHeader extends Vue {
   color: #333333;
 
 }
-
+@media (max-width: 600px) {
+  .nav>* {
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media (min-width: 601px) {
+  .nav>* {
+    display: inline-block;
+  }
+}
 .nav>* {
-   display: inline-block;
    margin: 0 15px;
    color: black;
    text-decoration: none;
