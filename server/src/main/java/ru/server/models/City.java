@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @ApiModelProperty(notes = "Униклаьный идентификатор города")
+    @ApiModelProperty(notes = "Уникальный идентификатор города")
     @Column(name="id")
     private Long id;
     @ApiModelProperty(notes="Название города")
