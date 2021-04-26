@@ -1,12 +1,186 @@
+export type Address = object;
+
+export interface Authority {
+  authority?: string;
+
+  /**
+   * Уникальный идентификатор
+   * @format int64
+   */
+  id?: number;
+
+  /** Название права */
+  name?: string;
+}
+
 export interface City {
   /**
-   * Униклаьный идентификатор города
+   * Уникальный идентификатор города
    * @format int64
    */
   id?: number;
 
   /** Название города */
   name?: string;
+}
+
+export interface Complex {
+  address?: Address;
+
+  /**
+   * Реклама - отображать ли в блоке рекомендаций
+   * @example false
+   */
+  advertized?: boolean;
+
+  /**
+   * Количество комнат
+   * @format int32
+   */
+  amountOfRooms?: number;
+  author?: User;
+
+  /** Категория надвижимости: новостройки, вторичка, аренда */
+  category?: "NEW" | "RENT" | "SECONDARY";
+
+  /** Комментарий */
+  comment?: string;
+
+  /** Контакты */
+  contacts?: Contacts;
+
+  /** Тип недвижимости */
+  estateType?: "FLAT" | "HOUSE" | "ROOM";
+
+  /**
+   * Униветсальный идентификатор комплекса
+   * @format int64
+   */
+  id?: number;
+
+  /** image */
+  image?: string;
+
+  /** Название комплекса */
+  name?: string;
+
+  /**
+   * Цена, руб
+   * @format int32
+   */
+  price?: number;
+
+  /**
+   * Площадь, м. кв.
+   * @format int32
+   */
+  space?: number;
+
+  /** Статус объекта: принят, отклонен, сдается */
+  status?: "ACCEPTED" | "DECLINED" | "RENTED";
+}
+
+export interface ComplexQuery {
+  /**
+   * Рекламируется
+   * @example false
+   */
+  advertized?: boolean;
+
+  /**
+   * Количество комнат
+   * @format int32
+   */
+  amountOfRooms?: number;
+
+  /**
+   * id автора
+   * @format int64
+   */
+  authorId?: number;
+
+  /**
+   * id города
+   * @format int64
+   */
+  cityId: number;
+
+  /**
+   * id контакта
+   * @format int64
+   */
+  contactsId?: number;
+
+  /**
+   * id района
+   * @format int64
+   */
+  districtId?: number;
+
+  /** Категория недвижимости: новостройка, вторичка... */
+  estateCategory?: "NEW" | "RENT" | "SECONDARY";
+
+  /** Тип недвижимости: квартира, дом... */
+  estateType?: "FLAT" | "HOUSE" | "ROOM";
+
+  /**
+   * Уникальный идентификатор комплекса
+   * @format int64
+   */
+  id?: number;
+
+  /**
+   * id станции метро
+   * @format int64
+   */
+  metroId?: number;
+
+  /** Маска названия комплекса */
+  name?: string;
+
+  /**
+   * Максимальная цена
+   * @format int32
+   */
+  priceMax?: number;
+
+  /**
+   * Минимальная цена
+   * @format int32
+   */
+  priceMin?: number;
+
+  /**
+   * Площадь, верхний порог
+   * @format int32
+   */
+  spaceMax?: number;
+
+  /**
+   * Площадь, нижний порог
+   * @format int32
+   */
+  spaceMin?: number;
+}
+
+export interface Contacts {
+  email?: string;
+
+  /**
+   * Уникальный идентификатор контактов
+   * @format int64
+   */
+  id?: number;
+
+  /** Имя контактного лица */
+  name?: string;
+
+  /** Телефон */
+  phone?: string;
+}
+
+export interface GrantedAuthority {
+  authority?: string;
 }
 
 export interface Greeting {
@@ -95,6 +269,39 @@ export interface ModelAndView {
   viewName?: string;
 }
 
+export interface Pageable {
+  /** @format int32 */
+  page?: number;
+
+  /** @format int32 */
+  size?: number;
+  sort?: string;
+}
+
+export interface PageComplex {
+  content?: Complex[];
+  empty?: boolean;
+  first?: boolean;
+  last?: boolean;
+
+  /** @format int32 */
+  number?: number;
+
+  /** @format int32 */
+  numberOfElements?: number;
+  pageable?: Pageable;
+
+  /** @format int32 */
+  size?: number;
+  sort?: Sort;
+
+  /** @format int64 */
+  totalElements?: number;
+
+  /** @format int32 */
+  totalPages?: number;
+}
+
 export interface RepresentationModelObject {
   links?: Links;
 }
@@ -110,6 +317,53 @@ export interface Request {
 export interface Response {
   /** Токен */
   token?: string;
+}
+
+export interface Role {
+  /** Список прав роли */
+  authorities?: Authority[];
+
+  /**
+   * Уникальный идентификатор
+   * @format int64
+   */
+  id?: number;
+
+  /** Название роли */
+  name?: string;
+
+  /** Список пользователей с ролью */
+  users?: User[];
+}
+
+export interface Sort {
+  empty?: boolean;
+  sorted?: boolean;
+  unsorted?: boolean;
+}
+
+export interface User {
+  accountNonExpired?: boolean;
+  accountNonLocked?: boolean;
+  authorities?: GrantedAuthority[];
+  credentialsNonExpired?: boolean;
+  enabled?: boolean;
+
+  /**
+   * Уникальный идентификатор
+   * @format int64
+   */
+  id?: number;
+
+  /** Логин */
+  login?: string;
+
+  /** Хеш пароля */
+  password?: string;
+
+  /** Роль пользователя */
+  role?: Role;
+  username?: string;
 }
 
 export interface View {

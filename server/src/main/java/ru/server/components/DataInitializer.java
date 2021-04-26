@@ -7,12 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.server.enums.Authority;
-import ru.server.models.City;
-import ru.server.models.User;
-import ru.server.repositories.IAuthorityRepository;
-import ru.server.repositories.ICityRepository;
-import ru.server.repositories.IRoleRepository;
-import ru.server.repositories.IUserRepository;
+import ru.server.models.*;
+import ru.server.repositories.*;
 import ru.server.enums.UserRole;
 
 import java.util.Arrays;
@@ -37,6 +33,14 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private ICityRepository cityRepository;
     @Autowired
+    private IMetroRepository metroRepository;
+    @Autowired
+    private IContactsRepository contactsRepository;
+    @Autowired
+    private IAddressRepository addressRepository;
+    @Autowired
+    private IComplexRepository complexRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     private static final List<String>
             roleNames = Arrays.asList(ru.server.enums.UserRole.ADMIN, UserRole.CONTENT_MANAGER, UserRole.REALTOR, UserRole.CLIENT),
@@ -44,10 +48,46 @@ public class DataInitializer implements ApplicationRunner {
             userLogins=Arrays.asList("admin", "manager"),
             userPasswords=Arrays.asList("password", "password"),
             userRoles=Arrays.asList(UserRole.ADMIN, UserRole.CONTENT_MANAGER),
-            cityNames=Arrays.asList("Омск", "Санкт-Петербург");
+            cityNames=Arrays.asList("Омск", "Санкт-Петербург", "Москва"),
+            metroStationNames=Arrays.asList("Комендантский проспект", "Фрунзенская"),
+            metroStationCities=Arrays.asList("Санкт-Петербург", "Санкт-Петербург"),
+            metroStationColors=Arrays.asList("#7F0F7E","#007DCC"),
+            contactNames = Arrays.asList("Иван Иванович Иванов"),
+            contactPhones = Arrays.asList("222-32-32"),
+            contactEmails = Arrays.asList("test@test.ru"),
+            addressStreets = Arrays.asList("Плесецкая ул.", "Московский пр."),
+            addressHouses = Arrays.asList("д. 2", "д. 65"),
+            addressDistricts = Arrays.asList("Приморский", "Адмиралтейский"),
+            addressCities = Arrays.asList("Санкт-Петербург", "Санкт-Петербург"),
+            addressMetros = Arrays.asList("Комендантский проспект", "Фрунзенская"),
+            complexAuthors = Arrays.asList("manager", "manager"),
+            complexNames = Arrays.asList("Ultra City", "LEGENDA Московский 65"),
+            complexAddresses = Arrays.asList("Плесецкая ул.", "Московский пр."),
+            complexImages = Arrays.asList(
+                    "https://get.pxhere.com/photo/city-metropolitan-area-architecture-urban-area-landmark-commercial-building-metropolis-tower-block-building-condominium-daytime-blue-skyscraper-mixed-use-human-settlement-sky-corporate-headquarters-tower-facade-headquarters-real-estate-apartment-reflection-tree-downtown-neighbourhood-residential-area-glass-symmetry-house-1612790.jpg",
+                    "https://img2.goodfon.ru/wallpaper/nbig/7/7a/zdanie-4-bashni-w-proekt.jpg"
+            ),
+            complexComments = Arrays.asList("«Ultra City» — великолепный проект от компании «Северный город» в Приморском районе Санкт-Петербурга. Ultra City строится в соответствии с концепцией 3Е, которая подразумевает гармоничное сочетание экономики, эргономики, а также экологии. Территория закрыта. Круглосуточную охрану осуществляет служба безопасности. Камеры установлены в парадных, на въездах, во дворе и по периметру, управление ими доступно со смартфона.",
+                    "Первый проект бизнес-класса от LEGENDA - это:\n" +
+                            "\n" +
+                            "    расположение на пересечении Московского проспекта и набережной Обводного канала\n" +
+                            "    неоклассический стиль\n" +
+                            "    4 корпуса с переменной этажностью до 8 этажей, объединяющих квартиры, коммерческие помещения на первом этаже, а также подземный паркинг на 570 машиномест\n" +
+                            "    новая линейка планировочных и технических решений, отвечающая уровню недвижимости высокого класса двухуровневые квартиры, квартиры с двойным светом, а также квартиры с террасами\n" +
+                            "    отдельные кладовые — помещения, которые расположатся на техническом этаже \n" +
+                            "    в одном из корпусов встроенный детский сад на 110 мест"),
+            complexContactNames = Arrays.asList("Иван Иванович Иванов","Иван Иванович Иванов");
+            private static final List<Complex.EstateType> complexEstateTypes = Arrays.asList(Complex.EstateType.FLAT, Complex.EstateType.FLAT);
+            private static final List<Complex.EstateCategory> complexEstateCategories = Arrays.asList(Complex.EstateCategory.NEW, Complex.EstateCategory.NEW);
+            private static final List<Complex.EstateStatus> complexEstateStatuses = Arrays.asList(Complex.EstateStatus.ACCEPTED, Complex.EstateStatus.ACCEPTED);
+            private final List<Boolean> complexEstateAdvertized = Arrays.asList(true, true);
+            private static final List<Integer>
+                    complexPrices = Arrays.asList(152709,289800),
+                    complexSpaces = Arrays.asList(2,3),
+                    complexAmountsOfRooms=Arrays.asList(2,3);
     private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER), new HashSet<>(), new HashSet<>(), new HashSet<>());
-    private static List<Set<User.Role.Authority>> authorityGroups;
     private static class ListInserter<T> {
+
         public <R extends CrudRepository<T, Long>> void insert(R repo, LongFunction<T> builder, long i) {
             repo.saveAll(LongStream.range(0, i).mapToObj(builder).collect(Collectors.toList()));
         }
@@ -65,6 +105,11 @@ public class DataInitializer implements ApplicationRunner {
         assert roleRepository.getByName(UserRole.ADMIN).getAuthorities().size() > 0;
         addUsers();
         addCities();
+        addMetros();
+        addAddresses();
+        addContacts();
+        System.out.println("ADDING COMPLEXES");
+        addComplexes();
     }
     private void addAuthorities(){
         new ListInserter<User.Role.Authority>().insertFromList(authorityRepository, User.Role.Authority::new, authorityNames);
@@ -90,6 +135,34 @@ public class DataInitializer implements ApplicationRunner {
                 cityRepository,
                 (int i)-> new City(cityNames.get(i)),
                 cityNames.size()
+        );
+    }
+    private void addMetros() {
+        new ListInserter<Metro>().insert(
+                metroRepository,
+                (int i)-> new Metro(metroStationNames.get(i), metroStationColors.get(i), cityRepository.findByName(metroStationCities.get(i)).orElse(null)),
+                metroStationNames.size()
+        );
+    }
+    private void addContacts() {
+        new ListInserter<Contacts>().insert(
+                contactsRepository,
+                (int i)-> new Contacts(contactNames.get(i), contactPhones.get(i), contactEmails.get(i)),
+                contactNames.size()
+        );
+    }
+    private void addAddresses() {
+        new ListInserter<Address>().insert(
+                addressRepository,
+                (int i)-> new Address(addressStreets.get(i), addressHouses.get(i), addressDistricts.get(i), cityRepository.findByName(addressCities.get(i)).orElse(null), metroRepository.findByName(addressMetros.get(i)).orElse(null)),
+                addressStreets.size()
+        );
+    }
+    private void addComplexes() {
+        new ListInserter<Complex>().insert(
+                complexRepository,
+                (int i)->new Complex(userRepository.findByUsername(complexAuthors.get(i)), complexNames.get(i), addressRepository.findByStreet(complexAddresses.get(i)).orElse(null),  complexEstateTypes.get(i), complexAmountsOfRooms.get(i), complexPrices.get(i), complexSpaces.get(i), complexImages.get(i), complexComments.get(i), contactsRepository.getByName("Иван Иванович Иванов").orElse(null), complexEstateStatuses.get(i), complexEstateCategories.get(i), complexEstateAdvertized.get(i)),
+                complexNames.size()
         );
     }
 }
