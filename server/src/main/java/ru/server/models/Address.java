@@ -36,4 +36,52 @@ public class Address {
     @ApiModelProperty("Ближайшая станция метро")
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     private Metro metro;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getHouse() {
+        return house;
+    }
+
+    public void setHouse(String house) {
+        this.house = house;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Metro getMetro() {
+        return metro;
+    }
+
+    public void setMetro(Metro metro) {
+        this.metro = metro;
+    }
 }

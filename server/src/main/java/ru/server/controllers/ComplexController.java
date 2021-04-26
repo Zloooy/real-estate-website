@@ -21,7 +21,7 @@ public class ComplexController {
     @Autowired
     IComplexService complexService;
     @ApiOperation(value = "Получение рекламируемых городов")
-    @PostMapping("/public_api/advertized_complexes/")
+    @PostMapping(value = "/public_api/advertized_complexes/", produces = "application/json", consumes = "application/json")
     public ResponseEntity<List<Complex>> getAdvertized(@RequestBody ComplexQuery query){
         return ResponseEntity.ok(complexService.findAdvertizedByQuery(query));
     }
