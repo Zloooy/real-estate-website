@@ -1,4 +1,25 @@
-export type Address = object;
+export interface Address {
+  /** Город */
+  city?: City;
+
+  /** Район */
+  district?: string;
+
+  /** Номер дома */
+  house?: string;
+
+  /**
+   * Униклальный идентификатор адреса
+   * @format int64
+   */
+  id?: number;
+
+  /** Ближайшая станция метро */
+  metro?: Metro;
+
+  /** Название улицы */
+  street?: string;
+}
 
 export interface Authority {
   authority?: string;
@@ -189,6 +210,23 @@ export interface Greeting {
 
 export interface Links {
   empty?: boolean;
+}
+
+export interface Metro {
+  /** Город станции метро */
+  city?: City;
+
+  /** Цвет станции метро */
+  color?: string;
+
+  /**
+   * Уникльный идентификатор станции метро
+   * @format int64
+   */
+  id?: number;
+
+  /** Название станции метро */
+  name?: string;
 }
 
 export interface ModelAndView {

@@ -1,12 +1,15 @@
 <template>
-  <div class = "card">
-    <div class = "card__image">
+  <div class="card">
+    <div class="card__image">
       <img :src="image">
     </div>
-    <div class = "card__desk">
-      <div class = "title"></div>
-      <div class = "metro"></div>
-      <div class = "price"></div>
+    <div class="card__desk">
+      <div class="title"></div>
+      {{title}}
+      <div class="metro"></div>
+      {{metro}}
+      <div class="price"></div>
+      от {{price}} руб/m²
     </div>
   </div>
 </template>
@@ -28,7 +31,7 @@ import {Options, Vue} from "vue-class-component";
       type: String
     },
     price:{
-      type: String
+      type: Number
     }
   }
 })
@@ -41,18 +44,24 @@ export default class MyCard extends Vue {
 <style scoped>
 
 .card{
+  border: 3px solid black;
   margin-top: 60px;
   width: 30%;
-  height: 600px;
+  height: 300px;
   margin-bottom: 30px;
+  text-align:center;
 }
 
 .card__image{
-
+}
+.card__image img{
+	max-width: 100%;
 }
 
 .card__desk{
-
+text-align: left;
+padding-left: 5px;
+padding-top: 5px;
 }
 
 .title{

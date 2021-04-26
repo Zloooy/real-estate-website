@@ -2,7 +2,7 @@ import { GetterTree } from "vuex/types";
 import {Api} from "@/generated-api/Api";
 import {Auth} from "@/generated-api/Auth";
 import {state, State} from "@/store/state";
-import {City} from "@/generated-api/data-contracts";
+import {City, Complex} from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
 
 export type Getters = {
@@ -10,7 +10,8 @@ export type Getters = {
     api(state: State): Api,
     public_api(state:State): PublicApi,
     authorization_set(state: State): boolean,
-    cities(state: State): City[]
+    cities(state: State): City[],
+    complexes(state: State): Complex[]
 }
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -30,5 +31,8 @@ export const getters: GetterTree<State, State> & Getters = {
     },
     cities(state: State): City[] {
         return state.cities;
+    },
+    complexes(state: State): Complex[] {
+        return state.complexes;
     }
 } as Getters;

@@ -2,12 +2,13 @@
 import {MutationTree} from "vuex";
 import {Api} from "@/generated-api/Api";
 import {State} from "@/store/state";
-import {City} from "@/generated-api/data-contracts";
+import {City, Complex} from "@/generated-api/data-contracts";
 
 export type Mutations<S = State> = {
     SET_TOKEN(state: S, payload: string): void,
     SET_CITY(state: S, payload: City),
     SET_CITIES(state: S, payload: City[])
+    SET_COMPLEXES(state: S, payload: Complex[])
 }
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -32,5 +33,8 @@ export const mutations: MutationTree<State> & Mutations = {
         else if (state.city.id !== payload.id)
             state.city_changed = true;
         state.city = payload;
+    },
+    SET_COMPLEXES(state: State, payload: Complex[]){
+        state.complexes = payload;
     }
 }

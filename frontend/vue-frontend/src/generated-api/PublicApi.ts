@@ -31,6 +31,7 @@ export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDa
       method: "POST",
       body: data,
       type: ContentType.Json,
+      format: "json",
       ...params,
     });
   /**

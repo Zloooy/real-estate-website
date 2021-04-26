@@ -1,6 +1,6 @@
 import {Api} from "@/generated-api/Api";
 import {Auth} from "@/generated-api/Auth";
-import {City} from "@/generated-api/data-contracts";
+import {City, Complex} from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
 export interface State {
     auth: Auth,
@@ -9,7 +9,8 @@ export interface State {
     authorization_set: boolean,
     cities: City[]
     city: City | null,
-    city_changed: boolean
+    city_changed: boolean,
+    complexes: Complex[]
 }
 export const state: State = {
     api: new Api(),
@@ -20,5 +21,6 @@ export const state: State = {
     }),
     cities: [],
     city: null,
-    city_changed: false
+    city_changed: false,
+    complexes: []
 }

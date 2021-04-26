@@ -1,77 +1,64 @@
 <template>
-  <header class="header">
-  <div class="container">
-    <div class="header__inner">
-      <div class="header__logo">Real-Estate</div>
-
-      <nav class="nav">
-        <a class="nav__link" href="#">Город</a>
-        <a class="nav__link" href="#">Тарифы</a>
-        <a class="nav__link" href="#">Блог</a>
-        <a class="nav__link" href="#">Оставить заявку</a>
-      </nav>
-    </div>
-
+  <horizontal-category-select
+    :categories="categories"
+    :firstSelectedIndex="0"
+    @select="changeCategory"
+  />
+  <ul class="list-grid" v-if="categories.length > 0">
+  <li v-for="(complex, i) in complexes" :key="i">
+    <my-card
+        :image="complex.image"
+        :title="complex.name"
+        :metro="complex.address.metro.name"
+        :price="complex.price"
+    />
+  </li>
+  </ul>
+  <div v-else>
+    По вашему запросу ничего не найдено
   </div>
-  </header>
-
-  <div class="intro">
-  <div class="container">
-    <div class="intro__inner">
-      <img src="assets/images/intro.jpg" alt="">
-      <a class="btn" href="#">Новостройки</a>
-      <a class="btn" href="#">Вторичка</a>
-      <a class="btn" href="#">Аренда</a>
-    </div>
-  </div>
-  </div>
-
-  <footer class="footer">
-  <div class="container">
-    <div class="footer__inner">
-      <div class="footer__col footer__col--first">
-        <div class="footer__logo">Real-Estate</div>
-        <div class="footer__text">Центр недвижимости "Актив-центр"
-          Помогаем людям находить оптимальные решения с недвижимостью.
-          Данный сайт носит исключительно информационный характер и не является публичной офертой.
-        </div>
-        <div class="footer__social">
-          <div class="footer__social-content">
-            Наши социальные сети:
-            <a href="#" target="_blank">
-              <i class="fab fa-facebook"></i>
-            </a>
-            <a href="#" target="_blank">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" target="_blank">
-              <i class="fab fa-instagram"></i>
-            </a>
-          </div>
-        </div>
-
-        <form class="subscribe" action="/" method="post">
-          <input class="subscribe__input" type="phone" name="name" placeholder="Номер телефона">
-          <button class="subscribe__btn" type="submit">Обратный звонок</button>
-        </form>
-      </div><!-- /footer__col-->
-      <div class="footer__col footer__col--second"></div>
-      <div class="footer__col .footer__col--third">
-        <div class="footer__title">С нами можно связаться:</div>
-
-      </div>
-    </div>
-  </div>
-  </footer>
+  <intro-footer/>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-@Options({
-  name:"intro-page"
-})
-export default class IntroPage extends Vue{
+import HorizontalCategorySelect from "@/components/HorizontalCategorySelect.vue";
+import IntroFooter from "@/components/IntroFooter.vue";
+import {useStore} from "@/store/index";
+import MyCard from "@/components/MyCard.vue";
 
+@Options({
+  name:"intro-page",
+  components: {
+    HorizontalCategorySelect,
+    IntroFooter,
+    MyCard
+  },
+  computed:{
+    complexes(){
+      return this.store.getters.complexes;
+    }
+  }
+})
+export default class IntroPage extends Vue {
+ store = useStore();
+ categories = [
+   {
+     name:"Новостройки",
+     value: "NEW"
+   },
+   {
+     name: "Вторичка",
+     value: "SECONDARY"
+   },
+   {
+     name:"Аренда",
+     value: "RENT"
+   }
+ ];
+ changeCategory(category: any){
+  this.store.dispatch('GET_ADVERTIZED_COMPLEXES', category.value);
+ }
 }
 
 </script>
@@ -150,7 +137,6 @@ export default class IntroPage extends Vue{
   }
 
   /*NAv*/
-
   .nav{
     font-size: 15px;
     text-transform: uppercase;
@@ -309,6 +295,19 @@ export default class IntroPage extends Vue{
 
   .subscribe__btn:focus {
     outline: 0;
+  }
+
+  .list-grid {
+    display: grid;
+    display: -ms-grid;
+    grid-template-columns: auto auto;
+  }
+  .list-grid li {
+    list-style-type: none;
+    align-items: center;
+    padding-left: 30px;
+    list-style-position: inside;
+    text-transform: none;
   }
 
 </style>

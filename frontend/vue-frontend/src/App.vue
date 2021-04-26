@@ -1,35 +1,32 @@
 <template>
   <navigation-header/>
-  <horizontal-category-select
-      :categories="categories"
-      :firstSelectedIndex="1"
-  />
-  <intro-footer/>
+  <intro-page/>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import NavigationHeader from "@/components/NavigationHeader.vue";
 import {Store, useStore} from "@/store";
-import HorizontalCategorySelect from "@/components/HorizontalCategorySelect.vue";
-import IntroFooter from "@/components/IntroFooter.vue";
+import IntroPage from "@/components/IntroPage.vue";
 
 @Options({
   components: {
     NavigationHeader,
-    HorizontalCategorySelect,
-    IntroFooter
+    IntroPage
   },
 })
 export default class App extends Vue {
-  categories: any = [
-      {name:"Новостройки"},
+  categories = [
+      {
+        name:"Новостройки",
+      },
     {name: "Вторичка"},
     {name:"Аренда"}
   ];
   store: Store = useStore();
   mounted() {
     this.store.dispatch('GET_CITIES',null);
+    console.debug('getting adv')
   }
 }
 </script>

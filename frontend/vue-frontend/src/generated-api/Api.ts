@@ -1,4 +1,4 @@
-import { Address, Greeting, RepresentationModelObject } from "./data-contracts";
+import { Greeting, RepresentationModelObject } from "./data-contracts";
 import { HttpClient, RequestParams } from "./http-client";
 
 export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -39,7 +39,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    * @request OPTIONS:/api/profile
    */
   profileOptionsUsingOptions = (params: RequestParams = {}) =>
-    this.request<Address, void>({
+    this.request<object, void>({
       path: `/api/profile`,
       method: "OPTIONS",
       ...params,
