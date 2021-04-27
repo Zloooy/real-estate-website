@@ -1,6 +1,7 @@
 <template>
   <navigation-header/>
-  <intro-page/>
+  <router-view/>
+<!--  <intro-page/>-->
 </template>
 
 <script lang="ts">
