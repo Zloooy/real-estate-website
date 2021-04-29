@@ -7,7 +7,7 @@
         <dropdown-selector
             nameFieldTitle="name"
             :options="cities"
-            firstSelectedOptionIndex="1"
+            :firstSelectedOptionIndex="1"
             @select="setCity"
         />
         <router-link to="/tariffs">Тарифы</router-link>
