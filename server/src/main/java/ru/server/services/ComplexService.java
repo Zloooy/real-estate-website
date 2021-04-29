@@ -9,27 +9,21 @@ import ru.server.data.ComplexQuery;
 import ru.server.models.Complex;
 import ru.server.repositories.IComplexRepository;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 @Service
 public class ComplexService implements IComplexService{
     @Autowired
     IComplexRepository repository;
-    private Specification<Complex> fieldLike(String fieldName, String fieldValue){
-        return (complex, cq, cb)-> cb.or(isNull(cb, fieldValue), cb.like(complex.get(fieldName), enTemp(fieldValue)));
-    }
-    private Specification<Complex> fieldBetween(String fieldName, Integer minVal, Integer maxVal) {
-        return (complex, cq, cb)-> cb.or(cb.and(isNull(cb, minVal).isNull(), cb.literal(maxVal).isNull()), cb.between( complex.get(fieldName), minVal, maxVal));
-    }
-    private Specification<Complex> fieldBetween(String fieldName, Long minVal, Long maxVal) {
-        return (complex, cq, cb)-> cb.or(cb.literal(minVal == null && maxVal == null), cb.between( complex.get(fieldName), minVal, maxVal));
-    }
-    private <T> Specification<Complex> fieldMatches(String fieldName, T value){
-        return (complex, cq, cb)-> cb.or(isNull(cb, value), cb.equal(complex.get(fieldName), value));
+    private interface ExprBuilder {
+        Expression<Boolean> apply(Root<Complex> complex, CriteriaBuilder cb, Object value);
     }
     private <T> Predicate isNull(CriteriaBuilder cb, T value){
         if (value == null) {
@@ -39,6 +33,22 @@ public class ComplexService implements IComplexService{
             return cb.or();
         }
     }
+    private <T> Specification<Complex> nullOr(ExprBuilder eb, T value) {
+        return (complex, cq, cb)-> cb.or(isNull(cb, value), eb.apply(complex, cb, value));
+    }
+    private Specification<Complex> fieldLike(String fieldName, String fieldValue){
+        return nullOr((complex, cb, value) -> cb.like(complex.get(fieldName), enTemp(fieldValue)), fieldValue);
+    }
+    private Specification<Complex> fieldBetween(String fieldName, Integer minVal, Integer maxVal) {
+        return (complex, cq, cb)-> cb.or(cb.and(isNull(cb, minVal), cb.literal(maxVal).isNull()), cb.between( complex.get(fieldName), minVal, maxVal));
+    }
+    private Specification<Complex> fieldBetween(String fieldName, Long minVal, Long maxVal) {
+        return (complex, cq, cb)-> cb.or(cb.and(isNull(cb, minVal), isNull(cb, maxVal)), cb.between( complex.get(fieldName), minVal, maxVal));
+    }
+    private <T> Specification<Complex> fieldMatches(String field, T val){
+        return nullOr((complex, cb, value)->cb.equal(complex.get(field), value), val);
+    }
+
     private String enTemp(String s){
         return "%" + s + "%";
     }
@@ -48,20 +58,23 @@ public class ComplexService implements IComplexService{
 private Specification<Complex> generateSpecification(ComplexQuery query){
         return Specification.where(and(
                 fieldLike("name", query.getName()),
-                fieldMatches("id", query.getId())
-//                fieldMatches("estateType", query.getEstateType()),
-//                fieldMatches("category", query.getEstateCategory()),
-//                fieldMatches("advertized", query.getAdvertized())
+                fieldMatches("id", query.getId()),
+                fieldMatches("estateType", query.getEstateType()),
+                fieldMatches("category", query.getEstateCategory()),
+                fieldMatches("advertized", query.getAdvertized()),
+                nullOr((complex, cb, value)->cb.equal(complex.get("address").get("city").get("id"), value), query.getCityId())
                 //@TODO add all filters
         ));
 }
     @Override
     public List<Complex> findAdvertizedByQuery(ComplexQuery query) {
+        query.setAdvertized(true);
         return repository.findAll(generateSpecification(query));
     }
 
     @Override
     public Page<Complex> findComplexByQuery(ComplexQuery query, Pageable pageable) {
+        query.setAdvertized(null);
         return repository.findAll(generateSpecification(query), pageable);
     }
 }
