@@ -4,6 +4,7 @@ import {Auth} from "@/generated-api/Auth";
 import {state, State} from "@/store/state";
 import {City, Complex} from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
+import {useStore} from "@/store/index";
 
 export type Getters = {
     auth(state: State): Auth,
@@ -20,14 +21,12 @@ export const getters: GetterTree<State, State> & Getters = {
 },
     authorization_set: (state: State) => {
         return state.authorization_set;
-},
+    },
     auth: (state: State) => {
-        return new Auth({
-        baseUrl:"http://localhost:8009"
-    });
+        return state.auth;
     },
     public_api(state: State): PublicApi {
-        return new PublicApi();
+        return state.public_api;
     },
     cities(state: State): City[] {
         return state.cities;

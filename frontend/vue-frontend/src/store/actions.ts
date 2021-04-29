@@ -1,7 +1,7 @@
 import {Mutations} from "@/store/mutations";
 import {ActionContext, ActionTree} from "vuex";
-import {state, State} from "@/store/state";
-import {City, ComplexQuery} from "@/generated-api/data-contracts";
+import {State} from "@/store/state";
+import {City} from "@/generated-api/data-contracts";
 
 
 type AugmentActionContext = {
@@ -15,18 +15,17 @@ export interface Actions {
     GET_CITIES({ commit }: AugmentActionContext,
     payload: null): Promise<City[]>,
 
-    GET_ADVERTIZED_COMPLEXES({ commit , }: AugmentActionContext,
-               payload: String): Promise<City[]>
+    GET_ADVERTIZED_COMPLEXES({ commit }: AugmentActionContext,
+               payload: void): Promise<City[]>
 }
 export const actions: ActionTree<State, State> & Actions = {
-    GET_CITIES({commit}: AugmentActionContext, payload: null): Promise<City[]> {
-        return state.public_api.getAllCitiesUsingGet().then(response => response.data).catch(err => [])
-            .then(d=>commit('SET_CITIES', d));
+    GET_CITIES(context: AugmentActionContext, payload: null): Promise<City[]> {
+        return context.getters.public_api.getAllCitiesUsingGet().then(response => response.data).catch(err => [])
+            .then(d=>context.commit('SET_CITIES', d));
     },
-    GET_ADVERTIZED_COMPLEXES({commit}: AugmentActionContext, payload: ("NEW" | "RENT" | "SECONDARY")): Promise<City[]> {
-        return state.public_api.getAdvertizedUsingPost({cityId: state.city?.id || 9, estateCategory:payload})
+    GET_ADVERTIZED_COMPLEXES({commit, state}: AugmentActionContext, payload: void): Promise<City[]> {
+        return state.public_api.getAdvertizedUsingPost({cityId: state.city?.id || 9, estateCategory:state.complex_category})
             .then(response => {
-                console.debug(JSON.stringify(response));
                 return response.data
             }).catch(()=>[])
             .then(d=>commit('SET_COMPLEXES', d));

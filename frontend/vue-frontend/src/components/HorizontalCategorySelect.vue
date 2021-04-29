@@ -37,7 +37,7 @@ import {Vue, Options} from "vue-class-component";
 })
 export default class HorizontalCategorySelect extends Vue {
   currentSelectedIndex: number = -1;
-  created(){
+  mounted(){
     //@ts-ignore
     this.currentSelectedIndex = this.$props.firstSelectedIndex;
     //@ts-ignore
