@@ -25,9 +25,8 @@ export default class App extends Vue {
     {name:"Аренда"}
   ];
   store: Store = useStore();
-  mounted() {
+  created() {
     this.store.dispatch('GET_CITIES',null);
-    console.debug('getting adv')
   }
 }
 </script>

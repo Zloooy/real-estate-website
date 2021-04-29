@@ -36,8 +36,10 @@
 import {Options, Vue} from "vue-class-component";
 import HorizontalCategorySelect from "@/components/HorizontalCategorySelect.vue";
 import IntroFooter from "@/components/IntroFooter.vue";
-import {useStore} from "@/store/index";
+import {Store, useStore} from "@/store/index";
 import MyCard from "@/components/MyCard.vue";
+import {ComplexQuery} from "@/generated-api/data-contracts";
+import {MutationPayload} from "vuex";
 
 @Options({
   name:"intro-page",
@@ -53,8 +55,11 @@ import MyCard from "@/components/MyCard.vue";
   }
 })
 export default class IntroPage extends Vue {
- store = useStore();
- categories = [
+ store: Store = useStore();
+ categories: {
+   name: String,
+   value:ComplexQuery['estateCategory']
+   }[] = [
    {
      name:"Новостройки",
      value: "NEW"
@@ -68,8 +73,16 @@ export default class IntroPage extends Vue {
      value: "RENT"
    }
  ];
+ created(){
+   this.store.subscribe(this.subscribeCityChange);
+ }
  changeCategory(category: any){
-  this.store.dispatch('GET_ADVERTIZED_COMPLEXES', category.value);
+   this.store.commit('SET_COMPLEX_CATEGORY', category.value);
+ }
+ subscribeCityChange(mutation: MutationPayload){
+   if (mutation.type === 'SET_CITY' || mutation.type === 'SET_COMPLEX_CATEGORY'){
+     this.store.dispatch('GET_ADVERTIZED_COMPLEXES', undefined);
+   }
  }
 }
 
