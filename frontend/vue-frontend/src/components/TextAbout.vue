@@ -1,0 +1,41 @@
+<template>
+  <div class="text-about">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+    {{about}}
+  </div>
+</template>
+
+
+<script lang="ts">
+import {Options, Vue} from "vue-class-component";
+
+@Options({
+  name: "text-about",
+  props: {
+    about: {
+      type: String
+    }
+  }
+})
+
+export default class TextAbout extends Vue {
+
+}
+</script>
+
+<style scoped>
+
+.text-about {
+  padding-top: 10px;
+  text-align:left;
+  line-height:2;
+  font-size: 20px;
+}
+
+@media (max-width: 349px){
+  .text-about {
+    line-height:1.5;
+    font-size: 15px;
+  }
+}
+</style>
