@@ -12,20 +12,36 @@
         img
       </div>
       <main-data-complex
-          :categories="data"
-          :firstSelectedIndex="0"
-          @select="changeCategory"
+          address="address"
+          metro = "metro"
       />
     </div>
-    <div class="headers">О ПРОЕКТЕ</div>
-    <div class="text-about"></div>
+    <div class="about-complex">
+      <div class="headers">О ПРОЕКТЕ</div>
+      <text-about/>
+    </div>
+
+    <div class="complex-flats">
+      <div class="headers">КВАРТИРЫ КОМПЛЕКСА</div>
+      <div class="flats-list">
+        <mini-flat-card
+        rooms="2"
+        price="6500000"
+        square="50"
+        floor="6"/>
+        <mini-flat-card/>
+        <mini-flat-card/>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import HorizontalCategorySelect from "@/components/HorizontalCategorySelect.vue";
+import TextAbout from "@/components/TextAbout.vue";
 import MainDataComplex from "@/components/MainDataComplex.vue";
+import MiniFlatCard from "@/components/MiniFlatCard.vue";
 import {Store, useStore} from "@/store/index";
 import {ComplexQuery} from "@/generated-api/data-contracts";
 import {MutationPayload} from "vuex";
@@ -34,7 +50,9 @@ import {MutationPayload} from "vuex";
   name:"complex-page",
   components: {
     HorizontalCategorySelect,
-    MainDataComplex
+    MainDataComplex,
+    TextAbout,
+    MiniFlatCard
   }
 
 })
@@ -80,17 +98,19 @@ export default class СomplexPage extends Vue{
 }
 
 .complex-page{
+
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'HelveticaNeueCyr', sans-serif;
   font-size: 15px;
   line-height: 1.6;
   color: #333333;
+  max-width: 1060px;
+  margin: 0 auto;
 }
-
 
 .complex-name{
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 60px;
   width: 100%;
   text-align: left;
   max-width: 1060px;
@@ -100,8 +120,6 @@ export default class СomplexPage extends Vue{
 
 .intro-complex {
   width: 100%;
-  max-width: 1060px;
-  margin: 0 auto;
   padding-top: 30px;
   font-size: 15px;
   display: grid;
@@ -117,21 +135,39 @@ export default class СomplexPage extends Vue{
 }
 
 .headers{
-  margin: 0 auto;
-  margin-top: 15px;
+  margin-top: 60px;
   width: 100%;
   text-align: left;
-  max-width: 1060px;
   font-size: 20px;
   font-weight: 700;
 }
 
+.about-complex{
+
+  padding-top: 30px;
+}
+
+.flats-list{
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px,auto));
+  grid-gap: 15px;
+
+}
 @media (max-width: 349px){
   .intro-complex {
     grid-template-columns: 1fr;
   }
   .complex-name{
+    margin-top: 30px;
     text-align: center;
+  }
+  .headers{
+    margin-top: 30px;
+    text-align: center;
+  }
+  .flats-list{
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
@@ -139,6 +175,8 @@ export default class СomplexPage extends Vue{
   .intro-complex {
     grid-template-columns: 3fr 2fr;
   }
+
+
 }
 
 @media (min-width: 601px) and (max-width: 900px) {
