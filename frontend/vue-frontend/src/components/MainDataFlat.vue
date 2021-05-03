@@ -52,7 +52,7 @@ export default class MianDataFlat extends Vue {}
   height: auto;
   text-align:center;
   overflow: hidden;
-  margin: 5px 5px;
+  margin: 15px;
   font-size: 15px ;
 }
 
@@ -61,7 +61,10 @@ export default class MianDataFlat extends Vue {}
   font-size: 25px ;
   font-weight: 700;
   text-align:left;
+
 }
+
+
 
 .data{
   max-width:95%;
@@ -72,10 +75,24 @@ export default class MianDataFlat extends Vue {}
 .address{
   margin: 5px 5px;
 }
+
+.address:hover {
+  color: lightsalmon;
+}
+
 .metro{
   margin: 5px 5px;
 }
+
+.metro:hover {
+   color: lightsalmon;
+ }
+
 .district{
   margin: 5px 5px;
+}
+
+.district:hover {
+  color: lightsalmon;
 }
 </style>

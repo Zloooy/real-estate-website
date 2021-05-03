@@ -51,7 +51,13 @@ export default class MiniFlatCard extends Vue {
   text-align:left;
   overflow: hidden;
   border-radius: 10px;
+  text-decoration: none;
+  transition: color 0.2s linear;
 }
+.mini-flat-card:hover{
+  background-color: #EFF3F8;
+}
+
 .box1{
   display: grid;
   grid-template-columns: 1fr 7fr;

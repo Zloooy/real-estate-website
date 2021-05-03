@@ -45,9 +45,15 @@ export default class NavigationHeader extends Vue {
 </script>
 
 <style scoped>
+.navigation-header{
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
+}
+
 .header__container {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1060px;
   margin: 0 auto;
 }
 
@@ -61,8 +67,19 @@ export default class NavigationHeader extends Vue {
   font-size: 30px;
   font-weight: 700;
   color: #333333;
-
 }
+
+.nav>* {
+  margin: 0 15px;
+  color: black;
+  text-decoration: none;
+  transition: color 0.2s linear;
+}
+
+.nav>*:hover{
+  color: lightsalmon;
+}
+
 @media (max-width: 600px) {
   .nav>* {
     display: flex;
@@ -74,6 +91,7 @@ export default class NavigationHeader extends Vue {
     display: inline-block;
   }
 }
+
 .nav>* {
    margin: 0 15px;
    color: black;

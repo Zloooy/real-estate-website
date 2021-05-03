@@ -62,15 +62,38 @@ export default class MianDataComplex extends Vue {}
   margin: 0 15px;
   text-align:left;
   text-overflow:ellipsis;
-  white-space: nowrap;}
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 0.2s linear;
+}
+
 
 .address{
   margin: 5px 5px;
+  text-decoration: none;
+  transition: color 0.2s linear;
 }
+.address:hover{
+  color: lightsalmon;
+}
+
 .metro{
   margin: 5px 5px;
+  text-decoration: none;
+  transition: color 0.2s linear;
 }
+.metro:hover{
+  color: lightsalmon;
+}
+
 .district{
   margin: 5px 5px;
+  text-decoration: none;
+  transition: color 0.2s linear;
 }
+
+.district:hover{
+  color: lightsalmon;
+}
+
 </style>

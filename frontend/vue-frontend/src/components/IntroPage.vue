@@ -99,21 +99,6 @@ export default class IntroPage extends Vue {
     font-size: 20px;
   }
 
-  @media (max-width: 600px){
-    .list-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-  @media (min-width: 601px) and (max-width: 900px) {
-    .list-grid {
-      grid-template-columns: repeat(2, minmax(250px, 3fr));
-    }
-  }
-  @media (min-width: 901px) {
-    .list-grid {
-      grid-template-columns: repeat(3, minmax(250px, 3fr));
-    }
-  }
   .list-grid {
     display: inline-grid;
     display: -ms-grid;
@@ -139,4 +124,19 @@ export default class IntroPage extends Vue {
     text-align: center;
   }
 
+  @media (max-width: 600px){
+    .list-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (min-width: 601px) and (max-width: 900px) {
+    .list-grid {
+      grid-template-columns: repeat(2, minmax(250px, 3fr));
+    }
+  }
+  @media (min-width: 901px) {
+    .list-grid {
+      grid-template-columns: repeat(3, minmax(250px, 3fr));
+    }
+  }
 </style>
