@@ -14,6 +14,7 @@
       <main-data-complex
           address="address"
           metro = "metro"
+          district = "district"
       />
     </div>
     <div class="about-complex">
@@ -131,7 +132,6 @@ export default class СomplexPage extends Vue{
 
 .img-complex{
   background-color: steelblue;
-  border-radius: 5px;
 }
 
 .headers{
@@ -143,7 +143,6 @@ export default class СomplexPage extends Vue{
 }
 
 .about-complex{
-
   padding-top: 30px;
 }
 
@@ -152,7 +151,6 @@ export default class СomplexPage extends Vue{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px,auto));
   grid-gap: 15px;
-
 }
 @media (max-width: 349px){
   .intro-complex {

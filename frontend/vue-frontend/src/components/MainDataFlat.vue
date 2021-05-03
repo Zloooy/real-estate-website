@@ -1,5 +1,8 @@
 <template>
-  <div class="main-data-complex">
+  <div class="main-data-flat">
+    <div class="realtor-data">
+      <data-realtor/>
+    </div>
     <div class="call-btn">
       <button>"Заказать звонок"</button>
     </div>
@@ -20,8 +23,9 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 
+
 @Options({
-  name: "main-data-complex",
+  name: "main-data-flat",
   props: {
     button: {
       type: String
@@ -38,28 +42,29 @@ import {Options, Vue} from "vue-class-component";
   }
 })
 
-export default class MianDataComplex extends Vue {}
+export default class MianDataFlat extends Vue {}
 
 </script>
 
 <style scoped>
 
-.main-data-complex{
+.main-data-flat{
   height: auto;
-  text-align:left;
+  text-align:center;
   overflow: hidden;
-  margin: 0 15px;
+  margin: 5px 5px;
   font-size: 15px ;
 }
 
 .call-btn{
+  width: 100%;
   font-size: 25px ;
   font-weight: 700;
+  text-align:left;
 }
 
 .data{
   max-width:95%;
-  margin: 0 15px;
   text-align:left;
   text-overflow:ellipsis;
   white-space: nowrap;}
