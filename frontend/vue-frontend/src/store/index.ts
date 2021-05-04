@@ -20,15 +20,15 @@ export type Store = Omit<VuexStore<State>, 'getters' | 'dispatch' | 'commit'> & 
       options?: DispatchOptions
   ): ReturnType<Actions[K]>
 } & {
-commit<K extends keyof Mutations> (
+  commit<K extends keyof Mutations>(
       key: K,
       payload: Parameters<Mutations[K]>[1],
       options?: CommitOptions
   ): ReturnType<Mutations[K]>
+}
       & {
     getters: { [K in keyof Getters]: ReturnType<Getters[K]> }
-  }
-};
+  };
 
 export function useStore() {
   return store as Store;

@@ -1,6 +1,6 @@
 import {Api} from "@/generated-api/Api";
 import {Auth} from "@/generated-api/Auth";
-import {City, Complex, ComplexQuery} from "@/generated-api/data-contracts";
+import {City, Complex, ComplexQuery, Metro, District} from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
 import {ApiConfig} from "@/generated-api/http-client";
 // export interface State {
@@ -24,7 +24,20 @@ export const state = {
     cities: [] as City[],
     city: null as City | null,
     complexes: [] as Complex[],
-    complex_category: "NEW" as ComplexQuery['estateCategory']
+    complex_category: "NEW" as ComplexQuery['estateCategory'],
+    sort: 'price' as string,
+    metros: [] as Metro[],
+    districts: [] as District[],
+    amountOfRooms: undefined as undefined | number,
+    complexSearchParamsChanged: true as boolean,
+    complexPage: 0 as number,
+    complexSize: 1 as number,
+    complexesLoading: false as boolean,
+    metro: null as Metro | null,
+    district: null as District | null,
+    minComplexPrice: undefined as number | undefined,
+    maxComplexPrice: undefined as number | undefined,
+    complexDeliveryDate: undefined as string | undefined
 };
 
 export type State = typeof state;

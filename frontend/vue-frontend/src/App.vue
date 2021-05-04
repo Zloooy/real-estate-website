@@ -9,11 +9,13 @@ import {Options, Vue} from 'vue-class-component';
 import NavigationHeader from "@/components/NavigationHeader.vue";
 import {Store, useStore} from "@/store";
 import IntroPage from "@/components/IntroPage.vue";
+import RangeSlider from "@/components/RangeSlider.vue";
 
 @Options({
   components: {
     NavigationHeader,
-    IntroPage
+    IntroPage,
+    RangeSlider
   },
 })
 export default class App extends Vue {

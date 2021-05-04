@@ -3,7 +3,7 @@ export interface Address {
   city?: City;
 
   /** Район */
-  district?: string;
+  district?: District;
 
   /** Номер дома */
   house?: string;
@@ -70,6 +70,9 @@ export interface Complex {
   /** Контакты */
   contacts?: Contacts;
 
+  /** Плановая дата сдачи */
+  deliveryDate?: string;
+
   /** Тип недвижимости */
   estateType?: "FLAT" | "HOUSE" | "ROOM";
 
@@ -131,6 +134,9 @@ export interface ComplexQuery {
    * @format int64
    */
   contactsId?: number;
+
+  /** Стартовая дата сдачи */
+  deliveryDate?: string;
 
   /**
    * id района
@@ -198,6 +204,20 @@ export interface Contacts {
 
   /** Телефон */
   phone?: string;
+}
+
+export interface District {
+  /** Город района */
+  city?: City;
+
+  /**
+   * Уникальный идентификатор района
+   * @format int64
+   */
+  id?: number;
+
+  /** Название района */
+  name?: string;
 }
 
 export interface GrantedAuthority {

@@ -1,4 +1,4 @@
-import { City, Complex, ComplexQuery, PageComplex } from "./data-contracts";
+import { City, Complex, ComplexQuery, District, Metro, PageComplex } from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -53,6 +53,39 @@ export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDa
       query: query,
       body: data,
       type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags district-rest-controller
+   * @name GetDistrictsByCityUsingGet
+   * @summary Получить список районов города
+   * @request GET:/public_api/districts
+   */
+  getDistrictsByCityUsingGet = (query: { city_id: number }, params: RequestParams = {}) =>
+    this.request<District[], void>({
+      path: `/public_api/districts`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags metro-controller
+   * @name GetCityMetrosUsingGet
+   * @summary Получить станции метро города
+   * @request GET:/public_api/metros
+   */
+  getCityMetrosUsingGet = (query: { city_id: number }, params: RequestParams = {}) =>
+    this.request<Metro[], void>({
+      path: `/public_api/metros`,
+      method: "GET",
+      query: query,
+      format: "json",
       ...params,
     });
 }

@@ -1,16 +1,14 @@
 <template>
-  import MyCard from "@/components/MyCard.vue";
 
   <div class="catalog">
-    <div class="catalog-layout__sidebar_content"><!--поиск в каталоге-->
+    <div class="sidebar_content"><!--поиск в каталоге-->
       <!--сортировка по: возрастанию цены и т.п-->
       <div class="sort">Сортировка
         <nav class="sort-ds">
           <dropdown-selector
               nameFieldTitle="name"
-              defaultText="По умолчанию"
               :options="sort"
-              @select="setTypeS"
+              @select="setSort"
           />
         </nav>
         <!--выпадающий список метро-->
@@ -18,19 +16,18 @@
         <nav class="metro-ds">
           <dropdown-selector
               nameFieldTitle="name"
-              defaultText="Не выбрано"
-              :options="metro"
-              @select="setMetroS"
+              :options="metros"
+              @select="setMetro"
           />
         </nav>
-        <!--выпадающий список region-->
-      </div> <div class="region">Район
-        <nav class="region-ds">
+        <!--выпадающий список district-->
+      </div>
+      <div class="district">Район
+        <nav class="district-ds">
           <dropdown-selector
               nameFieldTitle="name"
-              defaultText="Не выбран"
-              :options="region"
-              @select="setRegionS"
+              :options="districts"
+              @select="setDistrict"
           />
         </nav>
       </div>
@@ -39,45 +36,57 @@
         <nav class="number-of-rooms-ds">
           <dropdown-selector
               nameFieldTitle="name"
-              defaultText="Не выбрано"
-              :options="numberrooms"
-              @select="numberOfRoomsS"
+              :options="amountOfRooms"
+              @select="setAmountOfRooms"
           />
         </nav>
       </div>
       <!-- заголовок
       стоимость от и до-->
-      <div class="coast-range">Диапазон стоимости</div>
-
-      <!-- выпажадающй список сроков сдачи-->
-      <div class="term-of-delivery">Сортировка
-        <nav class="term-of-delivery-ds">
-          <dropdown-selector
-              nameFieldTitle="name"
-              defaultText="Не выбрано"
-              :options="termdelivery"
-              @select="termOfDeliveryS"
-          />
-        </nav>
+      <div class="price-range">
+        Цена
+        <br>
+      от {{minTempPrice}} Р
+      <range-slider
+          :min="100"
+          :max="300000"
+          @max-value="setMaxPrice"
+          @min-value="setMinPrice"
+          @max-temp-value="setMaxTempPrice"
+          @min-temp-value="setMinTempPrice"
+      />
+      до {{maxTempPrice}} Р
       </div>
-      <!-- заголовок
-  площадь от и до-->
-      <div class="square"></div>
-      <!-- кнопка поиск-->
-      <div class="btn-search"></div>
+
+<!--      &lt;!&ndash; выпажадающй список сроков сдачи&ndash;&gt;-->
+<!--      <div class="term-of-delivery">Сортировка-->
+<!--        <nav class="term-of-delivery-ds">-->
+<!--          <dropdown-selector-->
+<!--              nameFieldTitle="name"-->
+<!--              defaultText="Не выбрано"-->
+<!--              :options="termdelivery"-->
+<!--              @select="termOfDeliveryS"-->
+<!--          />-->
+<!--        </nav>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; заголовок-->
+<!--  площадь от и до&ndash;&gt;-->
+<!--      <div class="square"></div>-->
+<!--      &lt;!&ndash; кнопка поиск&ndash;&gt;-->
+      <div class="delivery_date_selector"></div>
+      <dropdown-selector
+          nameFieldTitle="name"
+          :options="deliveryDate"
+          @select="setDeliveryDate"
+      />
+      <button class="btn-search" @click="search">
+      Поиск
+      </button>
     </div>
 
     <div class="centered">
       <ul class="list-grid" v-if="complexes && complexes.length > 0">
         <li v-for="(complex, i) in complexes" :key="i">
-          <my-card
-              :image="complex.image"
-              :title="complex.name"
-              :metro="complex.address.metro.name || ''"
-              :price="complex.price"
-          />
-        </li>
-        <li v-for="(complex, i) in complexes.slice(1)" :key="i">
           <my-card
               :image="complex.image"
               :title="complex.name"
@@ -95,20 +104,128 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import {useStore} from "@/store/index";
+import {Store, useStore} from "@/store/index";
 import MyCard from "@/components/MyCard.vue";
+import DropdownSelector from "@/components/DropdownSelector.vue";
+import {Complex, District, Metro} from "@/generated-api/data-contracts";
+import RangeSlider from "@/components/RangeSlider.vue";
 
 @Options({
   name:"catalog",
   components: {
-    MyCard
+    MyCard,
+    DropdownSelector,
+    RangeSlider
   },
   computed:{
-    complexes(){
+    complexes(): Complex[]{
       return this.store.getters.complexes;
+    },
+    metros(): Metro[]{
+      return [{name: "Любая", id: null} as unknown as Metro].concat(this.store.getters.metros);
+    },
+    districts(){
+      return [{name: "Любой", id: null} as unknown as District].concat(this.store.getters.districts);
+    },
+    complexSearchParamsChanged(){
+      return this.store.getters.complexSearchParamsChanged;
     }
   }
 })
+export default class Catalog extends Vue {
+  store : Store = useStore();
+  sort: {name:string, value: string | null}[] = [
+    {
+      name: "По умолчанию",
+      value: "id"
+    },
+    {
+      name: "По цене",
+      value: "price"
+    }
+  ]
+  amountOfRooms: {name:string, value: number | null}[] = [
+    {
+      name: "Любое",
+      value: null
+    },
+    {
+      name:"одна",
+      value: 1
+    },
+    {
+      name: "две",
+      value: 2
+    },
+    {
+      name: "три",
+      value: 3
+    }
+  ]
+  deliveryDate: {name:string, value: string | undefined}[]=[
+    {
+      name:"Любой",
+      value: undefined
+    },
+  {
+    name: "2022",
+    value: "2022"
+  },
+  {
+    name: "2023",
+    value: "2023"
+  },
+  {
+    name: "2024",
+    value: "2024"
+  },
+  {name: "2025",
+  value: "2025"
+  },
+  {
+    name: "2026",
+  value: "2026"
+  }
+  ]
+  minTempPrice: number = 0;
+  maxTempPrice: number = 300000;
+  created(){
+    this.store.dispatch('GET_METROS', undefined);
+    this.store.dispatch('GET_DISTRICTS', undefined);
+    this.store.dispatch("GET_SEARCHED_COMPLEXES", undefined);
+  }
+  setSort({value}){
+    this.store.commit('SET_SORT', value);
+  }
+  setAmountOfRooms({value}){
+    this.store.commit('SET_AMOUNT_OF_ROOMS', value);
+  }
+  setMetro(m: Metro){
+    this.store.commit('SET_METRO', m);
+  }
+  setDistrict(d: District){
+    this.store.commit('SET_DISTRICT', d);
+  }
+  setDeliveryDate({value}) {
+    this.store.commit('SET_COMPLEX_DELIVERY_DATE', value);
+  }
+  search(){
+    console.debug("SEARCHING");
+    this.store.dispatch('GET_SEARCHED_COMPLEXES', undefined);
+  }
+  setMinPrice(minPrice: number){
+    this.store.commit('SET_MIN_COMPLEX_PRICE', minPrice);
+  }
+  setMaxPrice(maxPrice: number){
+    this.store.commit('SET_MAX_COMPLEX_PRICE', maxPrice);
+  }
+  setMinTempPrice(minTempPrice: number){
+    this.minTempPrice=minTempPrice;
+  }
+  setMaxTempPrice(maxTempPrice: number){
+    this.maxTempPrice=maxTempPrice;
+  }
+}
 </script>
 
 <style scoped>
@@ -175,6 +292,15 @@ import MyCard from "@/components/MyCard.vue";
   .main-catalog{
     grid-template-columns: repeat(2, minmax(250px, 3fr));
   }
+}
+.price-range {
+  display: block;
+}
+.sidebar_content {
+  text-align: left;
+}
+.sidebar_content > * {
+  margin-top: 10px;
 }
 
 </style>

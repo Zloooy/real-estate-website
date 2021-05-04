@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import IntroPage from "@/components/IntroPage.vue";
+import Catalog from "@/components/Catalog.vue";
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
         name: 'Главная',
         component: IntroPage
     },
+    {
+        path: '/search',
+        name: 'Поиск',
+        component: Catalog
+    }
 /*
     {
         path: '/404',
