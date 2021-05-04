@@ -13,6 +13,7 @@ import javax.persistence.criteria.*;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
@@ -40,7 +41,7 @@ public class ComplexService implements IComplexService{
         return nullOr((complex, cb, value) -> cb.like(complex.get(fieldName), enTemp(fieldValue)), fieldValue);
     }
     private Specification<Complex> fieldBetween(String fieldName, Integer minVal, Integer maxVal) {
-        return (complex, cq, cb)-> cb.or(cb.and(isNull(cb, minVal), cb.literal(maxVal).isNull()), cb.between( complex.get(fieldName), minVal, maxVal));
+        return (complex, cq, cb)-> cb.or(isNull(cb, minVal), isNull(cb, maxVal), cb.between( complex.get(fieldName), minVal, maxVal));
     }
     private Specification<Complex> fieldBetween(String fieldName, Long minVal, Long maxVal) {
         return (complex, cq, cb)-> cb.or(cb.and(isNull(cb, minVal), isNull(cb, maxVal)), cb.between( complex.get(fieldName), minVal, maxVal));
@@ -48,6 +49,7 @@ public class ComplexService implements IComplexService{
     private <T> Specification<Complex> fieldMatches(String field, T val){
         return nullOr((complex, cb, value)->cb.equal(complex.get(field), value), val);
     }
+
 
     private String enTemp(String s){
         return "%" + s + "%";
@@ -62,7 +64,12 @@ private Specification<Complex> generateSpecification(ComplexQuery query){
                 fieldMatches("estateType", query.getEstateType()),
                 fieldMatches("category", query.getEstateCategory()),
                 fieldMatches("advertized", query.getAdvertized()),
-                nullOr((complex, cb, value)->cb.equal(complex.get("address").get("city").get("id"), value), query.getCityId())
+                nullOr((complex, cb, value)->cb.equal(complex.get("address").get("city").get("id"), value), query.getCityId()),
+                nullOr((complex, cb, value)->cb.equal(complex.get("address").get("metro").get("id"), value), query.getMetroId()),
+                nullOr((complex, cb, value)->cb.equal(complex.get("address").get("district").get("id"), value), query.getDistrictId()),
+                nullOr((complex, cb, value)->cb.ge(complex.get("price"), (Number) value), query.getPriceMin()),
+                nullOr((complex, cb, value)->cb.le(complex.get("price"), (Number) value), query.getPriceMax()),
+                nullOr((complex, cb, value)->cb.lessThanOrEqualTo(complex.<Date>get("deliveryDate"), (value == null) ? new Date() :((Date)value)), query.getDeliveryDate())
                 //@TODO add all filters
         ));
 }
