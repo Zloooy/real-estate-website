@@ -1,14 +1,17 @@
 package ru.server.data;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import ru.server.models.Complex;
+
+import java.util.Date;
 
 public class ComplexQuery {
 
     @ApiModelProperty(notes = "Уникальный идентификатор комплекса")
     private Long id;
     @ApiModelProperty(notes = "Количество комнат")
-    private int amountOfRooms;
+    private Integer amountOfRooms;
     @ApiModelProperty(notes = "Тип недвижимости: квартира, дом...")
     private Complex.EstateType estateType;
     @ApiModelProperty(notes = "Категория недвижимости: новостройка, вторичка...")
@@ -16,9 +19,9 @@ public class ComplexQuery {
     @ApiModelProperty("Маска названия комплекса")
     private String name;
     @ApiModelProperty(notes = "Минимальная цена")
-    private int priceMin;
+    private Integer priceMin;
     @ApiModelProperty(notes = "Максимальная цена")
-    private int priceMax;
+    private Integer priceMax;
     @ApiModelProperty(notes = "Площадь, нижний порог")
     private Integer spaceMin;
     @ApiModelProperty(notes = "Площадь, верхний порог")
@@ -33,6 +36,9 @@ public class ComplexQuery {
     private Long districtId;
     @ApiModelProperty(notes = "id города", required = true)
     private Long cityId;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy")
+    @ApiModelProperty(notes = "Стартовая дата сдачи")
+    private Date deliveryDate;
     @ApiModelProperty(notes = "Рекламируется")
     private Boolean advertized;
     public static enum OrderType {
@@ -50,11 +56,11 @@ public class ComplexQuery {
         this.id = id;
     }
 
-    public int getAmountOfRooms() {
+    public Integer getAmountOfRooms() {
         return amountOfRooms;
     }
 
-    public void setAmountOfRooms(int amountOfRooms) {
+    public void setAmountOfRooms(Integer amountOfRooms) {
         this.amountOfRooms = amountOfRooms;
     }
 
@@ -74,19 +80,19 @@ public class ComplexQuery {
         this.name = name;
     }
 
-    public int getPriceMin() {
+    public Integer getPriceMin() {
         return priceMin;
     }
 
-    public void setPriceMin(int priceMin) {
+    public void setPriceMin(Integer priceMin) {
         this.priceMin = priceMin;
     }
 
-    public int getPriceMax() {
+    public Integer getPriceMax() {
         return priceMax;
     }
 
-    public void setPriceMax(int priceMax) {
+    public void setPriceMax(Integer priceMax) {
         this.priceMax = priceMax;
     }
 
@@ -160,5 +166,13 @@ public class ComplexQuery {
 
     public void setAdvertized(Boolean advertized) {
         this.advertized = advertized;
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 }

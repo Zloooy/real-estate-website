@@ -1,4 +1,25 @@
-export type Address = object;
+export interface Address {
+  /** Город */
+  city?: City;
+
+  /** Район */
+  district?: District;
+
+  /** Номер дома */
+  house?: string;
+
+  /**
+   * Униклальный идентификатор адреса
+   * @format int64
+   */
+  id?: number;
+
+  /** Ближайшая станция метро */
+  metro?: Metro;
+
+  /** Название улицы */
+  street?: string;
+}
 
 export interface Authority {
   authority?: string;
@@ -48,6 +69,9 @@ export interface Complex {
 
   /** Контакты */
   contacts?: Contacts;
+
+  /** Плановая дата сдачи */
+  deliveryDate?: string;
 
   /** Тип недвижимости */
   estateType?: "FLAT" | "HOUSE" | "ROOM";
@@ -110,6 +134,9 @@ export interface ComplexQuery {
    * @format int64
    */
   contactsId?: number;
+
+  /** Стартовая дата сдачи */
+  deliveryDate?: string;
 
   /**
    * id района
@@ -179,6 +206,20 @@ export interface Contacts {
   phone?: string;
 }
 
+export interface District {
+  /** Город района */
+  city?: City;
+
+  /**
+   * Уникальный идентификатор района
+   * @format int64
+   */
+  id?: number;
+
+  /** Название района */
+  name?: string;
+}
+
 export interface GrantedAuthority {
   authority?: string;
 }
@@ -189,6 +230,23 @@ export interface Greeting {
 
 export interface Links {
   empty?: boolean;
+}
+
+export interface Metro {
+  /** Город станции метро */
+  city?: City;
+
+  /** Цвет станции метро */
+  color?: string;
+
+  /**
+   * Уникльный идентификатор станции метро
+   * @format int64
+   */
+  id?: number;
+
+  /** Название станции метро */
+  name?: string;
 }
 
 export interface ModelAndView {
