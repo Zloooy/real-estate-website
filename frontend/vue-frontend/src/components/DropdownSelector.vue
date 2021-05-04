@@ -8,6 +8,7 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import {compareObjects} from "@/utils";
 @Options({
   name: "dropdown-selector",
   props: {
@@ -38,17 +39,12 @@ import {Options, Vue} from "vue-class-component";
 })
 export default class DropdownSelector extends Vue {
   selectedOption: any = null;
-
-  private equals(a: Object, b: Object){
-    let keys: string[] = Object.keys(a)
-    if (keys.length!== Object.keys(b).length) {
-      return false;
-    }
-    return keys.map(k=>a[k]==b[k]).reduce((x,y)=>x&&y);
-  }
   mounted() {
     //@ts-ignore
     this.selectedOption = this.$props.options[this.$props.firstSelectedOptionIndex];
   }
+  equals(o1:any, o2:any): boolean{
+    return compareObjects(o1, o2);
+}
 }
 </script>

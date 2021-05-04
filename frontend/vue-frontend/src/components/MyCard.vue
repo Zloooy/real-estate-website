@@ -4,12 +4,15 @@
       <img :src="image">
     </div>
     <div class="card__desk">
-      <div class="title"></div>
-      {{title}}
-      <div class="metro"></div>
-      {{metro}}
-      <div class="price"></div>
-      от {{price}} руб/m²
+      <div class="title">
+        {{title}}
+      </div>
+      <div class="metro">
+        {{metro}}
+      </div>
+      <div class="price">
+        от {{price}} руб/m²
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +38,6 @@ import {Options, Vue} from "vue-class-component";
     }
   }
 })
-
 export default class MyCard extends Vue {
 
 }

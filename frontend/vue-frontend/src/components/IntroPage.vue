@@ -27,6 +27,9 @@
   <div v-else>
     По вашему запросу ничего не найдено
   </div>
+      <router-link to="/search">
+        перейти ко {{getCategoryDatelny()}}
+      </router-link>
     </div>
   <intro-footer/>
   </div>
@@ -51,6 +54,9 @@ import {MutationPayload} from "vuex";
   computed:{
     complexes(){
       return this.store.getters.complexes;
+    },
+    category(){
+      return this.store.getters.complex_category;
     }
   }
 })
@@ -82,6 +88,18 @@ export default class IntroPage extends Vue {
  subscribeCityChange(mutation: MutationPayload){
    if (mutation.type === 'SET_CITY' || mutation.type === 'SET_COMPLEX_CATEGORY'){
      this.store.dispatch('GET_ADVERTIZED_COMPLEXES', undefined);
+   }
+ }
+ getCategoryDatelny(){
+   switch (this.store.getters.complex_category){
+     case "NEW":
+       return "всем новостройкам";
+     case "RENT":
+       return "всей аренде"
+     case "SECONDARY":
+       return "всей вторичке"
+       default:
+         return null
    }
  }
 }
