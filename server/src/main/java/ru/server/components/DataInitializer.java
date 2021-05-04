@@ -11,10 +11,9 @@ import ru.server.models.*;
 import ru.server.repositories.*;
 import ru.server.enums.UserRole;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.LongFunction;
@@ -34,6 +33,8 @@ public class DataInitializer implements ApplicationRunner {
     private ICityRepository cityRepository;
     @Autowired
     private IMetroRepository metroRepository;
+    @Autowired
+    private IDistrictRepository districtRepository;
     @Autowired
     private IContactsRepository contactsRepository;
     @Autowired
@@ -55,10 +56,12 @@ public class DataInitializer implements ApplicationRunner {
             contactNames = Arrays.asList("Иван Иванович Иванов"),
             contactPhones = Arrays.asList("222-32-32"),
             contactEmails = Arrays.asList("test@test.ru"),
+            districtNames = Arrays.asList("Приморский", "Адмиралтейский"),
+            districtCities = Arrays.asList("Санкт-Петербург", "Санкт-Петербург"),
             addressStreets = Arrays.asList("Плесецкая ул.", "Московский пр."),
             addressHouses = Arrays.asList("д. 2", "д. 65"),
-            addressDistricts = Arrays.asList("Приморский", "Адмиралтейский"),
             addressCities = Arrays.asList("Санкт-Петербург", "Санкт-Петербург"),
+            addressDistrictNames = Arrays.asList("Приморский", "Адмиралтейский"),
             addressMetros = Arrays.asList("Комендантский проспект", "Фрунзенская"),
             complexAuthors = Arrays.asList("manager", "manager"),
             complexNames = Arrays.asList("Ultra City", "LEGENDA Московский 65"),
@@ -77,6 +80,8 @@ public class DataInitializer implements ApplicationRunner {
                             "    отдельные кладовые — помещения, которые расположатся на техническом этаже \n" +
                             "    в одном из корпусов встроенный детский сад на 110 мест"),
             complexContactNames = Arrays.asList("Иван Иванович Иванов","Иван Иванович Иванов");
+            private static final Calendar workCalendar = new GregorianCalendar();
+            private static final List<Date> complexDeliveryDates = Arrays.asList(Date.from(LocalDate.of(2022,1,1).atStartOfDay().toInstant(ZoneOffset.UTC)),Date.from(LocalDate.of(2025,1,1).atStartOfDay().toInstant(ZoneOffset.UTC)));
             private static final List<Complex.EstateType> complexEstateTypes = Arrays.asList(Complex.EstateType.FLAT, Complex.EstateType.FLAT);
             private static final List<Complex.EstateCategory> complexEstateCategories = Arrays.asList(Complex.EstateCategory.NEW, Complex.EstateCategory.NEW);
             private static final List<Complex.EstateStatus> complexEstateStatuses = Arrays.asList(Complex.EstateStatus.ACCEPTED, Complex.EstateStatus.ACCEPTED);
@@ -106,6 +111,7 @@ public class DataInitializer implements ApplicationRunner {
         addUsers();
         addCities();
         addMetros();
+        addDistricts();
         addAddresses();
         addContacts();
         System.out.println("ADDING COMPLEXES");
@@ -144,6 +150,13 @@ public class DataInitializer implements ApplicationRunner {
                 metroStationNames.size()
         );
     }
+    private void addDistricts() {
+        new ListInserter<District>().insert(
+                districtRepository,
+                (int i)-> new District(districtNames.get(i), cityRepository.findByName(districtCities.get(i)).orElse(null)),
+                districtNames.size()
+        );
+    }
     private void addContacts() {
         new ListInserter<Contacts>().insert(
                 contactsRepository,
@@ -154,14 +167,14 @@ public class DataInitializer implements ApplicationRunner {
     private void addAddresses() {
         new ListInserter<Address>().insert(
                 addressRepository,
-                (int i)-> new Address(addressStreets.get(i), addressHouses.get(i), addressDistricts.get(i), cityRepository.findByName(addressCities.get(i)).orElse(null), metroRepository.findByName(addressMetros.get(i)).orElse(null)),
+                (int i)-> new Address(addressStreets.get(i), addressHouses.get(i), districtRepository.findByName(addressDistrictNames.get(i)).orElse(null), cityRepository.findByName(addressCities.get(i)).orElse(null), metroRepository.findByName(addressMetros.get(i)).orElse(null)),
                 addressStreets.size()
         );
     }
     private void addComplexes() {
         new ListInserter<Complex>().insert(
                 complexRepository,
-                (int i)->new Complex(userRepository.findByUsername(complexAuthors.get(i)), complexNames.get(i), addressRepository.findByStreet(complexAddresses.get(i)).orElse(null),  complexEstateTypes.get(i), complexAmountsOfRooms.get(i), complexPrices.get(i), complexSpaces.get(i), complexImages.get(i), complexComments.get(i), contactsRepository.getByName("Иван Иванович Иванов").orElse(null), complexEstateStatuses.get(i), complexEstateCategories.get(i), complexEstateAdvertized.get(i)),
+                (int i)->new Complex(userRepository.findByUsername(complexAuthors.get(i)), complexNames.get(i), addressRepository.findByStreet(complexAddresses.get(i)).orElse(null),  complexEstateTypes.get(i), complexAmountsOfRooms.get(i), complexPrices.get(i), complexSpaces.get(i), complexImages.get(i), complexDeliveryDates.get(i), complexComments.get(i), contactsRepository.getByName("Иван Иванович Иванов").orElse(null), complexEstateStatuses.get(i), complexEstateCategories.get(i), complexEstateAdvertized.get(i)),
                 complexNames.size()
         );
     }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="addresses")
 public class Address {
-    public Address(String street, String house, String district, City city, Metro metro) {
+    public Address(String street, String house, District district, City city, Metro metro) {
         this.street = street;
         this.house = house;
         this.district = district;
@@ -28,8 +28,8 @@ public class Address {
     @Column(name="house")
     private String house;
     @ApiModelProperty("Район")
-    @Column(name="district",nullable = true)
-    private String district;
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    private District district;
     @ApiModelProperty("Город")
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private City city;
@@ -61,11 +61,11 @@ public class Address {
         this.house = house;
     }
 
-    public String getDistrict() {
+    public District getDistrict() {
         return district;
     }
 
-    public void setDistrict(String district) {
+    public void setDistrict(District district) {
         this.district = district;
     }
 

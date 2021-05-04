@@ -25,8 +25,8 @@ public class ComplexController {
     public ResponseEntity<List<Complex>> getAdvertized(@RequestBody ComplexQuery query){
         return ResponseEntity.ok(complexService.findAdvertizedByQuery(query));
     }
-    @ApiOperation(value = "Получение страниц с городами", produces = "application/json")
-    @PostMapping("/public_api/complexes")
+    @ApiOperation(value = "Получение страниц с городами")
+    @PostMapping(value = "/public_api/complexes", produces = "application/json")
     public ResponseEntity<Page<Complex>> getComplexes(@RequestBody ComplexQuery query, Pageable pageable){
         return ResponseEntity.ok(complexService.findComplexByQuery(query, pageable));
     }

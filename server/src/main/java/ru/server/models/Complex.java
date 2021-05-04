@@ -1,13 +1,15 @@
 package ru.server.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="complexes")
 public class Complex {
-    public Complex(User author, String name, Address address, EstateType estateType, int amountOfRooms, int price, int space, String image, String comment, Contacts contacts, EstateStatus status, EstateCategory category, boolean advertized) {
+    public Complex(User author, String name, Address address, EstateType estateType, int amountOfRooms, int price, int space, String image, Date deliveryDate, String comment, Contacts contacts, EstateStatus status, EstateCategory category, boolean advertized) {
         this.author = author;
         this.name = name;
         this.address = address;
@@ -16,6 +18,7 @@ public class Complex {
         this.price = price;
         this.space = space;
         this.image = image;
+        this.deliveryDate = deliveryDate;
         this.comment = comment;
         this.contacts = contacts;
         this.status = status;
@@ -55,6 +58,11 @@ public class Complex {
     @ApiModelProperty("image")
     @Column(name = "image", length = 400)
     private String image;
+    @ApiModelProperty("Плановая дата сдачи")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy")
+    @Column(name="delivery_date")
+    @Temporal(TemporalType.DATE)
+    private Date deliveryDate;
     @ApiModelProperty("Комментарий")
     @Column(name="comment", length = 1000)
     private String comment;
@@ -200,5 +208,13 @@ public class Complex {
 
     public void setAdvertized(boolean advertized) {
         this.advertized = advertized;
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 }
