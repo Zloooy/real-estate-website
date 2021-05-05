@@ -38,6 +38,7 @@ import {Options, Vue} from "vue-class-component";
     }
   }
 })
+
 export default class MyCard extends Vue {
 
 }
@@ -53,24 +54,20 @@ export default class MyCard extends Vue {
   margin: 5px 5px;
 }
 
-.card__image{
-}
+
 .card__image img{
 	max-width: 100%;
   max-height: 300px;
 }
 
 .card__desk{
-  max-width:95%;
   text-align: left;
-  padding: 5px;
-  text-overflow:ellipsis;
-  white-space: nowrap;
+  padding: 10px;
 }
 
 .title{
-  max-width: 10%;
-  font-size: 25px ;
+  max-width: 200px;
+  font-size: 25px;
   font-weight: 700;
 
 }

@@ -27,9 +27,11 @@
   <div v-else>
     По вашему запросу ничего не найдено
   </div>
-      <router-link to="/search">
-        перейти ко {{getCategoryDatelny()}}
-      </router-link>
+      <div class="link">
+        <router-link to="/search">
+          перейти ко {{getCategoryDatelny()}}
+        </router-link>
+      </div>
     </div>
   <intro-footer/>
   </div>
@@ -118,19 +120,24 @@ export default class IntroPage extends Vue {
   }
 
   .list-grid {
-    display: inline-grid;
-    display: -ms-grid;
-    margin-top: 60px;
-    margin-bottom: 30px;
+    max-width: 1060px;
+    margin: 0 auto;
+    padding-top: 30px;
+    font-size: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px,auto));
+    grid-gap: 15px;
+    grid-auto-rows: minmax(150px, auto);
   }
+
   .list-grid li {
     align-items: center;
     justify-content: center;
     list-style-type: none;
-    max-width: 350px;
     list-style-position: inside;
     text-transform: none;
   }
+
   .intro-page {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
@@ -142,10 +149,12 @@ export default class IntroPage extends Vue {
     text-align: center;
   }
 
+  .link{
+    padding-top: 30px;
+  }
+
   @media (max-width: 600px){
-    .list-grid {
-      grid-template-columns: 1fr;
-    }
+
   }
   @media (min-width: 601px) and (max-width: 900px) {
     .list-grid {
