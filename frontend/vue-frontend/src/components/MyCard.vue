@@ -67,8 +67,9 @@ export default class MyCard extends Vue {
 
 .title{
   max-width: 200px;
-  font-size: 25px;
+  font-size: 22px;
   font-weight: 700;
+  margin-bottom: 10px;
 
 }
 
@@ -81,4 +82,10 @@ export default class MyCard extends Vue {
 }
 
 
+
+@media (max-width: 900px){
+  .title{
+    font-size: 20px ;
+  }
+}
 </style>

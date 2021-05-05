@@ -9,7 +9,7 @@
     <div class="complex-name">JK PAMPUSHKA</div>
     <div class="intro-complex">
       <div class="img-complex">
-        img
+        <img src="https://get.pxhere.com/photo/city-metropolitan-area-architecture-urban-area-landmark-commercial-building-metropolis-tower-block-building-condominium-daytime-blue-skyscraper-mixed-use-human-settlement-sky-corporate-headquarters-tower-facade-headquarters-real-estate-apartment-reflection-tree-downtown-neighbourhood-residential-area-glass-symmetry-house-1612790.jpg">
       </div>
       <main-data-complex
           address="address"
@@ -131,7 +131,14 @@ export default class СomplexPage extends Vue{
 }
 
 .img-complex{
-  background-color: steelblue;
+  height: auto;
+  text-align: center;
+  width: 100%;
+}
+
+.img-complex>img{
+  max-width: 100%;
+  max-height: 390px;
 }
 
 .headers{

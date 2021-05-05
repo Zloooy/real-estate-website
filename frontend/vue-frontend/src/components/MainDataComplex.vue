@@ -58,7 +58,7 @@ export default class MianDataComplex extends Vue {}
 }
 
 .data{
-  max-width:95%;
+  max-width:100%;
   margin: 0 15px;
   text-align:left;
   text-overflow:ellipsis;
@@ -69,7 +69,6 @@ export default class MianDataComplex extends Vue {}
 
 
 .address{
-  margin: 5px 5px;
   text-decoration: none;
   transition: color 0.2s linear;
 }
@@ -78,7 +77,6 @@ export default class MianDataComplex extends Vue {}
 }
 
 .metro{
-  margin: 5px 5px;
   text-decoration: none;
   transition: color 0.2s linear;
 }
@@ -87,7 +85,6 @@ export default class MianDataComplex extends Vue {}
 }
 
 .district{
-  margin: 5px 5px;
   text-decoration: none;
   transition: color 0.2s linear;
 }

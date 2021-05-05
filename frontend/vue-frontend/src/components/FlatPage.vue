@@ -3,9 +3,9 @@
     <div class="complex-name">JK PAMPUSHKA</div>
 
     <div class="intro-flat">
-      <div class="img-flat">
-        img
-      </div>
+        <div class="img-flat">
+          <img src="https://get.pxhere.com/photo/city-metropolitan-area-architecture-urban-area-landmark-commercial-building-metropolis-tower-block-building-condominium-daytime-blue-skyscraper-mixed-use-human-settlement-sky-corporate-headquarters-tower-facade-headquarters-real-estate-apartment-reflection-tree-downtown-neighbourhood-residential-area-glass-symmetry-house-1612790.jpg">
+        </div>
       <div class="data-flat">
         <div class="realtor-data">
           <data-realtor
@@ -15,6 +15,7 @@
           />
         </div>
         <main-data-flat
+            price="price"
             address="address"
             metro = "metro"
             district = "district"
@@ -62,6 +63,8 @@ export default class FlatPage extends Vue{}
   color: #333333;
   max-width: 1060px;
   margin: 0 auto;
+
+
 }
 
 .complex-name{
@@ -75,17 +78,26 @@ export default class FlatPage extends Vue{}
 }
 
 .intro-flat {
-  width: 100%;
   padding-top: 30px;
   font-size: 15px;
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-auto-rows: minmax(150px, auto);
   grid-column-gap: 15px;
+
+
 }
 
+
 .img-flat{
-  background-color: steelblue;
+  height: auto;
+  text-align: center;
+  width: 100%;
+}
+
+.img-flat>img{
+  max-width: 100%;
+  max-height: 390px;
 }
 
 .headers{
@@ -96,7 +108,7 @@ export default class FlatPage extends Vue{}
   font-weight: 700;
 }
 
-@media (max-width: 600px){
+@media (max-width: 610px){
   .intro-flat {
     grid-template-columns: 1fr;
   }
@@ -108,11 +120,20 @@ export default class FlatPage extends Vue{}
     margin-top: 30px;
     text-align: center;
   }
+  .img-flat{
+    margin-bottom: 30px;
+  }
 }
 
-@media (min-width: 601px) and (max-width: 900px) {
+@media (min-width: 611px) and (max-width: 900px) {
   .intro-flat {
     grid-template-columns: 2fr 1fr;
+  }
+  .img-flat{
+    height: auto;
+
+
+
   }
 }
 
