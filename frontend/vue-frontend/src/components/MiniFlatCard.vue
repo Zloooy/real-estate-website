@@ -55,7 +55,7 @@ export default class MiniFlatCard extends Vue {
   transition: color 0.2s linear;
 }
 .mini-flat-card:hover{
-  background-color: #EFF3F8;
+  background-color: #E6EDF2;
 }
 
 .box1{

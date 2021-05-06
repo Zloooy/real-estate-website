@@ -55,25 +55,35 @@ export default class HorizontalCategorySelect extends Vue {
 
 <style scoped>
 .horizontal-category-select {
-  display: inline-block;
-  margin: 60px auto 1px
+  max-width: 1060px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-gap: 15px;
+  margin: 0 auto;
+  margin-top: 60px;
 }
 .category-button {
-  display: inline-block;
   vertical-align: top;
   padding: 10px 15px;
-  border: 3px solid black;
+  border: 1px solid black;
   font-size: 15px;
   font-weight: bold;
-  color: black;
+  min-height: 40px ;
+  color: #333333;
+  background-color: #E6EDF2;
   text-transform: uppercase;
   transition: color 0.2s linear;
-  margin: 0 2px;
 }
 .category-button:hover {
   color: lightsalmon;
 }
 .selected-button {
   color: lightsalmon;
+}
+
+@media (max-width: 601px) {
+  .horizontal-category-select {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

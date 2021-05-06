@@ -49,6 +49,14 @@ export default class DropdownSelector extends Vue {
 }
 </script>
 
-<style>
+<style scooped>
+
+.dropdown-selector{
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  border: 0px;
+  margin: 0;
+
+}
 
 </style>

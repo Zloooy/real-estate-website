@@ -2,7 +2,9 @@
   <header class="navigation-header">
     <div class="header__container"></div>
     <div class="header__inner">
-      <div class="header__logo">Real-Estate</div>
+      <div class="header__logo">
+        <router-link to="/">Real-Estate</router-link>
+      </div>
       <nav class="nav">
         <dropdown-selector
             nameFieldTitle="name"
@@ -61,17 +63,28 @@ export default class NavigationHeader extends Vue {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  text-decoration: none;
 }
 
 .header__logo {
+
   font-size: 30px;
   font-weight: 700;
   color: #333333;
 }
+.header__logo>*{
+  color: #333333;
+  text-decoration: none;
+  transition: color 0.2s linear;
+}
+
+.header__logo>*:hover{
+  color: lightsalmon;
+}
 
 .nav>* {
   margin: 0 15px;
-  color: black;
+  color: #333333;
   text-decoration: none;
   transition: color 0.2s linear;
 }
@@ -94,7 +107,7 @@ export default class NavigationHeader extends Vue {
 
 .nav>* {
    margin: 0 15px;
-   color: black;
+   color: #333333;
    text-decoration: none;
    transition: color 0.2s linear;
  }
