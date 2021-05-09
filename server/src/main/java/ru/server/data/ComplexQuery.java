@@ -12,8 +12,6 @@ public class ComplexQuery {
     private Long id;
     @ApiModelProperty(notes = "Количество комнат")
     private Integer amountOfRooms;
-    @ApiModelProperty(notes = "Тип недвижимости: квартира, дом...")
-    private Complex.EstateType estateType;
     @ApiModelProperty(notes = "Категория недвижимости: новостройка, вторичка...")
     private Complex.EstateCategory estateCategory;
     @ApiModelProperty("Маска названия комплекса")
@@ -41,11 +39,6 @@ public class ComplexQuery {
     private Date deliveryDate;
     @ApiModelProperty(notes = "Рекламируется")
     private Boolean advertized;
-    public static enum OrderType {
-        NONE,
-        PRICE,
-        NAME
-    }
     protected ComplexQuery(){}
 
     public Long getId() {
@@ -62,14 +55,6 @@ public class ComplexQuery {
 
     public void setAmountOfRooms(Integer amountOfRooms) {
         this.amountOfRooms = amountOfRooms;
-    }
-
-    public Complex.EstateType getEstateType() {
-        return estateType;
-    }
-
-    public void setEstateType(Complex.EstateType estateType) {
-        this.estateType = estateType;
     }
 
     public String getName() {

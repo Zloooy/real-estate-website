@@ -12,12 +12,9 @@ import ru.server.repositories.IComplexRepository;
 import javax.persistence.criteria.*;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.UnaryOperator;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 @Service
 public class ComplexService implements IComplexService{
@@ -61,7 +58,7 @@ private Specification<Complex> generateSpecification(ComplexQuery query){
         return Specification.where(and(
                 fieldLike("name", query.getName()),
                 fieldMatches("id", query.getId()),
-                fieldMatches("estateType", query.getEstateType()),
+                //fieldMatches("estateType", query.getEstateType()),
                 fieldMatches("category", query.getEstateCategory()),
                 fieldMatches("advertized", query.getAdvertized()),
                 nullOr((complex, cb, value)->cb.equal(complex.get("address").get("city").get("id"), value), query.getCityId()),
@@ -83,5 +80,10 @@ private Specification<Complex> generateSpecification(ComplexQuery query){
     public Page<Complex> findComplexByQuery(ComplexQuery query, Pageable pageable) {
         query.setAdvertized(null);
         return repository.findAll(generateSpecification(query), pageable);
+    }
+
+    @Override
+    public Optional<Complex> findById(Long id) {
+        return repository.findById(id);
     }
 }

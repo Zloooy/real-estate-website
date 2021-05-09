@@ -20,7 +20,7 @@ public class User implements UserDetails {
     @ApiModelProperty(notes = "Логин")
     @Column(name="login", nullable = false, unique = true)
     private String login;
-    @ApiModelProperty(notes = "Хеш пароля")
+    @ApiModelProperty(notes = "Хеш пароля", hidden = true)
     @JsonIgnore
     @Column(name="password", nullable = false, unique = true)
     private String password;

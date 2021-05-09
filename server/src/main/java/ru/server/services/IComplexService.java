@@ -7,9 +7,11 @@ import ru.server.data.ComplexQuery;
 import ru.server.models.Complex;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface IComplexService {
     List<Complex> findAdvertizedByQuery(ComplexQuery query);
     Page<Complex> findComplexByQuery(ComplexQuery query, Pageable pageable);
+    Optional<Complex> findById(Long id);
 }
