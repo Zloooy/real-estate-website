@@ -8,7 +8,7 @@
       <main-data-complex
           :address="complex.address.street"
           :metro = "complex.address.metro.name"
-          :district = "complex.address.district"
+          :district = "complex.address.district.name"
       />
     </div>
     <div class="about-complex">
