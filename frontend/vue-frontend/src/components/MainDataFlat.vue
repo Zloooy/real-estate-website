@@ -7,6 +7,9 @@
       <button>"Заказать звонок"</button>
     </div>
     <div class="data">
+      <div class="price">
+        {{price}} Р
+      </div>
       <div class="address">
         {{address}}
       </div>
@@ -29,6 +32,9 @@ import {Options, Vue} from "vue-class-component";
   props: {
     button: {
       type: String
+    },
+    price: {
+      type: Number
     },
     address:{
       type: String
@@ -80,6 +86,9 @@ export default class MianDataFlat extends Vue {}
   color: lightsalmon;
 }
 
+.price{
+  margin: 5px 5px;
+}
 .metro{
   margin: 5px 5px;
 }

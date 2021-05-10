@@ -48,3 +48,7 @@ export default class DropdownSelector extends Vue {
 }
 }
 </script>
+
+<style>
+
+</style>
