@@ -1,7 +1,7 @@
 import {Mutations} from "@/store/mutations";
 import {ActionContext, ActionTree} from "vuex";
 import {State} from "@/store/state";
-import {City, Complex, District, Metro} from "@/generated-api/data-contracts";
+import {City, Complex, District, Flat, Metro} from "@/generated-api/data-contracts";
 
 
 type AugmentActionContext = {
@@ -23,15 +23,33 @@ export interface Actions {
                payload: void): Promise<Metro[]>
     GET_DISTRICTS({ commit }: AugmentActionContext,
                payload: void): Promise<District[]>
+    GET_COMPLEX({ commit }: AugmentActionContext,
+                  payload: number): Promise<Complex>
+    GET_COMPLEX_FLATS({commit, state}: AugmentActionContext,
+                      payload:number): Promise<Flat[]>,
+    GET_FLAT({commit, state}: AugmentActionContext,
+                      payload:number): Promise<Flat>
 }
 export const actions: ActionTree<State, State> & Actions = {
+    GET_FLAT({commit, state}: AugmentActionContext, payload: number): Promise<Flat> {
+        return state.public_api.getFlatByIdUsingGet(payload)
+            .then(resp=>resp.data)
+            .catch(()=>undefined)
+            .then(d=>commit('SET_FLAT', d));
+    },
+    GET_COMPLEX_FLATS({commit, state}: AugmentActionContext, payload: number): Promise<Flat[]> {
+        return state.public_api.getComplexFlatsUsingGet(payload)
+        .then(response=>response.data)
+            .then((d)=>{
+                console.debug("action data", d);
+                return d;
+        })
+        .catch(()=>[])
+            .then(d=>commit('SET_COMPLEX_FLATS', d));
+    },
     GET_DISTRICTS({commit, state}: AugmentActionContext, payload: void): Promise<District[]> {
         return state.public_api.getDistrictsByCityUsingGet({city_id: state.city?.id || 9})
             .then(response => response.data)
-            .then(p=>{
-                console.debug("got district data", JSON.stringify(p));
-                return p;
-            })
             .catch(()=>[])
             .then(d=>commit('SET_DISTRICTS', d));
     },
@@ -88,7 +106,12 @@ export const actions: ActionTree<State, State> & Actions = {
             })
             .then(response => {
                 return response.data
-            }).catch(()=>[])
+            }).catch(()=>[] as Complex[])
             .then(d=>commit('SET_COMPLEXES', d));
+    },
+    GET_COMPLEX({commit, state}: AugmentActionContext, payload: number): Promise<Complex> {
+        return state.public_api.findByIdUsingGet(payload, {})
+            .then(r=>r.data)
+            .then(d=>commit('SET_COMPLEX', d));
     }
 }

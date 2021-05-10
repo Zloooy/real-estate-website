@@ -1,4 +1,4 @@
-import { City, Complex, ComplexQuery, District, Metro, PageComplex } from "./data-contracts";
+import { City, Complex, ComplexQuery, District, Flat, Metro, PageComplex } from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -38,6 +38,21 @@ export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDa
    * No description
    *
    * @tags complex-controller
+   * @name FindByIdUsingGet
+   * @summary Комплекс с заданным id
+   * @request GET:/public_api/complex/{id}
+   */
+  findByIdUsingGet = (id: number, params: RequestParams = {}) =>
+    this.request<Complex, void>({
+      path: `/public_api/complex/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags complex-controller
    * @name GetComplexesUsingPost
    * @summary Получение страниц с городами
    * @request POST:/public_api/complexes
@@ -69,6 +84,36 @@ export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDa
       path: `/public_api/districts`,
       method: "GET",
       query: query,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags flat-controller
+   * @name GetFlatByIdUsingGet
+   * @summary Получение квартиры по id
+   * @request GET:/public_api/flat/{id}
+   */
+  getFlatByIdUsingGet = (id: number, params: RequestParams = {}) =>
+    this.request<Flat, void>({
+      path: `/public_api/flat/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags flat-controller
+   * @name GetComplexFlatsUsingGet
+   * @summary Получение списка квартир комплекса
+   * @request GET:/public_api/flats_by_complex/{id}
+   */
+  getComplexFlatsUsingGet = (id: number, params: RequestParams = {}) =>
+    this.request<Flat[], void>({
+      path: `/public_api/flats_by_complex/${id}`,
+      method: "GET",
       format: "json",
       ...params,
     });

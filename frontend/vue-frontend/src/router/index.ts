@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import IntroPage from "@/components/IntroPage.vue";
 import Catalog from "@/components/Catalog.vue";
+import ComplexPage from "@/components/СomplexPage.vue";
+import FlatPage from "@/components/FlatPage.vue";
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -11,6 +13,16 @@ const routes: Array<RouteRecordRaw> = [
         path: '/search',
         name: 'Поиск',
         component: Catalog
+    },
+    {
+        path: '/complex/:id',
+        name: 'Комплекс',
+        component: ComplexPage
+    },
+    {
+        path: '/flat/:id',
+        name: 'Квартира',
+        component: FlatPage
     }
 /*
     {

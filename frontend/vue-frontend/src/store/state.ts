@@ -1,6 +1,6 @@
 import {Api} from "@/generated-api/Api";
 import {Auth} from "@/generated-api/Auth";
-import {City, Complex, ComplexQuery, Metro, District} from "@/generated-api/data-contracts";
+import {City, Complex, ComplexQuery, Metro, District, Flat} from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
 import {ApiConfig} from "@/generated-api/http-client";
 // export interface State {
@@ -37,7 +37,10 @@ export const state = {
     district: null as District | null,
     minComplexPrice: undefined as number | undefined,
     maxComplexPrice: undefined as number | undefined,
-    complexDeliveryDate: undefined as string | undefined
+    complexDeliveryDate: undefined as string | undefined,
+    complex: undefined as Complex | undefined,
+    complexFlats: [] as Flat[],
+    flat: undefined as Flat | undefined
 };
 
 export type State = typeof state;

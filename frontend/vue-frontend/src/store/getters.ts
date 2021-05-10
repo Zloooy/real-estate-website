@@ -2,7 +2,7 @@ import { GetterTree } from "vuex/types";
 import {Api} from "@/generated-api/Api";
 import {Auth} from "@/generated-api/Auth";
 import {state, State} from "@/store/state";
-import {City, Complex, District, Metro} from "@/generated-api/data-contracts";
+import {City, Complex, District, Flat, Metro} from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
 import {Store, useStore} from "@/store/index";
 
@@ -17,6 +17,9 @@ export type Getters = {
     districts(state: State): District[],
     complexSearchParamsChanged(state: State): boolean
     complex_category(state: State): State['complex_category']
+    complex(state: State): Complex | null,
+    complexFlats(state: State): State['complexFlats'],
+    flat(state: State): State['flat']
 }
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -49,5 +52,14 @@ export const getters: GetterTree<State, State> & Getters = {
     },
     complex_category(state: State): State['complex_category']{
         return state.complex_category;
+    },
+    complex(state: State): Complex | null{
+        return state.complex ? state.complex : null;
+    },
+    complexFlats(state: State): State["complexFlats"] {
+        return state.complexFlats;
+    },
+    flat(state: State): State['flat'] {
+        return state.flat;
     }
 } as Getters;

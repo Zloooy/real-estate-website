@@ -14,8 +14,7 @@
       </div>
     </div>
     <div class="img-realtor">
-      <img src="https://n1s1.elle.ru/54/36/f0/5436f057e5b73bcc698c19d76719225a/620x803_1_49a385ff19c6d22e5e6c4a61d40a0528@1056x1368_0xac120003_16229048421558357472.jpg">
-      {{img}}
+      <img :src="img">
     </div>
   </div>
 </template>

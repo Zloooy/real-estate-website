@@ -73,11 +73,8 @@ export interface Complex {
   /** Плановая дата сдачи */
   deliveryDate?: string;
 
-  /** Тип недвижимости */
-  estateType?: "FLAT" | "HOUSE" | "ROOM";
-
   /**
-   * Униветсальный идентификатор комплекса
+   * Уникальный идентификатор комплекса
    * @format int64
    */
   id?: number;
@@ -147,9 +144,6 @@ export interface ComplexQuery {
   /** Категория недвижимости: новостройка, вторичка... */
   estateCategory?: "NEW" | "RENT" | "SECONDARY";
 
-  /** Тип недвижимости: квартира, дом... */
-  estateType?: "FLAT" | "HOUSE" | "ROOM";
-
   /**
    * Уникальный идентификатор комплекса
    * @format int64
@@ -204,6 +198,7 @@ export interface Contacts {
 
   /** Телефон */
   phone?: string;
+  photo?: string;
 }
 
 export interface District {
@@ -218,6 +213,48 @@ export interface District {
 
   /** Название района */
   name?: string;
+}
+
+export interface Flat {
+  /** Описание квартиры */
+  about?: string;
+
+  /** Комплекс, к которому относится квартира */
+  complex?: Complex;
+
+  /** Тип недвижимости */
+  estateType?: "FLAT" | "HOUSE" | "ROOM";
+
+  /**
+   * Этаж квартиры
+   * @format int32
+   */
+  floor?: number;
+
+  /**
+   * Уникальный идентификатор квартиры
+   * @format int64
+   */
+  id?: number;
+  image?: string;
+
+  /**
+   * Количество комнат
+   * @format double
+   */
+  numberOfRooms?: number;
+
+  /**
+   * Цена
+   * @format double
+   */
+  price?: number;
+
+  /**
+   * Площадь квартиры
+   * @format float
+   */
+  square?: number;
 }
 
 export interface GrantedAuthority {
@@ -415,9 +452,6 @@ export interface User {
 
   /** Логин */
   login?: string;
-
-  /** Хеш пароля */
-  password?: string;
 
   /** Роль пользователя */
   role?: Role;
