@@ -1,8 +1,6 @@
 <template>
   <div class="main-data-complex">
-    <div class="call-btn">
-      <button>"Заказать звонок"</button>
-    </div>
+    <request-call/>
     <div class="data">
       <div class="address">
         {{address}}
@@ -19,9 +17,11 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import RequestCall from "@/components/RequestCall.vue";
 
 @Options({
   name: "main-data-complex",
+  components: {RequestCall},
   props: {
     button: {
       type: String
@@ -50,11 +50,6 @@ export default class MianDataComplex extends Vue {}
   overflow: hidden;
   margin: 0 15px;
   font-size: 15px ;
-}
-
-.call-btn{
-  font-size: 25px ;
-  font-weight: 700;
 }
 
 .data{

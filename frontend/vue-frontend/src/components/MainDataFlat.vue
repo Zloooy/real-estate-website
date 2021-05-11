@@ -3,9 +3,7 @@
     <div class="realtor-data">
       <data-realtor/>
     </div>
-    <div class="call-btn">
-      <button>"Заказать звонок"</button>
-    </div>
+    <request-call/>
     <div class="data">
       <div class="price">
         {{price}} Р
@@ -25,10 +23,12 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import RequestCall from "@/components/RequestCall.vue";
 
 
 @Options({
   name: "main-data-flat",
+  components: {RequestCall},
   props: {
     button: {
       type: String
@@ -60,14 +60,6 @@ export default class MianDataFlat extends Vue {}
   overflow: hidden;
   margin: 15px;
   font-size: 15px ;
-}
-
-.call-btn{
-  width: 100%;
-  font-size: 25px ;
-  font-weight: 700;
-  text-align:left;
-
 }
 
 
