@@ -6,6 +6,7 @@ public class RequestCallQuery {
     private String name;
     private String contactPhone;
     private String contactEmail;
+    private String comment;
     public enum PlaceType {
         COMPLEX,
         FLAT
@@ -49,5 +50,13 @@ public class RequestCallQuery {
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
