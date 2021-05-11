@@ -249,7 +249,10 @@ export default class Catalog extends Vue {
   padding: 0;
 }
 
-.catalog {
+.catalog{
+  text-align: center;
+  max-width: 1060px;
+  margin: 0 auto;
   padding-top: 15px;
   font-size: 15px;
   display: grid;
@@ -257,22 +260,21 @@ export default class Catalog extends Vue {
 }
 
 .list-grid {
-  display: inline-grid;
-  display: -ms-grid;
-  margin-top: 60px;
-  margin-bottom: 30px;
+
+  padding-top: 30px;
+  font-size: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px,auto));
+  grid-gap: 15px;
+  grid-auto-rows: minmax(150px, auto);
 }
+
 .list-grid li {
   align-items: center;
   justify-content: center;
   list-style-type: none;
-  max-width: 350px;
   list-style-position: inside;
   text-transform: none;
-}
-
-.centered {
-  text-align: center;
 }
 
 @media (max-width: 349px){
@@ -294,18 +296,16 @@ export default class Catalog extends Vue {
   .catalog{
     grid-template-columns: 1fr 2fr;
   }
-  .main-catalog{
-    grid-template-columns: repeat(1, minmax(250px, 3fr));
-  }
 }
 
 @media (min-width: 901px) {
   .catalog{
     grid-template-columns: 1fr 3fr;
   }
-  .main-catalog{
+  .list-grid {
     grid-template-columns: repeat(2, minmax(250px, 3fr));
   }
+
 }
 .price-range {
   display: block;
