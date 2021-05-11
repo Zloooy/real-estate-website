@@ -2,7 +2,7 @@
 import {MutationTree} from "vuex";
 import {Api} from "@/generated-api/Api";
 import {State, state} from "@/store/state";
-import {City, Complex, ComplexQuery, District, Metro} from "@/generated-api/data-contracts";
+import {City, Complex, ComplexQuery, District, Flat, Metro} from "@/generated-api/data-contracts";
 import {compareObjects} from "@/utils";
 
 export type Mutations<S = State> = {
@@ -22,6 +22,9 @@ export type Mutations<S = State> = {
     SET_MIN_COMPLEX_PRICE(state: S, payload: number)
     SET_MAX_COMPLEX_PRICE(state: S, payload: number)
     SET_COMPLEX_DELIVERY_DATE(state: S, payload: string | undefined)
+    SET_COMPLEX(state: S, payload: Complex);
+    SET_COMPLEX_FLATS(state: State, payload: Flat[]);
+    SET_FLAT(state: State, payload: State['flat']);
 }
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -90,5 +93,15 @@ export const mutations: MutationTree<State> & Mutations = {
     SET_DISTRICT(state: State, payload: District) {
         state.complexSearchParamsChanged = !compareObjects(state.district, payload);
         state.district = payload;
+    },
+    SET_COMPLEX(state: State, payload: Complex) {
+        state.complex = payload;
+    },
+    SET_COMPLEX_FLATS(state: State, payload: Flat[]) {
+        console.debug("setting complex flats", payload);
+        state.complexFlats=payload;
+    },
+    SET_FLAT(state: State, payload: State['flat']) {
+        state.flat = payload;
     }
 }

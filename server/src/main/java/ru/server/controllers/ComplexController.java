@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.server.data.ComplexQuery;
 import ru.server.models.Complex;
 import ru.server.services.IComplexService;
@@ -29,5 +27,10 @@ public class ComplexController {
     @PostMapping(value = "/public_api/complexes", produces = "application/json")
     public ResponseEntity<Page<Complex>> getComplexes(@RequestBody ComplexQuery query, Pageable pageable){
         return ResponseEntity.ok(complexService.findComplexByQuery(query, pageable));
+    }
+    @ApiOperation(value="Комплекс с заданным id")
+    @GetMapping(value="/public_api/complex/{id}", produces = "application/json")
+    public ResponseEntity<Complex> findById(@PathVariable("id") Long id){
+        return ResponseEntity.of(complexService.findById(id));
     }
 }

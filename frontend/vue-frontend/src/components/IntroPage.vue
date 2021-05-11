@@ -13,16 +13,9 @@
         :title="complex.name"
         :metro="complex.address.metro.name || ''"
         :price="complex.price"
+        @click="goToComplex(complex.id)"
     />
   </li>
-    <li v-for="(complex, i) in complexes.slice(1)" :key="i">
-      <my-card
-          :image="complex.image"
-          :title="complex.name"
-          :metro="complex.address.metro.name || ''"
-          :price="complex.price"
-      />
-    </li>
   </ul>
   <div v-else>
     По вашему запросу ничего не найдено
@@ -103,6 +96,10 @@ export default class IntroPage extends Vue {
        default:
          return null
    }
+ }
+ goToComplex(id: number){
+   console.debug("going to card");
+   this.$router.push(`/complex/${id}`);
  }
 }
 

@@ -1,30 +1,32 @@
 <template>
-  <div class="flat-page">
-    <div class="complex-name">JK PAMPUSHKA</div>
+  <div class="flat-page" v-if="flat">
+    <div class="complex-name">{{flat.complex.name}}</div>
 
     <div class="intro-flat">
         <div class="img-flat">
-          <img src="https://get.pxhere.com/photo/city-metropolitan-area-architecture-urban-area-landmark-commercial-building-metropolis-tower-block-building-condominium-daytime-blue-skyscraper-mixed-use-human-settlement-sky-corporate-headquarters-tower-facade-headquarters-real-estate-apartment-reflection-tree-downtown-neighbourhood-residential-area-glass-symmetry-house-1612790.jpg">
+          <img :src="flat.image">
         </div>
       <div class="data-flat">
         <div class="realtor-data">
           <data-realtor
-              fio="Семушкина Семёна Семёновна"
-              phone = "8-800-555-35-55"
-              email = "mirmurmya@mya"
+              :fio= "flat.complex.contacts.name"
+              :phone = "flat.complex.contacts.phone"
+              :email = "flat.complex.contacts.email"
+              :img="flat.complex.contacts.photo"
           />
         </div>
         <main-data-flat
-            price="price"
-            address="address"
-            metro = "metro"
-            district = "district"
+            :price="flat.price"
+            :address="flat.complex.address.street"
+            :metro = "flat.complex.address.metro.name"
+            :district = "flat.complex.address.district.name"
         />
       </div>
   </div>
     <div class="about-flat">
       <div class="headers">Описание</div>
-      <text-about/>
+      <text-about
+      :about="flat.about"/>
     </div>
 
   </div>
@@ -35,16 +37,27 @@ import {Options, Vue} from "vue-class-component";
 import TextAbout from "@/components/TextAbout.vue";
 import MainDataFlat from "@/components/MainDataFlat.vue";
 import DataRealtor from "@/components/DataRealtor.vue";
+import {Store, useStore} from "@/store/index";
 
 @Options({
-  name:"complex-page",
+  name:"flat-page",
   components: {
     MainDataFlat,
     TextAbout,
     DataRealtor
+  },
+  computed:{
+    flat() {
+      return this.store.getters.flat;
+    }
   }
 })
-export default class FlatPage extends Vue{}
+export default class FlatPage extends Vue{
+  store: Store = useStore();
+  created(){
+    this.store.dispatch('GET_FLAT', Number(this.$route.params.id));
+  }
+}
 
 </script>
 

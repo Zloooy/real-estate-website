@@ -42,6 +42,8 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private IComplexRepository complexRepository;
     @Autowired
+    private IFlatRepository flatRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     private static final List<String>
             roleNames = Arrays.asList(ru.server.enums.UserRole.ADMIN, UserRole.CONTENT_MANAGER, UserRole.REALTOR, UserRole.CLIENT),
@@ -56,6 +58,7 @@ public class DataInitializer implements ApplicationRunner {
             contactNames = Arrays.asList("Иван Иванович Иванов"),
             contactPhones = Arrays.asList("222-32-32"),
             contactEmails = Arrays.asList("test@test.ru"),
+            contactPhotos = Arrays.asList("http://вашнадежныйриелтор.рф/upload/photos/8e/8eda439d3124bb996fb4b1ab28d11c1b.jpg"),
             districtNames = Arrays.asList("Приморский", "Адмиралтейский"),
             districtCities = Arrays.asList("Санкт-Петербург", "Санкт-Петербург"),
             addressStreets = Arrays.asList("Плесецкая ул.", "Московский пр."),
@@ -79,17 +82,26 @@ public class DataInitializer implements ApplicationRunner {
                             "    новая линейка планировочных и технических решений, отвечающая уровню недвижимости высокого класса двухуровневые квартиры, квартиры с двойным светом, а также квартиры с террасами\n" +
                             "    отдельные кладовые — помещения, которые расположатся на техническом этаже \n" +
                             "    в одном из корпусов встроенный детский сад на 110 мест"),
-            complexContactNames = Arrays.asList("Иван Иванович Иванов","Иван Иванович Иванов");
+            complexContactNames = Arrays.asList("Иван Иванович Иванов","Иван Иванович Иванов"),
+            flatImages = Arrays.asList("https://i.pinimg.com/originals/73/ab/98/73ab981e0fde9cf235492cf35a2bd2b5.jpg",
+                    "https://i.ytimg.com/vi/6X8Bhjz8-uc/maxresdefault.jpg"
+            ),
+            flatComplexNames = Arrays.asList("Ultra City", "LEGENDA Московский 65"),
+            flatAbout = Arrays.asList("Теытоое оопимание 1", "Тестовое описание 2");
             private static final Calendar workCalendar = new GregorianCalendar();
             private static final List<Date> complexDeliveryDates = Arrays.asList(Date.from(LocalDate.of(2022,1,1).atStartOfDay().toInstant(ZoneOffset.UTC)),Date.from(LocalDate.of(2025,1,1).atStartOfDay().toInstant(ZoneOffset.UTC)));
-            private static final List<Complex.EstateType> complexEstateTypes = Arrays.asList(Complex.EstateType.FLAT, Complex.EstateType.FLAT);
             private static final List<Complex.EstateCategory> complexEstateCategories = Arrays.asList(Complex.EstateCategory.NEW, Complex.EstateCategory.NEW);
             private static final List<Complex.EstateStatus> complexEstateStatuses = Arrays.asList(Complex.EstateStatus.ACCEPTED, Complex.EstateStatus.ACCEPTED);
             private final List<Boolean> complexEstateAdvertized = Arrays.asList(true, true);
             private static final List<Integer>
                     complexPrices = Arrays.asList(152709,289800),
                     complexSpaces = Arrays.asList(2,3),
-                    complexAmountsOfRooms=Arrays.asList(2,3);
+                    complexAmountsOfRooms=Arrays.asList(2,3),
+                    flatNumbersOfRooms=Arrays.asList(2,3),
+                    flatFloors=Arrays.asList(2,3);
+            private static final List<Flat.EstateType> flatEstateTypes = Arrays.asList(Flat.EstateType.FLAT,  Flat.EstateType.FLAT);
+            private static final List<Double> flatPrices = Arrays.asList(100500.00,  360600.00);
+            private static final List<Float> flatSquares= Arrays.asList(80f, 100f);
     private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER), new HashSet<>(), new HashSet<>(), new HashSet<>());
     private static class ListInserter<T> {
 
@@ -116,6 +128,7 @@ public class DataInitializer implements ApplicationRunner {
         addContacts();
         System.out.println("ADDING COMPLEXES");
         addComplexes();
+        addFlats();
     }
     private void addAuthorities(){
         new ListInserter<User.Role.Authority>().insertFromList(authorityRepository, User.Role.Authority::new, authorityNames);
@@ -160,7 +173,7 @@ public class DataInitializer implements ApplicationRunner {
     private void addContacts() {
         new ListInserter<Contacts>().insert(
                 contactsRepository,
-                (int i)-> new Contacts(contactNames.get(i), contactPhones.get(i), contactEmails.get(i)),
+                (int i)-> new Contacts(contactNames.get(i), contactPhones.get(i), contactEmails.get(i), contactPhotos.get(i)),
                 contactNames.size()
         );
     }
@@ -174,8 +187,15 @@ public class DataInitializer implements ApplicationRunner {
     private void addComplexes() {
         new ListInserter<Complex>().insert(
                 complexRepository,
-                (int i)->new Complex(userRepository.findByUsername(complexAuthors.get(i)), complexNames.get(i), addressRepository.findByStreet(complexAddresses.get(i)).orElse(null),  complexEstateTypes.get(i), complexAmountsOfRooms.get(i), complexPrices.get(i), complexSpaces.get(i), complexImages.get(i), complexDeliveryDates.get(i), complexComments.get(i), contactsRepository.getByName("Иван Иванович Иванов").orElse(null), complexEstateStatuses.get(i), complexEstateCategories.get(i), complexEstateAdvertized.get(i)),
+                (int i)->new Complex(userRepository.findByUsername(complexAuthors.get(i)), complexNames.get(i), addressRepository.findByStreet(complexAddresses.get(i)).orElse(null), complexAmountsOfRooms.get(i), complexPrices.get(i), complexSpaces.get(i), complexImages.get(i), complexDeliveryDates.get(i), complexComments.get(i), contactsRepository.getByName("Иван Иванович Иванов").orElse(null), complexEstateStatuses.get(i), complexEstateCategories.get(i), complexEstateAdvertized.get(i)),
                 complexNames.size()
+        );
+    }
+    private void addFlats(){
+        new ListInserter<Flat>().insert(
+                flatRepository,
+                (int i)-> new Flat(flatImages.get(i), complexRepository.findByName(flatComplexNames.get(i)).orElse(null), flatAbout.get(i), flatPrices.get(i), flatNumbersOfRooms.get(i), flatEstateTypes.get(i), flatSquares.get(i), flatFloors.get(i)),
+                flatImages.size()
         );
     }
 }

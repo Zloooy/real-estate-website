@@ -9,11 +9,12 @@ import java.util.Date;
 @Entity
 @Table(name="complexes")
 public class Complex {
-    public Complex(User author, String name, Address address, EstateType estateType, int amountOfRooms, int price, int space, String image, Date deliveryDate, String comment, Contacts contacts, EstateStatus status, EstateCategory category, boolean advertized) {
+    protected Complex() {}
+
+    public Complex(User author, String name, Address address, int amountOfRooms, int price, int space, String image, Date deliveryDate, String comment, Contacts contacts, EstateStatus status, EstateCategory category, boolean advertized) {
         this.author = author;
         this.name = name;
         this.address = address;
-        this.estateType = estateType;
         this.amountOfRooms = amountOfRooms;
         this.price = price;
         this.space = space;
@@ -26,11 +27,9 @@ public class Complex {
         this.advertized = advertized;
     }
 
-    protected Complex() {}
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @ApiModelProperty(notes = "Униветсальный идентификатор комплекса")
+    @ApiModelProperty(notes = "Уникальный идентификатор комплекса")
     @Column(name="id")
     private Long id;
     @ApiModelProperty(name="Пользователь, опубликовавший информациб об обьекте")
@@ -42,10 +41,6 @@ public class Complex {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @ApiModelProperty(name="Адрес комплекса")
     private Address address;
-    @ApiModelProperty(notes = "Тип недвижимости")
-    @Enumerated(value = EnumType.STRING)
-    @Column(name="estate_type", nullable = false)
-    EstateType estateType;
     @ApiModelProperty(notes="Количество комнат")
     @Column(name="amount_of_rooms", nullable = false)
     private int amountOfRooms;
@@ -80,22 +75,17 @@ public class Complex {
     @ApiModelProperty("Реклама - отображать ли в блоке рекомендаций")
     @Column(name = "advertized", nullable = false)
     private boolean advertized;
-    public static enum EstateType {
-        ROOM,
-        FLAT,
-        HOUSE;
-    }
 
-    public static enum EstateStatus {
+    public enum EstateStatus {
         ACCEPTED,
         DECLINED,
-        RENTED;
+        RENTED
     }
 
-    public static enum EstateCategory {
+    public enum EstateCategory {
         NEW,
         SECONDARY,
-        RENT;
+        RENT
     }
 
     public Long getId() {
@@ -130,13 +120,6 @@ public class Complex {
         this.address = address;
     }
 
-    public EstateType getEstateType() {
-        return estateType;
-    }
-
-    public void setEstateType(EstateType estateType) {
-        this.estateType = estateType;
-    }
 
     public int getAmountOfRooms() {
         return amountOfRooms;

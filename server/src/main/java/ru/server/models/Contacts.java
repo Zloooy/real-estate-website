@@ -7,10 +7,11 @@ import javax.persistence.*;
 @Entity
 @Table(name="contacts")
 public class Contacts {
-    public Contacts(String name, String phone, String email) {
+    public Contacts(String name, String phone, String email, String photo) {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.photo = photo;
     }
     protected Contacts() {}
     @Id
@@ -27,6 +28,8 @@ public class Contacts {
     @ApiModelProperty(name="Эл. почта")
     @Column(name="email")
     private String email;
+    @ApiModelProperty(name="photo")
+    private String photo;
 
     public Long getId() {
         return id;
@@ -58,5 +61,13 @@ public class Contacts {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

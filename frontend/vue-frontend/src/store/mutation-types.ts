@@ -13,5 +13,8 @@ export type MutationTypes = (
     'SET_DISTRICT' |
     'SET_MIN_COMPLEX_PRICE' |
     'SET_MAX_COMPLEX_PRICE' |
-    'SET_COMPLEX_DELIVERY_DATE'
+    'SET_COMPLEX_DELIVERY_DATE' |
+    'SET_COMPLEX' |
+    'SET_COMPLEX_FLATS' |
+    'SET_FLAT'
     );

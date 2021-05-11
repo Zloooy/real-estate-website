@@ -1,37 +1,35 @@
 <template>
-  <div class="complex-page">
-
-    <horizontal-category-select
-        :categories="categories"
-        :firstSelectedIndex="0"
-        @select="changeCategory"
-    />
-    <div class="complex-name">JK PAMPUSHKA</div>
+  <div class="complex-page" v-if="complex">
+    <div class="complex-name">{{complex.name}}</div>
     <div class="intro-complex">
       <div class="img-complex">
-        <img src="https://get.pxhere.com/photo/city-metropolitan-area-architecture-urban-area-landmark-commercial-building-metropolis-tower-block-building-condominium-daytime-blue-skyscraper-mixed-use-human-settlement-sky-corporate-headquarters-tower-facade-headquarters-real-estate-apartment-reflection-tree-downtown-neighbourhood-residential-area-glass-symmetry-house-1612790.jpg">
+        <img :src="complex.image">
       </div>
       <main-data-complex
-          address="address"
-          metro = "metro"
-          district = "district"
+          :address="complex.address.street"
+          :metro = "complex.address.metro.name"
+          :district = "complex.address.district.name"
       />
     </div>
     <div class="about-complex">
       <div class="headers">О ПРОЕКТЕ</div>
-      <text-about/>
+      <text-about
+      :about="complex.comment"
+      />
     </div>
 
     <div class="complex-flats">
       <div class="headers">КВАРТИРЫ КОМПЛЕКСА</div>
       <div class="flats-list">
         <mini-flat-card
-        rooms="2"
-        price="6500000"
-        square="50"
-        floor="6"/>
-        <mini-flat-card/>
-        <mini-flat-card/>
+            @click="goToFlat(flat)"
+            v-for="flat in complex_flats"
+            :key="flat.id"
+            :rooms="flat.numberOfRooms"
+            :price="flat.price"
+            :square="flat.square"
+            :floor="flat.floor"
+        />
       </div>
     </div>
   </div>
@@ -44,8 +42,7 @@ import TextAbout from "@/components/TextAbout.vue";
 import MainDataComplex from "@/components/MainDataComplex.vue";
 import MiniFlatCard from "@/components/MiniFlatCard.vue";
 import {Store, useStore} from "@/store/index";
-import {ComplexQuery} from "@/generated-api/data-contracts";
-import {MutationPayload} from "vuex";
+import {Flat} from "@/generated-api/data-contracts";
 
 @Options({
   name:"complex-page",
@@ -54,38 +51,24 @@ import {MutationPayload} from "vuex";
     MainDataComplex,
     TextAbout,
     MiniFlatCard
+  },
+  computed: {
+    complex(){
+      return this.store.getters.complex;
+    },
+    complex_flats(){
+      return this.store.getters.complexFlats;
+    }
   }
-
 })
-export default class СomplexPage extends Vue{
+export default class ComplexPage extends Vue{
   store: Store = useStore();
-  categories: {
-    name: String,
-    value:ComplexQuery['estateCategory']
-  }[] = [
-    {
-      name:"Новостройки",
-      value: "NEW"
-    },
-    {
-      name: "Вторичка",
-      value: "SECONDARY"
-    },
-    {
-      name:"Аренда",
-      value: "RENT"
-    }
-  ];
   created(){
-    this.store.subscribe(this.subscribeCityChange);
+    this.store.dispatch('GET_COMPLEX', Number(this.$route.params.id));
+    this.store.dispatch('GET_COMPLEX_FLATS', Number(this.$route.params.id));
   }
-  changeCategory(category: any){
-    this.store.commit('SET_COMPLEX_CATEGORY', category.value);
-  }
-  subscribeCityChange(mutation: MutationPayload){
-    if (mutation.type === 'SET_CITY' || mutation.type === 'SET_COMPLEX_CATEGORY'){
-      this.store.dispatch('GET_ADVERTIZED_COMPLEXES', undefined);
-    }
+  goToFlat({id}:Flat){
+    this.$router.push(`/flat/${id}`)
   }
 }
 
