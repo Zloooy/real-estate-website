@@ -253,7 +253,7 @@ export default class Catalog extends Vue {
   text-align: center;
   max-width: 1060px;
   margin: 0 auto;
-  padding-top: 15px;
+  padding-top: 30px;
   font-size: 15px;
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -261,7 +261,6 @@ export default class Catalog extends Vue {
 
 .list-grid {
 
-  padding-top: 30px;
   font-size: 15px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px,auto));
@@ -287,9 +286,7 @@ export default class Catalog extends Vue {
   .catalog{
     grid-template-columns: 1fr 1fr;
   }
-  .main-catalog {
-    grid-template-columns: 1fr;
-  }
+
 }
 
 @media (min-width: 601px) and (max-width: 900px) {
