@@ -4,7 +4,7 @@
       <data-realtor/>
     </div>
     <div class="call-btn">
-      <button>"Заказать звонок"</button>
+     <request-call-form/>
     </div>
     <div class="data">
       <div class="price">
@@ -25,10 +25,14 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import RequestCallForm from "@/components/RequestCallForm.vue"
 
 
 @Options({
   name: "main-data-flat",
+  components: {
+    RequestCallForm
+  },
   props: {
     button: {
       type: String

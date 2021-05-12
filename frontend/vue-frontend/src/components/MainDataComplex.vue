@@ -1,7 +1,7 @@
 <template>
   <div class="main-data-complex">
     <div class="call-btn">
-      <button>"Заказать звонок"</button>
+      <request-call-form/>
     </div>
     <div class="data">
       <div class="address">
@@ -19,9 +19,13 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import RequestCallForm from "@/components/RequestCallForm.vue"
 
 @Options({
   name: "main-data-complex",
+  components: {
+    RequestCallForm
+  },
   props: {
     button: {
       type: String
