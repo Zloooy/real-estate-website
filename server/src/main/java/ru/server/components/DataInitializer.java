@@ -102,7 +102,7 @@ public class DataInitializer implements ApplicationRunner {
             private static final List<Flat.EstateType> flatEstateTypes = Arrays.asList(Flat.EstateType.FLAT,  Flat.EstateType.FLAT);
             private static final List<Double> flatPrices = Arrays.asList(100500.00,  360600.00);
             private static final List<Float> flatSquares= Arrays.asList(80f, 100f);
-    private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER), new HashSet<>(), new HashSet<>(), new HashSet<>());
+    private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS), new HashSet<>(), new HashSet<>(), new HashSet<>());
     private static class ListInserter<T> {
 
         public <R extends CrudRepository<T, Long>> void insert(R repo, LongFunction<T> builder, long i) {
