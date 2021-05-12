@@ -6,7 +6,7 @@ import {City, Complex, ComplexQuery, District, Flat, Metro} from "@/generated-ap
 import {compareObjects} from "@/utils";
 
 export type Mutations<S = State> = {
-    SET_TOKEN(state: S, payload: string): void,
+    SET_TOKEN(state: S, payload: string | null): void,
     SET_CITY(state: S, payload: City),
     SET_CITIES(state: S, payload: City[])
     SET_COMPLEXES(state: S, payload: Complex[])
@@ -25,6 +25,8 @@ export type Mutations<S = State> = {
     SET_COMPLEX(state: S, payload: Complex);
     SET_COMPLEX_FLATS(state: State, payload: Flat[]);
     SET_FLAT(state: State, payload: State['flat']);
+    SET_USERS(state: State, payload: State['users'])
+    SET_USER_ROLES(state: State, payload: State['userRoles'])
 }
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -47,7 +49,7 @@ export const mutations: MutationTree<State> & Mutations = {
     SET_CITIES(state: State, payload: City[]) {
         state.cities = payload;
     },
-    SET_TOKEN(state: State, payload: string) {
+    SET_TOKEN(state: State, payload: string | null) {
         state.api = new Api({
             baseUrl: "http://localhost:8009",
             baseApiParams: {
@@ -57,7 +59,7 @@ export const mutations: MutationTree<State> & Mutations = {
                 format: "json"
             }
         });
-        state.authorization_set = true;
+        state.authorization_set = !!payload;
     },
     SET_METROS(state: State, payload: Metro[]) {
         state.metros = payload;
@@ -103,5 +105,11 @@ export const mutations: MutationTree<State> & Mutations = {
     },
     SET_FLAT(state: State, payload: State['flat']) {
         state.flat = payload;
-    }
+    },
+    SET_USERS(state, payload: State["users"]) {
+        state.users = payload
+    },
+    SET_USER_ROLES(state, payload: State["userRoles"]) {
+        state.userRoles = payload;
+    },
 }

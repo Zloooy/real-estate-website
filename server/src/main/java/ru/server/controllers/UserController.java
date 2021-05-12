@@ -30,7 +30,7 @@ public class UserController {
     }
     @ApiOperation("Изменение ползователя")
     @PostMapping("/api/user/{id}")
-    ResponseEntity<Boolean> createUser(@RequestHeader("Authorization") String token, @RequestBody UserDto userValue, @PathVariable("id") long id){
+    ResponseEntity<Boolean> createUser(@RequestHeader("Authorization") String token, @PathVariable("id") long id, @RequestBody UserDto userValue){
         userValue.setId(id);
         return ResponseEntity.ok(userService.save(userValue));
     }

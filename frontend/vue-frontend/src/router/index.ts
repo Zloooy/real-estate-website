@@ -3,6 +3,8 @@ import IntroPage from "@/components/IntroPage.vue";
 import Catalog from "@/components/Catalog.vue";
 import ComplexPage from "@/components/СomplexPage.vue";
 import FlatPage from "@/components/FlatPage.vue";
+import LoginForm from "@/components/LoginForm.vue";
+import AdminPage from "@/components/AdminPage.vue";
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -23,6 +25,16 @@ const routes: Array<RouteRecordRaw> = [
         path: '/flat/:id',
         name: 'Квартира',
         component: FlatPage
+    },
+    {
+        path: '/login',
+        name: 'Вход',
+        component: LoginForm
+    },
+    {
+        path: '/admin_panel',
+        name: 'Панель администратора',
+        component: AdminPage
     }
 /*
     {

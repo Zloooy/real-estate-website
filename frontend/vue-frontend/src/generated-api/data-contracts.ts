@@ -409,6 +409,17 @@ export interface Request {
   password?: string;
 }
 
+export interface RequestCallQuery {
+  comment?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  name?: string;
+
+  /** @format int64 */
+  placeId?: number;
+  placeType?: "COMPLEX" | "FLAT";
+}
+
 export interface Response {
   /** Токен */
   token?: string;
@@ -456,6 +467,22 @@ export interface User {
   /** Роль пользователя */
   role?: Role;
   username?: string;
+}
+
+export interface UserDto {
+  /** @format int64 */
+  id?: number;
+  login?: string;
+  password?: string;
+
+  /** @format int64 */
+  roleId?: number;
+}
+
+export interface UserRoleDto {
+  /** @format int64 */
+  id?: number;
+  roleName?: string;
 }
 
 export interface View {
