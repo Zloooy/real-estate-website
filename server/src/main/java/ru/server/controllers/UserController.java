@@ -10,7 +10,6 @@ import ru.server.data.UserDto;
 import ru.server.enums.Authority;
 import ru.server.services.IUserService;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -21,17 +20,17 @@ public class UserController {
     IUserService userService;
     @ApiOperation("Получение списка всех пользователей")
     @GetMapping(value = "/api/get_all_users", produces = "application/json")
-    ResponseEntity<List<UserDto>>  getAllUsers(){
+    ResponseEntity<List<UserDto>>  getAllUsers(@RequestHeader("Authorization") String token){
         return ResponseEntity.ok(userService.getAll());
     }
     @ApiOperation("Изменение ползователя")
     @PostMapping("/api/user/new")
-    ResponseEntity<Boolean> createUser(@RequestBody UserDto userValue){
+    ResponseEntity<Boolean> createUser(@RequestHeader("Authorization") String token, @RequestBody UserDto userValue){
         return ResponseEntity.ok(userService.save(userValue));
     }
     @ApiOperation("Изменение ползователя")
-    @PostMapping("/api/user/:id")
-    ResponseEntity<Boolean> createUser(@RequestHeader("Authorization") String token, @RequestBody UserDto userValue, @PathParam("id") long id){
+    @PostMapping("/api/user/{id}")
+    ResponseEntity<Boolean> createUser(@RequestHeader("Authorization") String token, @RequestBody UserDto userValue, @PathVariable("id") long id){
         userValue.setId(id);
         return ResponseEntity.ok(userService.save(userValue));
     }
