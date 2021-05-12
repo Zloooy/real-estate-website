@@ -1,4 +1,4 @@
-import { City, Complex, ComplexQuery, District, Flat, Metro, PageComplex } from "./data-contracts";
+import { City, Complex, ComplexQuery, District, Flat, Metro, PageComplex, RequestCallQuery } from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -131,6 +131,22 @@ export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDa
       method: "GET",
       query: query,
       format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags request-call-controller
+   * @name SendCallRequestUsingPut
+   * @summary sendCallRequest
+   * @request PUT:/public_api/request_call
+   */
+  sendCallRequestUsingPut = (data: RequestCallQuery, params: RequestParams = {}) =>
+    this.request<void, void>({
+      path: `/public_api/request_call`,
+      method: "PUT",
+      body: data,
+      type: ContentType.Json,
       ...params,
     });
 }

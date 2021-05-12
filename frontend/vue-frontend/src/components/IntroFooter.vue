@@ -57,6 +57,6 @@ export default class IntroFooter extends Vue {
 .text{
   margin-bottom: 30px;
   font-size: 15px;
-  color: black;
+  color: #333333;
 }
 </style>

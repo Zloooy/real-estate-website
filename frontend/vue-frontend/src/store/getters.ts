@@ -1,10 +1,9 @@
 import { GetterTree } from "vuex/types";
 import {Api} from "@/generated-api/Api";
 import {Auth} from "@/generated-api/Auth";
-import {state, State} from "@/store/state";
+import {State} from "@/store/state";
 import {City, Complex, District, Flat, Metro} from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
-import {Store, useStore} from "@/store/index";
 
 export type Getters = {
     auth(state: State): Auth,
@@ -19,10 +18,18 @@ export type Getters = {
     complex_category(state: State): State['complex_category']
     complex(state: State): Complex | null,
     complexFlats(state: State): State['complexFlats'],
-    flat(state: State): State['flat']
+    flat(state: State): State['flat'],
+    users(state: State): State['users'],
+    userRoles(state: State): State['userRoles']
 }
 
 export const getters: GetterTree<State, State> & Getters = {
+    users(state: State): State['users'] {
+        return state.users;
+    },
+    userRoles(state: State): State['userRoles'] {
+     return state.userRoles;   
+    },
     api: (state: State) => {
         return state.api;
 },

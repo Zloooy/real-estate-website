@@ -1,7 +1,7 @@
 import {Mutations} from "@/store/mutations";
 import {ActionContext, ActionTree} from "vuex";
 import {State} from "@/store/state";
-import {City, Complex, District, Flat, Metro} from "@/generated-api/data-contracts";
+import {City, Complex, District, Flat, Metro, Request, UserDto} from "@/generated-api/data-contracts";
 
 
 type AugmentActionContext = {
@@ -28,9 +28,34 @@ export interface Actions {
     GET_COMPLEX_FLATS({commit, state}: AugmentActionContext,
                       payload:number): Promise<Flat[]>,
     GET_FLAT({commit, state}: AugmentActionContext,
-                      payload:number): Promise<Flat>
+                      payload:number): Promise<Flat>,
+    GET_AUTH_TOKEN({commit, state}: AugmentActionContext, payload: Request ): Promise<void>,
+    GET_USERS({commit, state}: AugmentActionContext, payload: void): Promise<void>,
+    GET_USER_ROLES({commit, state}: AugmentActionContext, payload: void): Promise<void>
+    SAVE_USER({state, commit} : AugmentActionContext, payload: UserDto) : Promise<void>
+    CREATE_USER({state, commit} : AugmentActionContext, payload: UserDto) : Promise<void>
 }
 export const actions: ActionTree<State, State> & Actions = {
+    SAVE_USER({state, commit, dispatch}: AugmentActionContext, payload): Promise<void> {
+        return state.api.createUserUsingPost(payload.id || 0, payload)
+            .then(()=>dispatch('GET_USERS', undefined));
+    },
+    CREATE_USER({state, dispatch}: AugmentActionContext, payload): Promise<void> {
+        return state.api.createUserUsingPost1(payload)
+            .then(()=>dispatch('GET_USERS', undefined))
+    },
+    GET_USERS({commit, state}: AugmentActionContext, payload: void): Promise<void> {
+        return state.api.getAllUsersUsingGet()
+            .then((request=>request.data))
+            .catch(()=>[])
+            .then((data)=>commit('SET_USERS', data));
+    },
+    GET_USER_ROLES({commit, state}: AugmentActionContext, payload: void): Promise<void> {
+        return state.api.getAllUserRolesUsingGet()
+            .then((response)=>response.data || [])
+            .then(data=>commit('SET_USER_ROLES', data))
+    },
+
     GET_FLAT({commit, state}: AugmentActionContext, payload: number): Promise<Flat> {
         return state.public_api.getFlatByIdUsingGet(payload)
             .then(resp=>resp.data)
@@ -96,6 +121,8 @@ export const actions: ActionTree<State, State> & Actions = {
                 return data.content;
             })
             .then(d=>commit('SET_COMPLEXES', state.complexes.concat(d || [])))
+            .then(()=>state.complexPage+=1)
+            .then(()=>undefined)
             .catch((err)=>undefined);
     },
     GET_ADVERTIZED_COMPLEXES({commit, state}: AugmentActionContext, payload: void): Promise<void> {
@@ -113,5 +140,12 @@ export const actions: ActionTree<State, State> & Actions = {
         return state.public_api.findByIdUsingGet(payload, {})
             .then(r=>r.data)
             .then(d=>commit('SET_COMPLEX', d));
+    },
+    GET_AUTH_TOKEN({commit, state}, payload: Request ): Promise<void> {
+       return state.auth.authUsingPost(payload)
+           .then(result=>result.data.token || null)
+           .catch(()=>null)
+           .then(token=>commit('SET_TOKEN', token))
     }
+    
 }

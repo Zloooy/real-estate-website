@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class CityService implements ICityService{
     @Autowired
-    ICityRepository repository;
+    private ICityRepository repository;
     @Override
     public List<City> getAll() {
         return repository.findAll();

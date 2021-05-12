@@ -106,9 +106,11 @@ export default class FlatPage extends Vue{
   height: auto;
   text-align: center;
   width: 100%;
+
 }
 
 .img-flat>img{
+
   max-width: 100%;
   max-height: 390px;
 }

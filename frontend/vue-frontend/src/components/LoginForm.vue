@@ -1,39 +1,28 @@
 <template>
   <div id="login-form">
+    <div>
     <input ref="login-field" v-model="this.login"/>
+    </div>
+    <div>
     <input type="password" v-model="this.password"/>
+    </div>
     <button @click="enter">Войти</button>
-    <div v-if="this.errorText">{{errorText}}</div>
+    <div v-if="errorT">{{errorT}}</div>
     <div v-else>{{successText}}</div>
   </div>
 </template>
 <script lang="ts">
-  import {Response} from "@/generated-api/data-contracts";
   import {Options, Vue} from "vue-class-component";
-  import {HttpResponse} from "@/generated-api/http-client";
-  import {useStore} from "@/store";
+  import {useStore, Store} from "@/store";
 
   @Options( {
     name: "login-form",
     data() {
       return {
-        login: "",
-        password: "",
-        errorText: "",
-        successText: "",
         store: useStore()
       }
     },
     methods: {
-      async enter() {
-        this.store.getters.auth
-        .authUsingPost({
-              login: this.login,
-              password: this.password
-            }
-        ).then(this.afterFetch)
-        .then(this.emitToken);
-      },
       onNetworkError(error: Error) {
         console.debug(error);
         this.setErrorText("Ошибка соединения. Повторите попытку позже");
@@ -44,26 +33,39 @@
       onWrongCredentials() {
         this.setErrorText("Неверный логин или пароль");
       },
-      emitToken(token: string) {
-        this.store.commit('SET_TOKEN', token);
-      },
-      afterFetch(result: HttpResponse<Response, void>): string | undefined {
-        if (result.status !== 200) {
-          Promise.reject();
-          return;
-        } else {
-          return result.data.token;
+    },
+    computed: {
+      authorization_set() {
+        return this.store.getters.authorization_set;
+      }
+    },
+    watch: {
+      authorization_set(newVal) {
+        if (newVal) {
+          this.$router.push("/admin_panel")
+          this.errorT = "";
         }
-      },
-      setErrorText(text: string) {
-        this.errorText = text
-        this.successText = "";
-      },
-      setSuccessText(text: string) {
-        this.errorText = "";
-        this.successText = text;
+        else {
+          this.errorT = "Неверный пкароль";
+        }
       }
     }
     })
-  export default class LoginForm extends Vue {}
+  export default class LoginForm extends Vue {
+   store: Store = useStore();
+   login: string = "";
+   password: string = "";
+   errorT: string = "";
+   successText: string = "";
+   enter(){
+     this.store.dispatch('GET_AUTH_TOKEN', {login: this.login, password: this.password});
+   }
+  }
 </script>
+
+<style>
+#login-form {
+  display: block;
+  text-align: center;
+}
+</style>

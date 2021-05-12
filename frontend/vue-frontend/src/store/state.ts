@@ -1,6 +1,6 @@
 import {Api} from "@/generated-api/Api";
 import {Auth} from "@/generated-api/Auth";
-import {City, Complex, ComplexQuery, Metro, District, Flat} from "@/generated-api/data-contracts";
+import {City, Complex, ComplexQuery, Metro, District, Flat, UserDto, UserRoleDto} from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
 import {ApiConfig} from "@/generated-api/http-client";
 // export interface State {
@@ -20,7 +20,7 @@ export const state = {
     api: new Api(apiConfig),
     public_api: new PublicApi(apiConfig),
     authorization_set: false as boolean,
-    auth: null as Auth | null,
+    auth: new Auth(apiConfig) as Auth,
     cities: [] as City[],
     city: null as City | null,
     complexes: [] as Complex[],
@@ -40,7 +40,9 @@ export const state = {
     complexDeliveryDate: undefined as string | undefined,
     complex: undefined as Complex | undefined,
     complexFlats: [] as Flat[],
-    flat: undefined as Flat | undefined
+    flat: undefined as Flat | undefined,
+    users: [] as UserDto[],
+    userRoles: [] as UserRoleDto[]
 };
 
 export type State = typeof state;
