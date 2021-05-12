@@ -6,6 +6,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import ru.server.data.Auth;
 import ru.server.enums.Authority;
 import ru.server.models.*;
 import ru.server.repositories.*;
@@ -47,7 +48,7 @@ public class DataInitializer implements ApplicationRunner {
     private PasswordEncoder passwordEncoder;
     private static final List<String>
             roleNames = Arrays.asList(ru.server.enums.UserRole.ADMIN, UserRole.CONTENT_MANAGER, UserRole.REALTOR, UserRole.CLIENT),
-            authorityNames = Arrays.asList(Authority.CAN_ENTER),
+            authorityNames = Arrays.asList(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS),
             userLogins=Arrays.asList("admin", "manager"),
             userPasswords=Arrays.asList("password", "password"),
             userRoles=Arrays.asList(UserRole.ADMIN, UserRole.CONTENT_MANAGER),

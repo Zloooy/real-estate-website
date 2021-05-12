@@ -48,10 +48,12 @@ public class UserService implements IUserService {
     @Override
     public boolean save(UserDto userDto) {
         User toModify;
-        User.Role role = roleRepository.findById(userDto.getId()).orElse(null);
+        User.Role role = roleRepository.findById(userDto.getRoleId()).orElse(null);
+        System.out.println("No such role");
         if (role == null) return false;
         if (userDto.getId() != null) {
             toModify = repository.findById(userDto.getId()).orElse(null);
+            System.out.println("No such user");
             if (toModify == null) return false;
         } else {
             toModify = new User();
