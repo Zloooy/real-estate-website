@@ -1,11 +1,11 @@
 package ru.server.services;
 
 import org.springframework.stereotype.Service;
-import ru.server.models.City;
+import ru.server.data.UserRoleDto;
 
 import java.util.List;
 
 @Service
-public interface ICityService {
-    List<City> getAll();
+public interface IRoleService {
+    List<UserRoleDto> getAllRoles();
 }

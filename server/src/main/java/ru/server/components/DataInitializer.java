@@ -55,10 +55,10 @@ public class DataInitializer implements ApplicationRunner {
             metroStationNames=Arrays.asList("Комендантский проспект", "Фрунзенская"),
             metroStationCities=Arrays.asList("Санкт-Петербург", "Санкт-Петербург"),
             metroStationColors=Arrays.asList("#7F0F7E","#007DCC"),
-            contactNames = Arrays.asList("Иван Иванович Иванов"),
-            contactPhones = Arrays.asList("222-32-32"),
-            contactEmails = Arrays.asList("test@test.ru"),
-            contactPhotos = Arrays.asList("http://вашнадежныйриелтор.рф/upload/photos/8e/8eda439d3124bb996fb4b1ab28d11c1b.jpg"),
+            contactNames = Arrays.asList("Семён"),
+            contactPhones = Arrays.asList("777-77-77"),
+            contactEmails = Arrays.asList("semra.limik@gmail.com"),
+            contactPhotos = Arrays.asList("https://sun9-55.userapi.com/impf/c849228/v849228257/188677/K43yeuFKhuE.jpg?size=1622x2160&quality=96&sign=12371b5ad3958b857a65b9cd855b3aaa"),
             districtNames = Arrays.asList("Приморский", "Адмиралтейский"),
             districtCities = Arrays.asList("Санкт-Петербург", "Санкт-Петербург"),
             addressStreets = Arrays.asList("Плесецкая ул.", "Московский пр."),
@@ -82,7 +82,7 @@ public class DataInitializer implements ApplicationRunner {
                             "    новая линейка планировочных и технических решений, отвечающая уровню недвижимости высокого класса двухуровневые квартиры, квартиры с двойным светом, а также квартиры с террасами\n" +
                             "    отдельные кладовые — помещения, которые расположатся на техническом этаже \n" +
                             "    в одном из корпусов встроенный детский сад на 110 мест"),
-            complexContactNames = Arrays.asList("Иван Иванович Иванов","Иван Иванович Иванов"),
+            complexContactNames = Arrays.asList("Семён","Семён"),
             flatImages = Arrays.asList("https://i.pinimg.com/originals/73/ab/98/73ab981e0fde9cf235492cf35a2bd2b5.jpg",
                     "https://i.ytimg.com/vi/6X8Bhjz8-uc/maxresdefault.jpg"
             ),
@@ -102,7 +102,7 @@ public class DataInitializer implements ApplicationRunner {
             private static final List<Flat.EstateType> flatEstateTypes = Arrays.asList(Flat.EstateType.FLAT,  Flat.EstateType.FLAT);
             private static final List<Double> flatPrices = Arrays.asList(100500.00,  360600.00);
             private static final List<Float> flatSquares= Arrays.asList(80f, 100f);
-    private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER), new HashSet<>(), new HashSet<>(), new HashSet<>());
+    private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS), new HashSet<>(), new HashSet<>(), new HashSet<>());
     private static class ListInserter<T> {
 
         public <R extends CrudRepository<T, Long>> void insert(R repo, LongFunction<T> builder, long i) {
@@ -187,7 +187,7 @@ public class DataInitializer implements ApplicationRunner {
     private void addComplexes() {
         new ListInserter<Complex>().insert(
                 complexRepository,
-                (int i)->new Complex(userRepository.findByUsername(complexAuthors.get(i)), complexNames.get(i), addressRepository.findByStreet(complexAddresses.get(i)).orElse(null), complexAmountsOfRooms.get(i), complexPrices.get(i), complexSpaces.get(i), complexImages.get(i), complexDeliveryDates.get(i), complexComments.get(i), contactsRepository.getByName("Иван Иванович Иванов").orElse(null), complexEstateStatuses.get(i), complexEstateCategories.get(i), complexEstateAdvertized.get(i)),
+                (int i)->new Complex(userRepository.findByUsername(complexAuthors.get(i)), complexNames.get(i), addressRepository.findByStreet(complexAddresses.get(i)).orElse(null), complexAmountsOfRooms.get(i), complexPrices.get(i), complexSpaces.get(i), complexImages.get(i), complexDeliveryDates.get(i), complexComments.get(i), contactsRepository.getByName("Семён").orElse(null), complexEstateStatuses.get(i), complexEstateCategories.get(i), complexEstateAdvertized.get(i)),
                 complexNames.size()
         );
     }
