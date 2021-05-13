@@ -4,7 +4,9 @@
       <data-realtor/>
     </div>
     <div class="call-btn">
-     <request-call-form/>
+     <request-call-form
+     place-type="FLAT"
+     :place-id="store.getters.flat?.id"/>
     </div>
     <div class="data">
       <div class="price">
@@ -26,6 +28,7 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import RequestCallForm from "@/components/RequestCallForm.vue"
+import {Store, useStore} from "@/store/index";
 
 
 @Options({
@@ -52,7 +55,9 @@ import RequestCallForm from "@/components/RequestCallForm.vue"
   }
 })
 
-export default class MianDataFlat extends Vue {}
+export default class MianDataFlat extends Vue {
+  store: Store = useStore();
+}
 
 </script>
 
