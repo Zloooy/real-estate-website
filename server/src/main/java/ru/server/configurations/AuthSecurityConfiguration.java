@@ -62,7 +62,8 @@ public class AuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/swagger-resources/**",
                 "/auth"
         )
-                .antMatchers(HttpMethod.POST, "/public_api/");
+                .antMatchers(HttpMethod.POST, "/public_api/**")
+                .antMatchers(HttpMethod.PUT, "/public_api/**");
     }
 
     @Bean
