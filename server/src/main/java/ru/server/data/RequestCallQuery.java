@@ -1,31 +1,33 @@
 package ru.server.data;
 
 public class RequestCallQuery {
-    private long placeId;
-    private PlaceType placeType;
+    private Long placeId;
+    private CallRequestType callRequestType;
     private String name;
     private String contactPhone;
     private String contactEmail;
     private String comment;
-    public enum PlaceType {
+    public enum CallRequestType {
         COMPLEX,
-        FLAT
+        FLAT,
+        WANT_TO_SELL,
+        WANT_TO_BUY
     }
 
-    public long getPlaceId() {
+    public Long getPlaceId() {
         return placeId;
     }
 
-    public void setPlaceId(long placeId) {
+    public void setPlaceId(Long placeId) {
         this.placeId = placeId;
     }
 
-    public PlaceType getPlaceType() {
-        return placeType;
+    public CallRequestType getCallRequestType() {
+        return callRequestType;
     }
 
-    public void setPlaceType(PlaceType placeType) {
-        this.placeType = placeType;
+    public void setCallRequestType(CallRequestType callRequestType) {
+        this.callRequestType = callRequestType;
     }
 
     public String getName() {

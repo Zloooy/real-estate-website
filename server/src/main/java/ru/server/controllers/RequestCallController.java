@@ -20,6 +20,7 @@ public class RequestCallController {
     IRequestCallService service;
     @PutMapping("/public_api/request_call")
     public void sendCallRequest(@RequestBody RequestCallQuery query){
-        service.sendMail(query);
+        System.out.println("sendCallRequest called");
+        System.out.println(service.sendMail(query));
     }
 }
