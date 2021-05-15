@@ -45,6 +45,8 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private IFlatRepository flatRepository;
     @Autowired
+    private ITariffRepository tariffRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     private static final List<String>
             roleNames = Arrays.asList(ru.server.enums.UserRole.ADMIN, UserRole.CONTENT_MANAGER, UserRole.REALTOR, UserRole.CLIENT),
@@ -88,7 +90,21 @@ public class DataInitializer implements ApplicationRunner {
                     "https://i.ytimg.com/vi/6X8Bhjz8-uc/maxresdefault.jpg"
             ),
             flatComplexNames = Arrays.asList("Ultra City", "LEGENDA Московский 65"),
-            flatAbout = Arrays.asList("Теытоое оопимание 1", "Тестовое описание 2");
+            flatAbout = Arrays.asList("Теытоое оопимание 1", "Тестовое описание 2"),
+            tariffNames = Arrays.asList(
+                    "Консультация по продаже недвижимости",
+                    "Сдача в аренду недвижимости -50% комиссия от месячной процентной ставки",
+                    "Юридическая консультация",
+                    "Проверка юридической чистоты квартиры",
+                    "Заказ выписок ЕГРН онлайн",
+                    "Заказ выписок ЕГРН через МФЦ",
+                    "Сдача документов от собственника на регистрацию",
+                    "Подготовка документов по перепланировке : проект с  лицензии",
+                    "Получение Разрешения на перепланировку",
+                    "Консультации по продаже объекта недвижимости",
+                    "Консультации при обмене недвижимости",
+                    "Оформление наследства по доверенности"
+                    );
             private static final Calendar workCalendar = new GregorianCalendar();
             private static final List<Date> complexDeliveryDates = Arrays.asList(Date.from(LocalDate.of(2022,1,1).atStartOfDay().toInstant(ZoneOffset.UTC)),Date.from(LocalDate.of(2025,1,1).atStartOfDay().toInstant(ZoneOffset.UTC)));
             private static final List<Complex.EstateCategory> complexEstateCategories = Arrays.asList(Complex.EstateCategory.NEW, Complex.EstateCategory.NEW);
@@ -101,9 +117,42 @@ public class DataInitializer implements ApplicationRunner {
                     flatNumbersOfRooms=Arrays.asList(2,3),
                     flatFloors=Arrays.asList(2,3);
             private static final List<Flat.EstateType> flatEstateTypes = Arrays.asList(Flat.EstateType.FLAT,  Flat.EstateType.FLAT);
-            private static final List<Double> flatPrices = Arrays.asList(100500.00,  360600.00);
+            private static final List<Double>
+                    flatPrices = Arrays.asList(100500.00,  360600.00),
+                    tariffPrices = Arrays.asList(
+                            3000.00,
+                            2000.00,
+                            3000.00,
+                            50.00,
+                            3000.00,
+                            15000.00,
+                            300.00,
+                            600.00,
+                            2000.00,
+                            5000.00,
+                            10000.00,
+                            3.00,
+                            5.00,
+                            15000.00
+                    );
             private static final List<Float> flatSquares= Arrays.asList(80f, 100f);
-    private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS), new HashSet<>(), new HashSet<>(), new HashSet<>());
+            private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS), new HashSet<>(), new HashSet<>(), new HashSet<>());
+    private static List<Tariff.TariffPriceType> tariffPriceTypes = Arrays.asList(
+            Tariff.TariffPriceType.ROUBLES,
+            Tariff.TariffPriceType.ROUBLES,
+            Tariff.TariffPriceType.ROUBLES,
+            Tariff.TariffPriceType.PERCENT_OF_MONTHLY_RENT_RATE,
+            Tariff.TariffPriceType.ROUBLES,
+            Tariff.TariffPriceType.ROUBLES,
+            Tariff.TariffPriceType.ROUBLES,
+            Tariff.TariffPriceType.ROUBLES,
+            Tariff.TariffPriceType.ROUBLES,
+            Tariff.TariffPriceType.ROUBLES,
+            Tariff.TariffPriceType.ROUBLES,
+            Tariff.TariffPriceType.PERCENT_OF_TRANSACTION_AMOUNT,
+            Tariff.TariffPriceType.PERCENT_OF_TRANSACTION_AMOUNT,
+            Tariff.TariffPriceType.ROUBLES
+);
     private static class ListInserter<T> {
 
         public <R extends CrudRepository<T, Long>> void insert(R repo, LongFunction<T> builder, long i) {
@@ -130,6 +179,9 @@ public class DataInitializer implements ApplicationRunner {
         System.out.println("ADDING COMPLEXES");
         addComplexes();
         addFlats();
+        assert tariffNames.size() == tariffPrices.size();
+        assert tariffNames.size() == tariffPriceTypes.size();
+        addTariffs();
     }
     private void addAuthorities(){
         new ListInserter<User.Role.Authority>().insertFromList(authorityRepository, User.Role.Authority::new, authorityNames);
@@ -199,4 +251,11 @@ public class DataInitializer implements ApplicationRunner {
                 flatImages.size()
         );
     }
+private void addTariffs(){
+        new ListInserter<Tariff>().insert(
+                tariffRepository,
+                (int i)->new Tariff(tariffNames.get(i), tariffPrices.get(i), tariffPriceTypes.get(i)),
+                tariffNames.size()
+        );
+}
 }
