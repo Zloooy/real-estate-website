@@ -14,7 +14,8 @@
         />
         <router-link to="/tariffs">Тарифы</router-link>
         <router-link to="/blog">Блог</router-link>
-        <router-link to="/phone">Телефон</router-link>
+        911
+        <request-call-button @click="$router.push('/request_call/')"/>
       </nav>
     </div>
   </header>
@@ -25,9 +26,11 @@ import {Options, Vue} from "vue-class-component";
 import DropdownSelector from "@/components/DropdownSelector.vue";
 import {City} from "@/generated-api/data-contracts";
 import {Store, useStore} from "@/store";
+import RequestCallButton from "@/components/RequestCallButton.vue";
 
 @Options({
       components: {
+        RequestCallButton,
         DropdownSelector
       },
       computed: {

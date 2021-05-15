@@ -1,7 +1,10 @@
 <template>
   <div class="main-data-complex">
     <div class="call-btn">
-      <request-call-form/>
+      <request-call-form-optional
+      call-request-type="COMPLEX"
+      :place-id="store.getters.complex?.id"
+      />
     </div>
     <div class="data">
       <div class="address">
@@ -19,12 +22,13 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import RequestCallForm from "@/components/RequestCallForm.vue"
+import {Store, useStore} from "@/store/index";
+import RequestCallFormOptional from "@/components/RequestCallFormOptional.vue";
 
 @Options({
   name: "main-data-complex",
   components: {
-    RequestCallForm
+    RequestCallFormOptional
   },
   props: {
     button: {
@@ -42,7 +46,9 @@ import RequestCallForm from "@/components/RequestCallForm.vue"
   }
 })
 
-export default class MianDataComplex extends Vue {}
+export default class MianDataComplex extends Vue {
+  store: Store = useStore();
+}
 
 </script>
 

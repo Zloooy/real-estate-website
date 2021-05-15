@@ -26,6 +26,7 @@ public class UserController {
     @ApiOperation("Изменение ползователя")
     @PostMapping("/api/user/new")
     ResponseEntity<Boolean> createUser(@RequestHeader("Authorization") String token, @RequestBody UserDto userValue){
+        userValue.setId(null);
         return ResponseEntity.ok(userService.save(userValue));
     }
     @ApiOperation("Изменение ползователя")

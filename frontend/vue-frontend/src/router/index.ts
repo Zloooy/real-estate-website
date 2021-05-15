@@ -5,16 +5,13 @@ import ComplexPage from "@/components/СomplexPage.vue";
 import FlatPage from "@/components/FlatPage.vue";
 import LoginForm from "@/components/LoginForm.vue";
 import AdminPage from "@/components/AdminPage.vue";
-import TariffsPage from "@/components/TariffsPage.vue";
-import BlogPage from "@/components/BlogPage.vue";
-import ArticlePage from "@/components/ArticlePage.vue";
-
+import RequestCallPage from "@/components/RequestCallPage.vue";
 const routes: Array<RouteRecordRaw> = [
-    // {
-    //     path: '/',
-    //     name: 'Главная',
-    //     component: IntroPage
-    // },
+    {
+        path: '/',
+        name: 'Главная',
+        component: IntroPage
+    },
     {
         path: '/search',
         name: 'Поиск',
@@ -41,12 +38,10 @@ const routes: Array<RouteRecordRaw> = [
         component: AdminPage
     },
     {
-        path: '/',
-        name: 'Главная',
-        component: ArticlePage
+        path: '/request_call',
+        name: 'Заказать звонок',
+        component: RequestCallPage
     }
-
-
 /*
     {
         path: '/404',
