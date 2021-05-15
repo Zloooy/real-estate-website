@@ -410,6 +410,7 @@ export interface Request {
 }
 
 export interface RequestCallQuery {
+  callRequestType?: "COMPLEX" | "FLAT" | "WANT_TO_BUY" | "WANT_TO_SELL";
   comment?: string;
   contactEmail?: string;
   contactPhone?: string;
@@ -417,7 +418,6 @@ export interface RequestCallQuery {
 
   /** @format int64 */
   placeId?: number;
-  placeType?: "COMPLEX" | "FLAT";
 }
 
 export interface Response {
