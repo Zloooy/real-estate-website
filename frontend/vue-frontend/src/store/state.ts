@@ -1,6 +1,16 @@
 import {Api} from "@/generated-api/Api";
 import {Auth} from "@/generated-api/Auth";
-import {City, Complex, ComplexQuery, Metro, District, Flat, UserDto, UserRoleDto} from "@/generated-api/data-contracts";
+import {
+    City,
+    Complex,
+    ComplexQuery,
+    Metro,
+    District,
+    Flat,
+    UserDto,
+    UserRoleDto,
+    Tariff
+} from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
 import {ApiConfig} from "@/generated-api/http-client";
 // export interface State {
@@ -42,7 +52,8 @@ export const state = {
     complexFlats: [] as Flat[],
     flat: undefined as Flat | undefined,
     users: [] as UserDto[],
-    userRoles: [] as UserRoleDto[]
+    userRoles: [] as UserRoleDto[],
+    tariffs: [] as Tariff[]
 };
 
 export type State = typeof state;

@@ -448,6 +448,26 @@ export interface Sort {
   unsorted?: boolean;
 }
 
+export interface Tariff {
+  /**
+   * Уникальный идентификатор тарифа
+   * @format int64
+   */
+  id?: number;
+
+  /** Название услуги */
+  name?: string;
+
+  /**
+   * Цена услуги
+   * @format double
+   */
+  price?: number;
+
+  /** Тип цены тарифа (проценты, рубли и т. п.). */
+  priceType?: "PERCENT_OF_MONTHLY_RENT_RATE" | "PERCENT_OF_TRANSACTION_AMOUNT" | "ROUBLES";
+}
+
 export interface User {
   accountNonExpired?: boolean;
   accountNonLocked?: boolean;

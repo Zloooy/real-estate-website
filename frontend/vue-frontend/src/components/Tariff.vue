@@ -4,26 +4,47 @@
       {{option}}
     </div>
     <div class="price">
-      {{price}} Р
+      {{price}}{{priceName}}
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import {PropType} from "vue";
+import {Tariff as TariffData} from "@/generated-api/data-contracts";
+
 @Options({
   name: "tariff",
   props:{
-    option:{
+    tariff: Object as PropType<TariffData>
+    /*option:{
       type: String
     },
     price:{
       type: Number
+    }*/
+  },
+  computed: {
+    option(){
+      return this.$props.tariff.name;
+    },
+    price(){
+      return this.$props.tariff.price;
+    },
+    priceName(){
+      return this.priceNames[this.$props.tariff.priceType];
     }
   }
 })
 
-export default class Tariff extends Vue {}
+export default class Tariff extends Vue {
+  priceNames: Record<Exclude<TariffData['priceType'], undefined>, string>= {
+    "ROUBLES": " Р",
+    "PERCENT_OF_TRANSACTION_AMOUNT": " % от суммы сделки",
+    "PERCENT_OF_MONTHLY_RENT_RATE": " % от месячной аренды",
+  }
+}
 
 </script>
 
