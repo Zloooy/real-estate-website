@@ -1,7 +1,9 @@
 <template>
-  <navigation-header/>
-  <router-view/>
-<!--  <intro-page/>-->
+  <div>
+    <navigation-header/>
+    <router-view/>
+  <!--  <intro-page/>-->
+  </div>
 </template>
 
 <script lang="ts">
