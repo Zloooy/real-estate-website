@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <navigation-header/>
-    <router-view/>
-  <!--  <intro-page/>-->
-  </div>
+  <navigation-header/>
+  <router-view/>
+<!--  <intro-page/>-->
 </template>
 
 <script lang="ts">
@@ -21,13 +19,6 @@ import RangeSlider from "@/components/RangeSlider.vue";
   },
 })
 export default class App extends Vue {
-  categories = [
-      {
-        name:"Новостройки",
-      },
-    {name: "Вторичка"},
-    {name:"Аренда"}
-  ];
   store: Store = useStore();
   created() {
     this.store.dispatch('GET_CITIES',null);
