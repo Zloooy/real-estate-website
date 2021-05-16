@@ -3,6 +3,7 @@
     <div class="header">
       БЛОГ
     </div>
+    <edit-button/>
     <div class="blog-articles">
       <div class="articles-list">
         <mini-Article-card
@@ -31,11 +32,13 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import MiniArticleCard from "@/components/MiniArticleCard.vue";
+import EditButton from "@/components/EditButton.vue";
 
 @Options({
   name:"blog-page",
   components:{
-    MiniArticleCard
+    MiniArticleCard,
+    EditButton
   }
 })
 export default class BLogPage extends Vue{

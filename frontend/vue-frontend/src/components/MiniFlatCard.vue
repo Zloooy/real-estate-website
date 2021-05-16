@@ -1,21 +1,28 @@
 <template>
   <div class="mini-flat-card">
+
     <div class="box1">
       <div class="rooms">{{rooms}}к</div>
 
       <div class="price">{{price}} Р</div>
+    </div>
+    <div class="btn">
+      <delete-button/>
     </div>
     <div class="box2">
       <div class="square">{{square}} м2</div>
 
       <div class="floor">{{floor}} этаж</div>
     </div>
+
   </div>
+
 </template>
 
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import DeleteButton from "@/components/DeleteButton.vue";
 
 @Options({
   name: "mini-flat-card",
@@ -32,6 +39,9 @@ import {Options, Vue} from "vue-class-component";
     floor:{
       type: Number
     },
+  },
+  components:{
+    DeleteButton
   }
 })
 
@@ -58,7 +68,12 @@ export default class MiniFlatCard extends Vue {
   background-color: #E6EDF2;
 }
 
+.btn{
+  float: right;
+}
+
 .box1{
+
   display: grid;
   grid-template-columns: 1fr 7fr;
 }

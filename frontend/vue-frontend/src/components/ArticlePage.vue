@@ -1,5 +1,6 @@
 <template>
   <div class="article-page">
+    <edit-button/>
     <div class="header-article">
       Новостройки у метро Звездная
       <div class="article-data">
@@ -28,6 +29,8 @@
 <script lang="ts">
   import {Options, Vue} from "vue-class-component";
   import TextAbout from "@/components/TextAbout.vue";
+  import EditButton from "@/components/EditButton.vue";
+
   @Options({
     name: "article-page",
     props:{
@@ -36,7 +39,8 @@
       }
     },
     components:{
-      TextAbout
+      TextAbout,
+      EditButton
     }
   })
 

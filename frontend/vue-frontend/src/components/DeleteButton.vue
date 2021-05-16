@@ -12,19 +12,19 @@ export default class DeleteButton extends Vue {}
 </script>
 
 
-<style>
+<style scoped>
 .delete-button {
   width: 40px;
   height: 40px;
   position: relative;
-  z-index: 1;
+  z-index: 3;
   cursor: pointer;
 }
 .delete-button:before {
   content: '+';
   color: steelblue;
   position: absolute;
-  z-index: 2;
+  z-index: 4;
   transform: rotate(45deg);
   font-size: 50px;
   line-height: 1;
