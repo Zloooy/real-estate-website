@@ -14,8 +14,10 @@
 </script>
 <style scoped>
   button {
-    border: none;
-    border-radius: 15px;
-    background: #6B8878;
+    border: 1px solid black;
+    background-color: #E6EDF2;
+    cursor: pointer;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
   }
 </style>
