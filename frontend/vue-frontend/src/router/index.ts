@@ -5,6 +5,8 @@ import ComplexPage from "@/components/СomplexPage.vue";
 import FlatPage from "@/components/FlatPage.vue";
 import LoginForm from "@/components/LoginForm.vue";
 import AdminPage from "@/components/AdminPage.vue";
+import TariffsPage from "@/components/TariffsPage.vue";
+import RequestCallPage from "@/components/RequestCallPage.vue";
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -35,6 +37,16 @@ const routes: Array<RouteRecordRaw> = [
         path: '/admin_panel',
         name: 'Панель администратора',
         component: AdminPage
+    },
+    {
+        path: '/tariffs',
+        name: 'Тарифы',
+        component: TariffsPage
+    },
+    {
+        path: '/request_call',
+        name: 'Заказать звонок',
+        component: RequestCallPage
     }
 /*
     {

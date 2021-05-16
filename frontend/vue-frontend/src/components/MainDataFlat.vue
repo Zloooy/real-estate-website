@@ -4,8 +4,8 @@
       <data-realtor/>
     </div>
     <div class="call-btn">
-     <request-call-form
-     place-type="FLAT"
+     <request-call-form-optional
+     call-request-type="FLAT"
      :place-id="store.getters.flat?.id"/>
     </div>
     <div class="data">
@@ -27,14 +27,14 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import RequestCallForm from "@/components/RequestCallForm.vue"
 import {Store, useStore} from "@/store/index";
+import RequestCallFormOptional from "@/components/RequestCallFormOptional.vue";
 
 
 @Options({
   name: "main-data-flat",
   components: {
-    RequestCallForm
+    RequestCallFormOptional
   },
   props: {
     button: {

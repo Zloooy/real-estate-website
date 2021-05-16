@@ -26,10 +26,14 @@ export type Mutations<S = State> = {
     SET_COMPLEX_FLATS(state: State, payload: Flat[]);
     SET_FLAT(state: State, payload: State['flat']);
     SET_USERS(state: State, payload: State['users'])
-    SET_USER_ROLES(state: State, payload: State['userRoles'])
+    SET_USER_ROLES(state: State, payload: State['userRoles']),
+    SET_TARIFFS(state: State, payload: State['tariffs'])
 }
 
 export const mutations: MutationTree<State> & Mutations = {
+    SET_TARIFFS(state: State, payload: State["tariffs"]) {
+        state.tariffs = payload;
+    },
     SET_COMPLEX_DELIVERY_DATE(state: State, payload: string | undefined) {
         state.complexSearchParamsChanged = !compareObjects(state.complexDeliveryDate, payload);
         state.complexDeliveryDate = payload;
@@ -111,5 +115,5 @@ export const mutations: MutationTree<State> & Mutations = {
     },
     SET_USER_ROLES(state, payload: State["userRoles"]) {
         state.userRoles = payload;
-    },
+    }
 }

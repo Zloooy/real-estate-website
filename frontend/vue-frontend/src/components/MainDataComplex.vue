@@ -1,8 +1,8 @@
 <template>
   <div class="main-data-complex">
     <div class="call-btn">
-      <request-call-form
-      place-type="COMPLEX"
+      <request-call-form-optional
+      call-request-type="COMPLEX"
       :place-id="store.getters.complex?.id"
       />
     </div>
@@ -22,13 +22,13 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import RequestCallForm from "@/components/RequestCallForm.vue"
 import {Store, useStore} from "@/store/index";
+import RequestCallFormOptional from "@/components/RequestCallFormOptional.vue";
 
 @Options({
   name: "main-data-complex",
   components: {
-    RequestCallForm
+    RequestCallFormOptional
   },
   props: {
     button: {

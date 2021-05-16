@@ -1,0 +1,72 @@
+<template>
+  <div class="blog-page">
+    <div class="header">
+      БЛОГ
+    </div>
+    <div class="blog-articles">
+      <div class="articles-list">
+        <mini-Article-card
+           header="Новостройки у метро Звездная"
+           data="14.05.2021"
+           description="Желающих жить в Московском районе меньше не становится."
+        />
+        <mini-Article-card
+            header="Новостройки у метро Звездная"
+            data="14.05.2021"
+        />
+        <mini-Article-card
+            header="Новостройки у метро Звездная"
+            data="14.05.2021"
+        />
+        <mini-Article-card
+            header="Новостройки у метро Звездная"
+            data="14.05.2021"
+        />
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script lang="ts">
+import {Options, Vue} from "vue-class-component";
+import MiniArticleCard from "@/components/MiniArticleCard.vue";
+
+@Options({
+  name:"blog-page",
+  components:{
+    MiniArticleCard
+  }
+})
+export default class BLogPage extends Vue{
+
+}
+
+</script>
+
+<style>
+.blog-page{
+  text-align: center;
+  font-family: 'HelveticaNeueCyr', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333333;
+  max-width: 1060px;
+  margin: 0 auto;
+}
+
+.header{
+  margin-top: 60px;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.articles-list{
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px,auto));
+  grid-gap: 40px;
+}
+</style>

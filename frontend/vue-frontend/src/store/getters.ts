@@ -20,7 +20,8 @@ export type Getters = {
     complexFlats(state: State): State['complexFlats'],
     flat(state: State): State['flat'],
     users(state: State): State['users'],
-    userRoles(state: State): State['userRoles']
+    userRoles(state: State): State['userRoles'],
+    tariffs(state: State): State['tariffs']
 }
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -68,5 +69,8 @@ export const getters: GetterTree<State, State> & Getters = {
     },
     flat(state: State): State['flat'] {
         return state.flat;
+    },
+    tariffs(state: State): State["tariffs"] {
+        return state.tariffs;
     }
 } as Getters;
