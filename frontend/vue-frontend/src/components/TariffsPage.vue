@@ -5,8 +5,9 @@
     </div>
     <div class="tariffs-list">
       <tariff
-      option="Сопровождение на сделку в МФЦ"
-      price="10000"
+      v-for="tariff in tariffs"
+      :key="tariff.if"
+      :tariff="tariff"
       />
     </div>
   </div>
@@ -15,15 +16,25 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import Tariff from "@/components/Tariff.vue";
+import {Store, useStore} from "@/store/index";
 
 @Options({
   name:"tariffs-page",
   components:{
     Tariff
+  },
+  computed: {
+    tariffs(){
+      return this.store.getters.tariffs;
+    }
   }
-//  computed:{ options(){ return this.store.getters.options;} }
 })
-export default class TariffsPage extends Vue{}
+export default class TariffsPage extends Vue{
+  created(){
+    this.store.dispatch('GET_TARIFFS', undefined);
+  }
+  store: Store = useStore();
+}
 </script>
 
 <style scoped>

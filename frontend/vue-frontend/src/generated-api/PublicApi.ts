@@ -1,4 +1,14 @@
-import { City, Complex, ComplexQuery, District, Flat, Metro, PageComplex, RequestCallQuery } from "./data-contracts";
+import {
+  City,
+  Complex,
+  ComplexQuery,
+  District,
+  Flat,
+  Metro,
+  PageComplex,
+  RequestCallQuery,
+  Tariff,
+} from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -138,7 +148,7 @@ export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDa
    *
    * @tags request-call-controller
    * @name SendCallRequestUsingPut
-   * @summary sendCallRequest
+   * @summary Отправка запроса на звонок
    * @request PUT:/public_api/request_call
    */
   sendCallRequestUsingPut = (data: RequestCallQuery, params: RequestParams = {}) =>
@@ -147,6 +157,21 @@ export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDa
       method: "PUT",
       body: data,
       type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags tariff-rest-controller
+   * @name GetAllTariffsUsingGet
+   * @summary Получение всех тарифов
+   * @request GET:/public_api/tariffs
+   */
+  getAllTariffsUsingGet = (params: RequestParams = {}) =>
+    this.request<Tariff[], void>({
+      path: `/public_api/tariffs`,
+      method: "GET",
+      format: "json",
       ...params,
     });
 }

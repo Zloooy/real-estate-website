@@ -1,7 +1,7 @@
 import {Mutations} from "@/store/mutations";
 import {ActionContext, ActionTree} from "vuex";
 import {State} from "@/store/state";
-import {City, Complex, District, Flat, Metro, Request, UserDto} from "@/generated-api/data-contracts";
+import {City, Complex, District, Flat, Metro, Request, Tariff, UserDto} from "@/generated-api/data-contracts";
 
 
 type AugmentActionContext = {
@@ -34,8 +34,15 @@ export interface Actions {
     GET_USER_ROLES({commit, state}: AugmentActionContext, payload: void): Promise<void>
     SAVE_USER({state, commit} : AugmentActionContext, payload: UserDto) : Promise<void>
     CREATE_USER({state, commit} : AugmentActionContext, payload: UserDto) : Promise<void>
+    GET_TARIFFS({state, commit}: AugmentActionContext, payload: void) : Promise<void>
 }
 export const actions: ActionTree<State, State> & Actions = {
+    GET_TARIFFS({state, commit}: AugmentActionContext, payload: void): Promise<void> {
+        return state.public_api.getAllTariffsUsingGet()
+            .then(response=>response.data)
+            .catch(()=>[] as Tariff[])
+            .then((tariffs)=>commit('SET_TARIFFS', tariffs));
+    },
     SAVE_USER({state, commit, dispatch}: AugmentActionContext, payload): Promise<void> {
         return state.api.createUserUsingPost(payload.id || 0, payload)
             .then(()=>dispatch('GET_USERS', undefined));
