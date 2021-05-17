@@ -7,6 +7,7 @@ import LoginForm from "@/components/LoginForm.vue";
 import AdminPage from "@/components/AdminPage.vue";
 import TariffsPage from "@/components/TariffsPage.vue";
 import RequestCallPage from "@/components/RequestCallPage.vue";
+import BLogPage from "@/components/BlogPage.vue";
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -47,6 +48,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/request_call',
         name: 'Заказать звонок',
         component: RequestCallPage
+    },
+    {
+        path: '/blog',
+        name: 'Блог',
+        component: BLogPage
     }
 /*
     {

@@ -28,9 +28,21 @@ export type Mutations<S = State> = {
     SET_USERS(state: State, payload: State['users'])
     SET_USER_ROLES(state: State, payload: State['userRoles']),
     SET_TARIFFS(state: State, payload: State['tariffs'])
+    SET_ARTICLES(state: State, payload: State['articles'])
+    SET_ARTICLE_PAGE(state: State, payload: number)
+    SET_ARTICLE_SIZE(state: State, payload: number)
 }
 
 export const mutations: MutationTree<State> & Mutations = {
+    SET_ARTICLE_PAGE(state: State, payload: number) {
+        state.articlePage = payload;
+    },
+    SET_ARTICLE_SIZE(state: State, payload: number) {
+        state.articleSize = payload;
+    },
+    SET_ARTICLES(state: State, payload: State["articles"]) {
+        state.articles = payload;
+    },
     SET_TARIFFS(state: State, payload: State["tariffs"]) {
         state.tariffs = payload;
     },

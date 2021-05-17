@@ -9,7 +9,7 @@ import {
     Flat,
     UserDto,
     UserRoleDto,
-    Tariff
+    Tariff, Article
 } from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
 import {ApiConfig} from "@/generated-api/http-client";
@@ -53,7 +53,10 @@ export const state = {
     flat: undefined as Flat | undefined,
     users: [] as UserDto[],
     userRoles: [] as UserRoleDto[],
-    tariffs: [] as Tariff[]
+    tariffs: [] as Tariff[],
+    articles: [] as Article[],
+    articlePage: 0 as number,
+    articleSize: 1 as number
 };
 
 export type State = typeof state;

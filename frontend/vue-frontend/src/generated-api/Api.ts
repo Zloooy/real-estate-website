@@ -1,7 +1,56 @@
-import { Greeting, RepresentationModelObject, UserDto, UserRoleDto } from "./data-contracts";
+import { Article, Greeting, RepresentationModelObject, UserDto, UserRoleDto } from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags article-controller
+   * @name CreateArticleUsingPost
+   * @summary Обновить статью с id
+   * @request POST:/api/article/new
+   */
+  createArticleUsingPost = (data: Article, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/article/new`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags article-controller
+   * @name EditArticleByIdUsingPost
+   * @summary Обновить статью с id
+   * @request POST:/api/article/{id}
+   */
+  editArticleByIdUsingPost = (id: number, data: Article, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/article/${id}`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags article-controller
+   * @name DeleteArticleByIdUsingDelete
+   * @summary Удаление статьи по id
+   * @request DELETE:/api/article/{id}
+   */
+  deleteArticleByIdUsingDelete = (id: number, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/article/${id}`,
+      method: "DELETE",
+      format: "json",
+      ...params,
+    });
   /**
    * No description
    *

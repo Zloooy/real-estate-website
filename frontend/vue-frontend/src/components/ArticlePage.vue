@@ -2,7 +2,7 @@
   <div class="article-page">
     <div class="header-article">
       Новостройки у метро Звездная
-      <div class="article-data">
+      <div class="article-date">
         14.05.2021
       </div>
     </div>
@@ -66,7 +66,7 @@
   font-weight: 700;
 }
 
-.article-data{
+.article-date{
   text-align: center;
   margin-top: 15px;
   color: steelblue;

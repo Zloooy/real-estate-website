@@ -14,7 +14,6 @@ type AugmentActionContext = {
 export interface Actions {
     GET_CITIES({ commit }: AugmentActionContext,
     payload: null): Promise<City[]>,
-
     GET_ADVERTIZED_COMPLEXES({ commit }: AugmentActionContext,
                payload: void): Promise<void>
     GET_SEARCHED_COMPLEXES({ commit }: AugmentActionContext,
@@ -34,9 +33,25 @@ export interface Actions {
     GET_USER_ROLES({commit, state}: AugmentActionContext, payload: void): Promise<void>
     SAVE_USER({state, commit} : AugmentActionContext, payload: UserDto) : Promise<void>
     CREATE_USER({state, commit} : AugmentActionContext, payload: UserDto) : Promise<void>
-    GET_TARIFFS({state, commit}: AugmentActionContext, payload: void) : Promise<void>
+    GET_TARIFFS({state, commit}: AugmentActionContext, payload: void) : Promise<void>,
+    GET_ARTICLES({state, commit}: AugmentActionContext, payload: void) : Promise<void>
 }
 export const actions: ActionTree<State, State> & Actions = {
+    GET_ARTICLES({state, commit}: AugmentActionContext, payload: void): Promise<void> {
+        if (state.articlePage >= state.articleSize){
+            return new Promise<void>(()=>undefined);
+        }
+        return state.public_api.getArticlesUsingGet({page: state.articlePage, size: 5})
+            .then(response=>response.data)
+            .then(data=>{
+                commit('SET_ARTICLE_SIZE', data.pageable?.page || 0);
+                commit('SET_ARTICLE_PAGE', data.pageable?.size || 0);
+                return data.content || [];
+            })
+            .then(d=>commit('SET_ARTICLES', state.articles.concat(d || [])))
+            .then(()=>state.articlePage+=1)
+            .then(()=>undefined);
+    },
     GET_TARIFFS({state, commit}: AugmentActionContext, payload: void): Promise<void> {
         return state.public_api.getAllTariffsUsingGet()
             .then(response=>response.data)

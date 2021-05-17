@@ -1,10 +1,12 @@
 import {
+  Article,
   City,
   Complex,
   ComplexQuery,
   District,
   Flat,
   Metro,
+  PageArticle,
   PageComplex,
   RequestCallQuery,
   Tariff,
@@ -12,6 +14,37 @@ import {
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class PublicApi<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags article-controller
+   * @name GetArticlesUsingGet
+   * @summary Получить страницу статей
+   * @request GET:/public_api/article
+   */
+  getArticlesUsingGet = (query?: { page?: number; size?: number; sort?: string }, params: RequestParams = {}) =>
+    this.request<PageArticle, void>({
+      path: `/public_api/article`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags article-controller
+   * @name FindArticleByIdUsingGet
+   * @summary Получение статьи с заданным id
+   * @request GET:/public_api/article/{id}
+   */
+  findArticleByIdUsingGet = (id: number, params: RequestParams = {}) =>
+    this.request<Article, void>({
+      path: `/public_api/article/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
   /**
    * No description
    *

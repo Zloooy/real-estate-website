@@ -21,6 +21,29 @@ export interface Address {
   street?: string;
 }
 
+export interface Article {
+  /**
+   * Уникальный идентификатор статьи блога
+   * @format int64
+   */
+  id?: number;
+
+  /** Илллюстрация к статье */
+  image?: string;
+
+  /**
+   * Дата публикации статьи
+   * @format date-time
+   */
+  publishDate?: string;
+
+  /** Текст статьи */
+  text?: string;
+
+  /** Название статьи */
+  title?: string;
+}
+
 export interface Authority {
   authority?: string;
 
@@ -371,6 +394,30 @@ export interface Pageable {
   /** @format int32 */
   size?: number;
   sort?: string;
+}
+
+export interface PageArticle {
+  content?: Article[];
+  empty?: boolean;
+  first?: boolean;
+  last?: boolean;
+
+  /** @format int32 */
+  number?: number;
+
+  /** @format int32 */
+  numberOfElements?: number;
+  pageable?: Pageable;
+
+  /** @format int32 */
+  size?: number;
+  sort?: Sort;
+
+  /** @format int64 */
+  totalElements?: number;
+
+  /** @format int32 */
+  totalPages?: number;
 }
 
 export interface PageComplex {

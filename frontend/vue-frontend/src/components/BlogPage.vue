@@ -6,11 +6,13 @@
     <div class="blog-articles">
       <div class="articles-list">
         <mini-Article-card
-           header="Новостройки у метро Звездная"
-           data="14.05.2021"
-           description="Желающих жить в Московском районе меньше не становится."
+            v-for="article in articles"
+            :key="article.id"
+           :header="article.name"
+           :data="article.date"
+           :description="article.text"
         />
-        <mini-Article-card
+<!--        <mini-Article-card
             header="Новостройки у метро Звездная"
             data="14.05.2021"
         />
@@ -21,7 +23,7 @@
         <mini-Article-card
             header="Новостройки у метро Звездная"
             data="14.05.2021"
-        />
+        />-->
       </div>
     </div>
 
@@ -31,15 +33,24 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import MiniArticleCard from "@/components/MiniArticleCard.vue";
+import {Store, useStore} from "@/store/index";
 
 @Options({
   name:"blog-page",
   components:{
     MiniArticleCard
+  },
+  computed: {
+    articles(){
+      return this.store.getters.articles;
+    }
   }
 })
 export default class BLogPage extends Vue{
-
+  store: Store = useStore();
+  created(){
+    this.store.dispatch('GET_ARTICLES', undefined);
+  }
 }
 
 </script>
