@@ -19,7 +19,7 @@ public class ArticleController {
     IArticleService articleService;
     @ApiOperation(value = "Получение статьи с заданным id")
     @GetMapping(value = "/public_api/article/{id}", produces = "application/json")
-    public ResponseEntity<Article> findArticleById(@RequestHeader("Authorization") String token, @PathVariable("id") Long id){
+    public ResponseEntity<Article> findArticleById(@PathVariable("id") Long id){
         return ResponseEntity.of(articleService.findById(id));
     }
     @Secured({Authority.CAN_EDIT_ARTICLES})
