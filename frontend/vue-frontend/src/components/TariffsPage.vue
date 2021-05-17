@@ -3,6 +3,7 @@
     <div class="header">
       Тарифы
     </div>
+    <edit-button/>
     <div class="tariffs-list">
       <tariff
       v-for="tariff in tariffs"
@@ -17,11 +18,13 @@
 import {Options, Vue} from "vue-class-component";
 import Tariff from "@/components/Tariff.vue";
 import {Store, useStore} from "@/store/index";
+import EditButton from "@/components/EditButton.vue";
 
 @Options({
   name:"tariffs-page",
   components:{
-    Tariff
+    Tariff,
+    EditButton
   },
   computed: {
     tariffs(){

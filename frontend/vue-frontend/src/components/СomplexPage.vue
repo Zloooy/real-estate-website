@@ -1,6 +1,7 @@
 <template>
   <div class="complex-page" v-if="complex">
     <div class="complex-name">{{complex.name}}</div>
+    <edit-button/>
     <div class="intro-complex">
       <div class="img-complex">
         <img :src="complex.image">
@@ -17,7 +18,6 @@
       :about="complex.comment"
       />
     </div>
-
     <div class="complex-flats">
       <div class="headers">КВАРТИРЫ КОМПЛЕКСА</div>
       <div class="flats-list">
@@ -31,6 +31,7 @@
             :floor="flat.floor"
         />
       </div>
+      <add-button/>
     </div>
   </div>
 </template>
@@ -43,6 +44,8 @@ import MainDataComplex from "@/components/MainDataComplex.vue";
 import MiniFlatCard from "@/components/MiniFlatCard.vue";
 import {Store, useStore} from "@/store/index";
 import {Flat} from "@/generated-api/data-contracts";
+import AddButton from "@/components/AddButton.vue";
+import EditButton from "@/components/EditButton.vue";
 
 @Options({
   name:"complex-page",
@@ -50,7 +53,9 @@ import {Flat} from "@/generated-api/data-contracts";
     HorizontalCategorySelect,
     MainDataComplex,
     TextAbout,
-    MiniFlatCard
+    MiniFlatCard,
+    EditButton,
+    AddButton
   },
   computed: {
     complex(){
@@ -79,6 +84,12 @@ export default class ComplexPage extends Vue{
 * {
   margin: 0;
   padding: 0;
+}
+
+.btn{
+  margin: 0 auto;
+  max-width: 1060px;
+
 }
 
 .complex-page{

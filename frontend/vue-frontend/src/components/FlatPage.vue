@@ -1,7 +1,7 @@
 <template>
   <div class="flat-page" v-if="flat">
     <div class="complex-name">{{flat.complex.name}}</div>
-
+    <edit-button/>
     <div class="intro-flat">
         <div class="img-flat">
           <img :src="flat.image">
@@ -38,13 +38,15 @@ import TextAbout from "@/components/TextAbout.vue";
 import MainDataFlat from "@/components/MainDataFlat.vue";
 import DataRealtor from "@/components/DataRealtor.vue";
 import {Store, useStore} from "@/store/index";
+import EditButton from "@/components/EditButton.vue";
 
 @Options({
   name:"flat-page",
   components: {
     MainDataFlat,
     TextAbout,
-    DataRealtor
+    DataRealtor,
+    EditButton
   },
   computed:{
     flat() {

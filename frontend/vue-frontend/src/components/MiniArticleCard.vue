@@ -1,5 +1,9 @@
 <template>
   <div class="mini-article-card">
+    <div class="btn">
+      <delete-button/>
+    </div>
+
     <div class="header">
       {{header}}
     </div>
@@ -13,11 +17,13 @@
     <div class="description">
       {{description}}
     </div>
+
   </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
+import DeleteButton from "@/components/DeleteButton.vue";
 
 @Options({
   name: "mini-article-card",
@@ -34,7 +40,9 @@ import {Options, Vue} from "vue-class-component";
     description:{
       type: String
     }
-
+  },
+  components: {
+    DeleteButton
   }
 })
 
@@ -62,6 +70,7 @@ export default class MiniArticleCard extends Vue {
   background-color: #E6EDF2;
 }
 
+
 .header{
   margin-top: 15px;
   width: 100%;
@@ -69,6 +78,9 @@ export default class MiniArticleCard extends Vue {
   font-size: 20px;
   font-weight: 700;
 
+}
+.btn{
+  float: right;
 }
 .img{
   margin-top: 10px;

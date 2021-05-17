@@ -1,5 +1,6 @@
 <template>
 
+
   <div class="catalog">
     <div class="sidebar_content"><!--поиск в каталоге-->
       <!--сортировка по: возрастанию цены и т.п-->
@@ -84,6 +85,7 @@
         По вашему запросу ничего не найдено
       </div>
     </div>
+
   </div>
 </template>
 

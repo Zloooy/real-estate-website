@@ -137,7 +137,7 @@ export default class IntroPage extends Vue {
 
   .intro-page {
     text-align: center;
-    font-family: 'Open Sans', sans-serif;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
     font-size: 15px;
     line-height: 1.6;
     color: #333333;

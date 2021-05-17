@@ -1,6 +1,8 @@
 <template>
 
   <div class="catalog">
+      <edit-button/>
+    <div class="main">
     <div class="sidebar_content"><!--поиск в каталоге-->
       <!--сортировка по: возрастанию цены и т.п-->
       <div class="sort">Сортировка
@@ -99,7 +101,10 @@
       <div v-else>
         По вашему запросу ничего не найдено
       </div>
+        <add-button/>
     </div>
+    </div>
+
   </div>
 </template>
 
@@ -110,13 +115,17 @@ import MyCard from "@/components/MyCard.vue";
 import DropdownSelector from "@/components/DropdownSelector.vue";
 import {Complex, District, Metro} from "@/generated-api/data-contracts";
 import RangeSlider from "@/components/RangeSlider.vue";
+import EditButton from "@/components/EditButton.vue";
+import AddButton from "@/components/AddButton.vue";
 
 @Options({
   name:"catalog",
   components: {
     MyCard,
     DropdownSelector,
-    RangeSlider
+    RangeSlider,
+    EditButton,
+    AddButton
   },
   computed:{
     complexes(): Complex[]{
@@ -249,12 +258,18 @@ export default class Catalog extends Vue {
   padding: 0;
 }
 
+
 .catalog{
   text-align: center;
   max-width: 1060px;
   margin: 0 auto;
-  padding-top: 30px;
   font-size: 15px;
+}
+
+
+.main{
+  width: 100%;
+  padding-top: 30px;
   display: grid;
   grid-template-columns: 1fr 3fr;
 }
@@ -285,6 +300,9 @@ export default class Catalog extends Vue {
 @media (min-width: 350px) and (max-width: 600px) {
   .catalog{
     grid-template-columns: 1fr 1fr;
+  }
+  .btn{
+    float: none;
   }
 
 }
