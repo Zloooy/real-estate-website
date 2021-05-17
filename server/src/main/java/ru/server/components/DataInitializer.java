@@ -47,10 +47,12 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private ITariffRepository tariffRepository;
     @Autowired
+    private IArticleRepository articleRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     private static final List<String>
             roleNames = Arrays.asList(ru.server.enums.UserRole.ADMIN, UserRole.CONTENT_MANAGER, UserRole.REALTOR, UserRole.CLIENT),
-            authorityNames = Arrays.asList(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS),
+            authorityNames = Arrays.asList(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS, Authority.CAN_EDIT_ARTICLES),
             userLogins=Arrays.asList("admin", "manager"),
             userPasswords=Arrays.asList("password", "password"),
             userRoles=Arrays.asList(UserRole.ADMIN, UserRole.CONTENT_MANAGER),
@@ -104,9 +106,19 @@ public class DataInitializer implements ApplicationRunner {
                     "Консультации по продаже объекта недвижимости",
                     "Консультации при обмене недвижимости",
                     "Оформление наследства по доверенности"
-                    );
+                    ),
+            articleNames = Arrays.asList("Новостройки у метро Звездная"),
+            articleTexts = Arrays.asList("В то время, как Приморский район признан самым популярным среди покупателей новостроек, желающих жить в Московском районе меньше не становится. Поэтому в южной части активно застраивается  территория мясоперерабатывающего завода «Самсон».\n" +
+                    "\n" +
+                    "Общая площадь, принадлежавшая предприятию – порядка 54 гектаров. Он начал свою работу в 30-х годах прошлого века, а пик активности пришелся на 70-е. В 2000 году предприятие признали банкротом. В интернете ходят легенды, что закрытие завода спровоцировано намеренно. Но не будем углубляться.\n" +
+                    "\n" +
+                    "После банкротства предприятия, главным собственником его земель стал Московский Индустриальный Банк. Освоение территорий своими силами он не потянул и начал продавать участки, которые конечно же оказались востребованными среди девелоперов.\n" +
+                    "\n" +
+                    "Сначала стройка развернулась вдоль Пулковского шоссе и большинство домов там уже сдано. С точки зрения развития трансплртной сети и торговой инфраструктуры – это были лакомые кусочки. Автобусы и маршрутки ездят по Пулковскому шоссе до метро “Московская”, в аэропорт, в Петергоф, Пушкин, Павловск и другие исторические пригороды. Напротив жилого массива находятся торговые комплексы “Лето”, “OBI”, “Metro”, гипермаркет “Окей”. "),
+            articleImages = Arrays.asList("https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000");
             private static final Calendar workCalendar = new GregorianCalendar();
-            private static final List<Date> complexDeliveryDates = Arrays.asList(Date.from(LocalDate.of(2022,1,1).atStartOfDay().toInstant(ZoneOffset.UTC)),Date.from(LocalDate.of(2025,1,1).atStartOfDay().toInstant(ZoneOffset.UTC)));
+            private static final List<Date> complexDeliveryDates = Arrays.asList(Date.from(LocalDate.of(2022,1,1).atStartOfDay().toInstant(ZoneOffset.UTC)),Date.from(LocalDate.of(2025,1,1).atStartOfDay().toInstant(ZoneOffset.UTC))),
+                                            articleDates = Arrays.asList(new Date());
             private static final List<Complex.EstateCategory> complexEstateCategories = Arrays.asList(Complex.EstateCategory.NEW, Complex.EstateCategory.NEW);
             private static final List<Complex.EstateStatus> complexEstateStatuses = Arrays.asList(Complex.EstateStatus.ACCEPTED, Complex.EstateStatus.ACCEPTED);
             private final List<Boolean> complexEstateAdvertized = Arrays.asList(true, true);
@@ -136,8 +148,8 @@ public class DataInitializer implements ApplicationRunner {
                             15000.00
                     );
             private static final List<Float> flatSquares= Arrays.asList(80f, 100f);
-            private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS), new HashSet<>(), new HashSet<>(), new HashSet<>());
-    private static List<Tariff.TariffPriceType> tariffPriceTypes = Arrays.asList(
+            private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS), Set.of(Authority.CAN_EDIT_ARTICLES), new HashSet<>(), new HashSet<>());
+    private static final List<Tariff.TariffPriceType> tariffPriceTypes = Arrays.asList(
             Tariff.TariffPriceType.ROUBLES,
             Tariff.TariffPriceType.ROUBLES,
             Tariff.TariffPriceType.ROUBLES,
@@ -182,6 +194,10 @@ public class DataInitializer implements ApplicationRunner {
         assert tariffNames.size() == tariffPrices.size();
         assert tariffNames.size() == tariffPriceTypes.size();
         addTariffs();
+        assert articleNames.size() == articleDates.size();
+        assert articleNames.size() == articleTexts.size();
+        assert  articleNames.size() == articleImages.size();
+        addArticles();
     }
     private void addAuthorities(){
         new ListInserter<User.Role.Authority>().insertFromList(authorityRepository, User.Role.Authority::new, authorityNames);
@@ -256,6 +272,13 @@ private void addTariffs(){
                 tariffRepository,
                 (int i)->new Tariff(tariffNames.get(i), tariffPrices.get(i), tariffPriceTypes.get(i)),
                 tariffNames.size()
+        );
+}
+private void addArticles(){
+        new ListInserter<Article>().insert(
+                articleRepository,
+                (int i)->new Article(articleDates.get(i), articleImages.get(i), articleNames.get(i), articleTexts.get(i)),
+                articleDates.size()
         );
 }
 }

@@ -5,4 +5,5 @@ public final class Authority {
     public static final String CAN_ENTER = DEFAULT_PREFIX +"CAN_ENTER";
     public static final String CAN_VIEW_ROLES = DEFAULT_PREFIX + "CAN_VIEW_ROLES";
     public static final String CAN_MANAGE_USERS = DEFAULT_PREFIX + "CAN_MANAGE_USERS";
+    public static final String CAN_EDIT_ARTICLES = DEFAULT_PREFIX + "CAN_EDIT_ARTICLES";
 }
