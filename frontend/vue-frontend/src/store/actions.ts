@@ -35,8 +35,16 @@ export interface Actions {
     CREATE_USER({state, commit} : AugmentActionContext, payload: UserDto) : Promise<void>
     GET_TARIFFS({state, commit}: AugmentActionContext, payload: void) : Promise<void>,
     GET_ARTICLES({state, commit}: AugmentActionContext, payload: void) : Promise<void>
+    GET_ARTICLE({state, commit}: AugmentActionContext, payload: number) : Promise<void>
 }
 export const actions: ActionTree<State, State> & Actions = {
+    GET_ARTICLE({state, commit}: AugmentActionContext, payload: number): Promise<void> {
+        return state.public_api.findArticleByIdUsingGet(payload)
+            .then(response=>response.data)
+            .then(data=>{
+                commit('SET_ARTICLE', data);
+            });
+    },
     GET_ARTICLES({state, commit}: AugmentActionContext, payload: void): Promise<void> {
         if (state.articlePage >= state.articleSize){
             return new Promise<void>(()=>undefined);

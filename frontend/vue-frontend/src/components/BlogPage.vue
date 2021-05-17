@@ -7,6 +7,7 @@
     <div class="blog-articles">
       <div class="articles-list">
         <mini-Article-card
+            @click="$router.push(`/article/${article.id}`)"
             v-for="article in articles"
             :key="article.id"
            :header="article.name"

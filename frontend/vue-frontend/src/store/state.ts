@@ -56,7 +56,8 @@ export const state = {
     tariffs: [] as Tariff[],
     articles: [] as Article[],
     articlePage: 0 as number,
-    articleSize: 1 as number
+    articleSize: 1 as number,
+    article: null as Article | null
 };
 
 export type State = typeof state;

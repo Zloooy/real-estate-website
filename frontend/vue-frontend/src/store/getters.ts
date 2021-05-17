@@ -22,7 +22,8 @@ export type Getters = {
     users(state: State): State['users'],
     userRoles(state: State): State['userRoles'],
     tariffs(state: State): State['tariffs']
-    articles(state: State): State['articles']
+    articles(state: State): State['articles'],
+    article(state: State): State['article']
 }
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -76,5 +77,8 @@ export const getters: GetterTree<State, State> & Getters = {
     },
     articles(state: State): State['articles'] {
         return state.articles;
+    },
+    article(state): State["article"] {
+        return state.article;
     }
 } as Getters;

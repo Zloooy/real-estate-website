@@ -1,25 +1,19 @@
 <template>
-  <div class="article-page">
+  <div class="article-page" v-if="article">
     <edit-button/>
     <div class="header-article">
-      Новостройки у метро Звездная
+      {{article.title}}
       <div class="article-date">
-        14.05.2021
+        {{new Date(article.publishDate)}}
       </div>
     </div>
 
     <div class="img-article">
-      <img src="https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000">
+      <img :src="article.image">
     </div>
     <div class="text">
       <text-about
-          about="В то время, как Приморский район признан самым популярным среди покупателей новостроек, желающих жить в Московском районе меньше не становится. Поэтому в южной части активно застраивается  территория мясоперерабатывающего завода «Самсон».
-
-Общая площадь, принадлежавшая предприятию – порядка 54 гектаров. Он начал свою работу в 30-х годах прошлого века, а пик активности пришелся на 70-е. В 2000 году предприятие признали банкротом. В интернете ходят легенды, что закрытие завода спровоцировано намеренно. Но не будем углубляться.
-
-После банкротства предприятия, главным собственником его земель стал Московский Индустриальный Банк. Освоение территорий своими силами он не потянул и начал продавать участки, которые конечно же оказались востребованными среди девелоперов.
-
-Сначала стройка развернулась вдоль Пулковского шоссе и большинство домов там уже сдано. С точки зрения развития трансплртной сети и торговой инфраструктуры – это были лакомые кусочки. Автобусы и маршрутки ездят по Пулковскому шоссе до метро “Московская”, в аэропорт, в Петергоф, Пушкин, Павловск и другие исторические пригороды. Напротив жилого массива находятся торговые комплексы “Лето”, “OBI”, “Metro”, гипермаркет “Окей”. "
+          :about="article.text"
       />
     </div>
   </div>
@@ -30,6 +24,7 @@
   import {Options, Vue} from "vue-class-component";
   import TextAbout from "@/components/TextAbout.vue";
   import EditButton from "@/components/EditButton.vue";
+  import {Store, useStore} from "@/store";
 
   @Options({
     name: "article-page",
@@ -41,11 +36,19 @@
     components:{
       TextAbout,
       EditButton
+    },
+    computed: {
+      article(){
+        return this.store.getters.article;
+      }
     }
   })
 
   export default class ArticlePage extends Vue{
-
+    store: Store = useStore();
+    created(){
+      this.store.dispatch('GET_ARTICLE', Number(this.$route.params.id));
+    }
 }
 
 </script>

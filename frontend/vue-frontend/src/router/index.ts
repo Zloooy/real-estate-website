@@ -8,6 +8,7 @@ import AdminPage from "@/components/AdminPage.vue";
 import TariffsPage from "@/components/TariffsPage.vue";
 import RequestCallPage from "@/components/RequestCallPage.vue";
 import BLogPage from "@/components/BlogPage.vue";
+import ArticlePage from "@/components/ArticlePage.vue";
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -53,6 +54,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/blog',
         name: 'Блог',
         component: BLogPage
+    },
+    {
+        path: '/article/:id',
+        name: 'Статья',
+        component: ArticlePage
     }
 /*
     {
