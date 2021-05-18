@@ -9,6 +9,7 @@ export type Mutations<S = State> = {
     SET_TOKEN(state: S, payload: string | null): void,
     SET_CITY(state: S, payload: City),
     SET_CITIES(state: S, payload: City[])
+    SET_CITIES_REDACTOR(state: S, payload: City[])
     SET_COMPLEXES(state: S, payload: Complex[])
     SET_COMPLEX_CATEGORY(state: S, payload: ComplexQuery['estateCategory'])
     SET_SORT(state: S, payload: string)
@@ -24,7 +25,7 @@ export type Mutations<S = State> = {
     SET_COMPLEX_DELIVERY_DATE(state: S, payload: string | undefined)
     SET_COMPLEX(state: S, payload: Complex);
     SET_COMPLEX_FLATS(state: State, payload: Flat[]);
-    SET_FLAT(state: State, payload: State['flat']);
+    SET_FLAT(state: State, payload: State['flat']);//1
     SET_USERS(state: State, payload: State['users'])
     SET_USER_ROLES(state: State, payload: State['userRoles']),
     SET_TARIFFS(state: State, payload: State['tariffs'])
@@ -68,6 +69,10 @@ export const mutations: MutationTree<State> & Mutations = {
     },
     SET_CITIES(state: State, payload: City[]) {
         state.cities = payload;
+    },
+    SET_CITIES_REDACTOR(state: State, payload: City[]) {
+        alert(payload);
+        state.citiesRedactor = payload;
     },
     SET_TOKEN(state: State, payload: string | null) {
         state.api = new Api({
@@ -123,7 +128,7 @@ export const mutations: MutationTree<State> & Mutations = {
         console.debug("setting complex flats", payload);
         state.complexFlats=payload;
     },
-    SET_FLAT(state: State, payload: State['flat']) {
+    SET_FLAT(state: State, payload: State['flat']) {// paylod ловит квартиру
         state.flat = payload;
     },
     SET_USERS(state, payload: State["users"]) {

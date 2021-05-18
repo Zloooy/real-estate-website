@@ -33,6 +33,7 @@ export const state = {
     auth: new Auth(apiConfig) as Auth,
     cities: [] as City[],
     city: null as City | null,
+    citiesRedactor: [] as City[], //my try
     complexes: [] as Complex[],
     complex_category: "NEW" as ComplexQuery['estateCategory'],
     sort: 'price' as string,
@@ -49,8 +50,8 @@ export const state = {
     maxComplexPrice: undefined as number | undefined,
     complexDeliveryDate: undefined as string | undefined,
     complex: undefined as Complex | undefined,
-    complexFlats: [] as Flat[],
-    flat: undefined as Flat | undefined,
+    complexFlats: [] as Flat[],//массив квартир
+    flat: undefined as Flat | undefined,// 1 квартира
     users: [] as UserDto[],
     userRoles: [] as UserRoleDto[],
     tariffs: [] as Tariff[],

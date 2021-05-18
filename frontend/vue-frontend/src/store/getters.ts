@@ -11,6 +11,7 @@ export type Getters = {
     public_api(state:State): PublicApi,
     authorization_set(state: State): boolean,
     cities(state: State): City[],
+    cities_redactor(state: State): City[],
     complexes(state: State): Complex[],
     metros(state: State): Metro[],
     districts(state: State): District[],
@@ -18,7 +19,7 @@ export type Getters = {
     complex_category(state: State): State['complex_category']
     complex(state: State): Complex | null,
     complexFlats(state: State): State['complexFlats'],
-    flat(state: State): State['flat'],
+    flat(state: State): State['flat'], //1 !!!
     users(state: State): State['users'],
     userRoles(state: State): State['userRoles'],
     tariffs(state: State): State['tariffs']
@@ -48,6 +49,9 @@ export const getters: GetterTree<State, State> & Getters = {
     cities(state: State): City[] {
         return state.cities;
     },
+    cities_redactor(state: State): City[] {
+        return state.citiesRedactor;
+    },
     complexes(state: State): Complex[] {
         return state.complexes;
     },
@@ -69,7 +73,7 @@ export const getters: GetterTree<State, State> & Getters = {
     complexFlats(state: State): State["complexFlats"] {
         return state.complexFlats;
     },
-    flat(state: State): State['flat'] {
+    flat(state: State): State['flat'] { // realiz
         return state.flat;
     },
     tariffs(state: State): State["tariffs"] {
