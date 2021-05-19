@@ -2,6 +2,11 @@
   <div class="redactor-page" v-if="complex">
 
     <div class="block">
+      ID
+      <input class="id-input" type="number" placeholder="id" v-model="complex.id">
+    </div>
+
+    <div class="block">
       Название
       <div class="complex-name">
         <input class="name-input" type="text" placeholder="Введите название комплекса" v-model="complex.name">
@@ -60,15 +65,28 @@
     </div>
 
     <div class="block">
+      Дата сдачи
+      <div class="complex-street">
+        <input class="date-input" type="text" placeholder="Введите дату сдачи" v-model="complex.deliveryDate">
+      </div>
+    </div>
+
+    <div class="block">
       Изображение
       <textarea name="img-input" type="text" placeholder="Введите url изображения" v-model="complex.image"></textarea>
     </div>
 
 
-
     <div class="block">
       Риэлтор
-      <input class="name-input" type="text" placeholder="Риэлтор" v-model="complex.author">
+      <input class="idr-input" type="number" placeholder="id Риэлтора" v-model="complex.author.id">
+      <input class="name-input" type="text" placeholder="Риэлтор" v-model="complex.author.username">
+    </div>
+
+    <div class="block">
+      Контакты
+      <input class="idС-input" type="number" placeholder="id контактного лица" v-model="complex.contacts.id">
+      <input class="nameС-input" type="text" placeholder="ФИО контактного лица" v-model="complex.contacts.name">
     </div>
 
     <div class="block">
@@ -154,10 +172,12 @@ export default class CatalogRedactor extends Vue {
     address:{city:{name:"Spb"}},
    // address:{street:"Наличная 25"},
     author: {username: "Шмяка"},
+    contacts: {name: "Шмяка"},
     name: "Pampushki",
     image:"https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000",
     comment:" огогого",
-    advertized: true
+    advertized: true,
+    deliveryDate: "2022"
   }
 
   complex_category=[
