@@ -1,5 +1,13 @@
 <template>
   <div class="redactor-page" v-if="complex">
+
+    <div class="block">
+      Название
+      <div class="complex-name">
+        <input class="name-input" type="text" placeholder="Введите название комплекса" v-model="complex.name">
+      </div>
+    </div>
+
     <div class="block">
 <!--      {{complex.address}}-->
       Город
@@ -14,6 +22,32 @@
     </div>
 
     <div class="block">
+      Метро
+      <dropdown-selector
+          :options="metros"
+      />
+    </div>
+
+    <div class="block">
+      Район
+      <dropdown-selector
+          :options="districts"
+      />
+    </div>
+
+    <div class="block">
+      Категория
+      <dropdown-selector
+          :options="complex_category"
+      />
+    </div>
+
+    <div class="block">
+      Реклама
+      <input type="checkbox"  v-model="complex.advertized">
+    </div>
+
+    <div class="block">
       Улица
       <div class="complex-street">
         <input class="street-input" type="text" placeholder="Введите адресс" v-model="complex.address.street">
@@ -21,10 +55,8 @@
     </div>
 
     <div class="block">
-      Название
-      <div class="complex-name">
-        <input class="name-input" type="text" placeholder="Введите название комплекса" v-model="complex.name">
-      </div>
+      Цена
+      <input class="price-input" type="number" placeholder="Введите стоимость" v-model="complex.price">
     </div>
 
     <div class="block">
@@ -32,19 +64,12 @@
       <textarea name="img-input" type="text" placeholder="Введите url изображения" v-model="complex.image"></textarea>
     </div>
 
-    <div class="block">
-      Метро
-      <dropdown-selector
-          :options="metros"
-      />
-    </div>
 
-     <div class="block">
-       Район
-       <dropdown-selector
-         :options="districts"
-     />
-     </div>
+
+    <div class="block">
+      Риэлтор
+      <input class="name-input" type="text" placeholder="Риэлтор" v-model="complex.author">
+    </div>
 
     <div class="block">
       Текст-описание
@@ -93,6 +118,9 @@ import {Complex, City} from '@/generated-api/data-contracts';
     districts(){
       return this.store.getters.districts;
     },
+    complex_category(){
+      return this.store.getters.complex_category;
+    }
     // complex_flats(){
     //   return this.store.getters.complexFlats;
     // }
@@ -126,11 +154,26 @@ export default class CatalogRedactor extends Vue {
     address:{city:{name:"Spb"}},
    // address:{street:"Наличная 25"},
     author: {username: "Шмяка"},
-    category: "NEW",
     name: "Pampushki",
     image:"https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000",
-    comment:" огогого"
+    comment:" огогого",
+    advertized: true
   }
+
+  complex_category=[
+    {
+      name:"Новостройки",
+      value: "NEW"
+    },
+    {
+      name: "Вторичка",
+      value: "SECONDARY"
+    },
+    {
+      name:"Аренда",
+      value: "RENT"
+    }
+  ];
 
 }
 </script>
@@ -146,15 +189,20 @@ export default class CatalogRedactor extends Vue {
 
 .block{
   margin-top: 15px;
+  color: steelblue;
 }
 
-input[type=text]{
+input[type=text],[type=number]{
   margin-top: 15px;
   width: 100%;
   padding: 12px;
   border-radius: 4px;
   box-sizing: border-box;
   resize: vertical;
+}
+
+input[type=number]{
+  border: 2px solid darkslategray;
 }
 
 textarea{
