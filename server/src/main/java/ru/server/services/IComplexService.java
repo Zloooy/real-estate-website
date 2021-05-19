@@ -14,4 +14,6 @@ public interface IComplexService {
     List<Complex> findAdvertizedByQuery(ComplexQuery query);
     Page<Complex> findComplexByQuery(ComplexQuery query, Pageable pageable);
     Optional<Complex> findById(Long id);
+    boolean create(Complex newComplex);
+    boolean update(Complex complex);
 }

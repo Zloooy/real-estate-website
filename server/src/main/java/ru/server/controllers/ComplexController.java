@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import ru.server.data.ComplexQuery;
+import ru.server.enums.Authority;
 import ru.server.models.Complex;
 import ru.server.services.IComplexService;
 
@@ -32,5 +34,20 @@ public class ComplexController {
     @GetMapping(value="/public_api/complex/{id}", produces = "application/json")
     public ResponseEntity<Complex> findById(@PathVariable("id") Long id){
         return ResponseEntity.of(complexService.findById(id));
+    }
+    @Secured({Authority.CAN_EDIT_COMPLEXES})
+    @ApiOperation(value = "Создание комплекса")
+    @PostMapping(value = "/api/complexes/new", produces = "application/json")
+    public ResponseEntity<Boolean> createNewComplex(@RequestHeader("Authorization") String token, @RequestBody Complex newComplex){
+        newComplex.setId(null);
+        newComplex.setAuthor(null);
+        return ResponseEntity.ok(complexService.create(newComplex));
+    }
+    @Secured({Authority.CAN_EDIT_COMPLEXES})
+    @ApiOperation(value="Редактирование комплекса")
+    @PostMapping(value = "/api/complexes/{id}", produces = "application/json")
+    public ResponseEntity<Boolean> editComplex(@RequestHeader("Authorization") String token, @PathVariable("id") Long id, @RequestBody Complex toReplace){
+        toReplace.setId(id);
+        return ResponseEntity.ok(complexService.update(toReplace));
     }
 }

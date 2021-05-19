@@ -86,4 +86,18 @@ private Specification<Complex> generateSpecification(ComplexQuery query){
     public Optional<Complex> findById(Long id) {
         return repository.findById(id);
     }
+
+    @Override
+    public boolean create(Complex newComplex) {
+        repository.save(newComplex);
+        return true;
+    }
+
+    @Override
+    public boolean update(Complex complex) {
+        if(!repository.existsById(complex.getId()))
+        return false;
+        repository.save(complex);
+        return true;
+    }
 }
