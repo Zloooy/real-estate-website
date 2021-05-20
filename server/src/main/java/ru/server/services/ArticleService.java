@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.server.data.CreationResponse;
 import ru.server.models.Article;
 import ru.server.repositories.IArticleRepository;
 
@@ -43,8 +44,8 @@ public class ArticleService implements IArticleService {
     }
 
     @Override
-    public boolean create(Article newArticle) {
+    public CreationResponse create(Article newArticle) {
         repository.save(newArticle);
-        return true;
+        return new CreationResponse(true, newArticle.getId());
     }
 }

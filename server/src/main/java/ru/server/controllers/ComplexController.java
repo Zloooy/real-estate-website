@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import ru.server.data.ComplexQuery;
+import ru.server.data.CreationResponse;
 import ru.server.enums.Authority;
 import ru.server.models.Complex;
 import ru.server.models.User;
@@ -45,7 +46,7 @@ public class ComplexController {
     @Secured({Authority.CAN_MANAGE_COMPLEXES})
     @ApiOperation(value = "Создание комплекса")
     @PostMapping(value = "/api/complexes/new", produces = "application/json")
-    public ResponseEntity<Boolean> createNewComplex(@RequestHeader("Authorization") String token, @RequestBody Complex newComplex){
+    public ResponseEntity<CreationResponse> createNewComplex(@RequestHeader("Authorization") String token, @RequestBody Complex newComplex){
         newComplex.setId(null);
         newComplex.setAuthor((User) userService.loadUserByUsername(tokenService.getLoginFromToken(token.substring(7))));
         return ResponseEntity.ok(complexService.create(newComplex));
