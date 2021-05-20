@@ -58,7 +58,9 @@ export const state = {
     articles: [] as Article[],
     articlePage: 0 as number,
     articleSize: 1 as number,
-    article: null as Article | null
+    article: null as Article | null,
+    authorities: [] as string[],
+    got_token: false as boolean
 };
 
 export type State = typeof state;

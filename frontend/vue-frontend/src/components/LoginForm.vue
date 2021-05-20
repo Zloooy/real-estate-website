@@ -42,11 +42,14 @@
     watch: {
       authorization_set(newVal) {
         if (newVal) {
-          this.$router.push("/admin_panel")
           this.errorT = "";
+          if (this.store.getters.CAN_MANAGE_USERS)
+              this.$router.push("/admin_panel")
+          else
+            this.$router.push("/");
         }
         else {
-          this.errorT = "Неверный пкароль";
+          this.errorT = "Неверный пароль";
         }
       }
     }

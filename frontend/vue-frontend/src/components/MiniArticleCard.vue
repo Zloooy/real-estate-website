@@ -1,15 +1,16 @@
 <template>
   <div class="mini-article-card">
     <div class="btn">
-      <delete-button/>
+      <delete-button
+          v-if="store.getters.CAN_EDIT_ARTICLES"
+      />
     </div>
 
     <div class="header">
       {{header}}
     </div>
     <div class="img">
-      <img src="https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000">
-      {{img}}
+      <img :src="img">
     </div>
     <div class="data">
       {{data}}
@@ -24,6 +25,7 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import DeleteButton from "@/components/DeleteButton.vue";
+import {Store, useStore} from "@/store/index";
 
 @Options({
   name: "mini-article-card",
@@ -48,7 +50,7 @@ import DeleteButton from "@/components/DeleteButton.vue";
 
 
 export default class MiniArticleCard extends Vue {
-
+  store: Store = useStore();
 }
 
 </script>

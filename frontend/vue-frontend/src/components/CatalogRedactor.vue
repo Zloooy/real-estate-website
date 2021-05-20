@@ -96,7 +96,7 @@
             :floor="flat.floor"
         />
       </div>
-      <add-button/>
+      <add-button v-if="store.getters.CAN_EDIT_FLATS"/>
     </div>
 
   </div>

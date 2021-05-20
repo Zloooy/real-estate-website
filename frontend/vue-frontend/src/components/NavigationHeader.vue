@@ -16,6 +16,7 @@
         <router-link to="/blog">Блог</router-link>
         911
         <request-call-button @click="$router.push('/request_call/')"/>
+        <logout-button v-if="store.getters.authorization_set"/>
       </nav>
     </div>
   </header>
@@ -27,9 +28,11 @@ import DropdownSelector from "@/components/DropdownSelector.vue";
 import {City} from "@/generated-api/data-contracts";
 import {Store, useStore} from "@/store";
 import RequestCallButton from "@/components/RequestCallButton.vue";
+import LogoutButton from "@/components/LogoutButton.vue";
 
 @Options({
       components: {
+        LogoutButton,
         RequestCallButton,
         DropdownSelector
       },

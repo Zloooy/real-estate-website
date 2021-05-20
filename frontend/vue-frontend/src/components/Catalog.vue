@@ -101,7 +101,7 @@
       <div v-else>
         По вашему запросу ничего не найдено
       </div>
-        <add-button/>
+        <add-button v-if="store.getters.CAN_EDIT_COMPLEXES"/>
     </div>
     </div>
 

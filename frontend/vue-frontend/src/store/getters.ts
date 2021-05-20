@@ -5,6 +5,10 @@ import {State} from "@/store/state";
 import {City, Complex, District, Flat, Metro} from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
 
+const authority_checker = (authority: string) => function (state: State): boolean {
+    console.debug(`gettinh authority ${authority}`);
+    return state.authorities.indexOf("ROLE_" + authority) != -1;
+}
 export type Getters = {
     auth(state: State): Auth,
     api(state: State): Api,
@@ -25,7 +29,15 @@ export type Getters = {
     userRoles(state: State): State['userRoles'],
     tariffs(state: State): State['tariffs']
     articles(state: State): State['articles'],
-    article(state: State): State['article']
+    article(state: State): State['article'],
+    CAN_MANAGE_USERS(state: State): boolean,
+    CAN_VIEW_ROLES(state: State): boolean,
+    CAN_EDIT_ARTICLES(state: State): boolean,
+    CAN_MANAGE_COMPLEXES(state: State): boolean,
+    CAN_EDIT_FLATS(state: State): boolean,
+    CAN_EDIT_METROS(state: State): boolean,
+    CAN_EDIT_DISTRICTS(state: State): boolean,
+
 }
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -33,11 +45,11 @@ export const getters: GetterTree<State, State> & Getters = {
         return state.users;
     },
     userRoles(state: State): State['userRoles'] {
-     return state.userRoles;   
+        return state.userRoles;
     },
     api: (state: State) => {
         return state.api;
-},
+    },
     authorization_set: (state: State) => {
         return state.authorization_set;
     },
@@ -65,10 +77,10 @@ export const getters: GetterTree<State, State> & Getters = {
     complexSearchParamsChanged(state: State): boolean {
         return state.complexSearchParamsChanged;
     },
-    complex_category(state: State): State['complex_category']{
+    complex_category(state: State): State['complex_category'] {
         return state.complex_category;
     },
-    complex(state: State): Complex | null{
+    complex(state: State): Complex | null {
         return state.complex ? state.complex : null;
     },
     complexFlats(state: State): State["complexFlats"] {
@@ -85,5 +97,12 @@ export const getters: GetterTree<State, State> & Getters = {
     },
     article(state): State["article"] {
         return state.article;
-    }
+    },
+    CAN_MANAGE_USERS: authority_checker("CAN_MANAGE_USERS"),
+    CAN_VIEW_ROLES: authority_checker("CAN_VIEW_ROLES"),
+    CAN_MANAGE_COMPLEXES: authority_checker("CAN_MANAGE_COMPLEXES"),
+    CAN_EDIT_FLATS: authority_checker("CAN_EDIT_FLATS"),
+    CAN_EDIT_ARTICLES: authority_checker("CAN_EDIT_ARTICLES"),
+    CAN_EDIT_DISTRICTS: authority_checker("CAN_EDIT_DISTRICTS"),
+    CAN_EDIT_METROS: authority_checker("CAN_EDIT_METROS")
 } as Getters;

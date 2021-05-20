@@ -3,7 +3,7 @@
     <div class="header">
       БЛОГ
     </div>
-    <edit-button/>
+    <edit-button v-if="store.getters.CAN_EDIT_ARTICLES"/>
     <div class="blog-articles">
       <div class="articles-list">
         <mini-Article-card
@@ -12,6 +12,7 @@
             :key="article.id"
            :header="article.name"
            :data="article.date"
+            :img="article.image"
            :description="article.text"
         />
 <!--        <mini-Article-card
