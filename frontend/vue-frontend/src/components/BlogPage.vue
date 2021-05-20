@@ -10,10 +10,10 @@
             @click="$router.push(`/article/${article.id}`)"
             v-for="article in articles"
             :key="article.id"
-           :header="article.name"
-           :data="article.date"
+            :header="article.title"
+            :data="article.publishDate"
             :img="article.image"
-           :description="article.text"
+            :description="article.text"
         />
 <!--        <mini-Article-card
             header="Новостройки у метро Звездная"

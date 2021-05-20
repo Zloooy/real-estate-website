@@ -62,9 +62,7 @@ export default class MiniArticleCard extends Vue {
   height: auto;
   border: 2px solid black;
   text-align:left;
-  overflow: hidden;
   border-radius: 10px;
-  text-decoration: none;
   transition: color 0.2s linear;
 }
 
@@ -107,10 +105,14 @@ export default class MiniArticleCard extends Vue {
 
 .description{
   margin: 10px 0px 15px 10px;
-  width: 100%;
-  max-width: 300px;
+  width: 95%;
   text-align: left;
   font-size: 15px;
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
 
 }
 
