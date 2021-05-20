@@ -33,9 +33,14 @@ export type Mutations<S = State> = {
     SET_ARTICLE_PAGE(state: State, payload: number)
     SET_ARTICLE_SIZE(state: State, payload: number)
     SET_ARTICLE(state: State, payload: State['article'])
+    SET_AUTHORITIES(state: State, payload: State['authorities'])
 }
 
 export const mutations: MutationTree<State> & Mutations = {
+    SET_AUTHORITIES(state: State, payload: State["authorities"]) {
+        state.authorities = payload;
+        state.authorization_set = state.got_token;
+    },
     SET_ARTICLE(state, payload: State["article"]) {
         state.article = payload;
     },
@@ -83,7 +88,7 @@ export const mutations: MutationTree<State> & Mutations = {
                 format: "json"
             }
         });
-        state.authorization_set = !!payload;
+        state.got_token = !!payload;
     },
     SET_METROS(state: State, payload: Metro[]) {
         state.metros = payload;

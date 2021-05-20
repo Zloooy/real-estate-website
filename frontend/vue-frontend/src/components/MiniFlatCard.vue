@@ -7,7 +7,7 @@
       <div class="price">{{price}} Р</div>
     </div>
     <div class="btn">
-      <delete-button/>
+      <delete-button v-if="store.getters.CAN_EDIT_FLATS"/>
     </div>
     <div class="box2">
       <div class="square">{{square}} м2</div>
@@ -23,6 +23,7 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import DeleteButton from "@/components/DeleteButton.vue";
+import {Store, useStore} from "@/store/index";
 
 @Options({
   name: "mini-flat-card",
@@ -47,7 +48,7 @@ import DeleteButton from "@/components/DeleteButton.vue";
 
 
 export default class MiniFlatCard extends Vue {
-
+  store: Store = useStore();
 }
 
 </script>

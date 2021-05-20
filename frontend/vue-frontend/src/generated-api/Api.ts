@@ -254,6 +254,21 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    * No description
    *
    * @tags user-controller
+   * @name GetUserAuthoritiesUsingPost
+   * @summary Получение разрешений пользователя
+   * @request POST:/api/user/authorities
+   */
+  getUserAuthoritiesUsingPost = (params: RequestParams = {}) =>
+    this.request<string[], void>({
+      path: `/api/user/authorities`,
+      method: "POST",
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags user-controller
    * @name CreateUserUsingPost1
    * @summary Изменение ползователя
    * @request POST:/api/user/new

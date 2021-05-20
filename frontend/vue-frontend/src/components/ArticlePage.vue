@@ -1,6 +1,7 @@
 <template>
   <div class="article-page" v-if="article">
     <edit-button
+        v-if="store.getters.CAN_EDIT_ARTICLES"
         @click="goToRedactor(article)"
     />
     <div class="header-article">

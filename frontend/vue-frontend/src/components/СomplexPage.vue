@@ -3,6 +3,7 @@
     <div class="complex-name">{{complex.name}}</div>
     <edit-button
         @click="goToRedactor(complex)"
+        v-if="store.getters.CAN_MANAGE_COMPLEXES"
     />
     <div class="intro-complex">
       <div class="img-complex">
@@ -33,7 +34,7 @@
             :floor="flat.floor"
         />
       </div>
-      <add-button/>
+      <add-button v-if="store.getters.CAN_EDIT_COMPLEXES"/>
     </div>
   </div>
 </template>

@@ -1,6 +1,7 @@
 package ru.server.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +11,7 @@ import ru.server.models.User;
 import ru.server.repositories.IRoleRepository;
 import ru.server.repositories.IUserRepository;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,4 +68,16 @@ public class UserService implements IUserService {
             repository.save(toModify);
         return true;
     }
+
+    @Override
+    public List<String> getUserAuthorities(String login) {
+        try {
+            UserDetails u = loadUserByUsername(login);
+            return u.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        }
+        catch(UsernameNotFoundException ex){
+                return new LinkedList<>();
+            }
+    }
+
 }

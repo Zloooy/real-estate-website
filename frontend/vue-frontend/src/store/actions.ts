@@ -44,8 +44,21 @@ export interface Actions {
     GET_TARIFFS({state, commit}: AugmentActionContext, payload: void) : Promise<void>,
     GET_ARTICLES({state, commit}: AugmentActionContext, payload: void) : Promise<void>
     GET_ARTICLE({state, commit}: AugmentActionContext, payload: number) : Promise<void>
+    GET_AUTHORITIES({state, commit}: AugmentActionContext, payload: void): Promise<void>,
+    LOGOUT({state, commit}: AugmentActionContext, payload: void): Promise<void>
 }
 export const actions: ActionTree<State, State> & Actions = {
+    LOGOUT({state, commit}: AugmentActionContext, payload: void): Promise<void> {
+        return Promise.resolve(undefined)
+            .then(()=>commit('SET_TOKEN', null))
+            .then(()=>commit('SET_AUTHORITIES', []));
+    },
+    GET_AUTHORITIES({state, commit}: AugmentActionContext, payload: void): Promise<void> {
+        return state.api.getUserAuthoritiesUsingPost()
+            .then(response=>response.data)
+            .catch(()=>[] as string[])
+            .then((d)=>commit('SET_AUTHORITIES', d));
+    },
     GET_ARTICLE({state, commit}: AugmentActionContext, payload: number): Promise<void> {
         return state.public_api.findArticleByIdUsingGet(payload)
             .then(response=>response.data)
@@ -205,11 +218,12 @@ export const actions: ActionTree<State, State> & Actions = {
             .then(r=>r.data)
             .then(d=>commit('SET_COMPLEX', d));
     },
-    GET_AUTH_TOKEN({commit, state}, payload: Request ): Promise<void> {
+    GET_AUTH_TOKEN({commit, dispatch, state}, payload: Request ): Promise<void> {
        return state.auth.authUsingPost(payload)
            .then(result=>result.data.token || null)
            .catch(()=>null)
            .then(token=>commit('SET_TOKEN', token))
+           .then(()=>dispatch('GET_AUTHORITIES', undefined));
     }
     
 }
