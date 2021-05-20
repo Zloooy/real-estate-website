@@ -1,4 +1,14 @@
-import { Article, Greeting, RepresentationModelObject, UserDto, UserRoleDto } from "./data-contracts";
+import {
+  Article,
+  Complex,
+  District,
+  Flat,
+  Greeting,
+  Metro,
+  RepresentationModelObject,
+  UserDto,
+  UserRoleDto,
+} from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -54,6 +64,121 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
   /**
    * No description
    *
+   * @tags complex-controller
+   * @name CreateNewComplexUsingPost
+   * @summary Создание комплекса
+   * @request POST:/api/complexes/new
+   */
+  createNewComplexUsingPost = (data: Complex, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/complexes/new`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags complex-controller
+   * @name EditComplexUsingPost
+   * @summary Редактирование комплекса
+   * @request POST:/api/complexes/{id}
+   */
+  editComplexUsingPost = (id: number, data: Complex, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/complexes/${id}`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags complex-controller
+   * @name DeleteComplexUsingDelete
+   * @summary Удаление комплекса
+   * @request DELETE:/api/complexes/{id}
+   */
+  deleteComplexUsingDelete = (id: number, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/complexes/${id}`,
+      method: "DELETE",
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags district-rest-controller
+   * @name CreateNewDistrictUsingPost
+   * @summary Создать новый район
+   * @request POST:/api/districts/new
+   */
+  createNewDistrictUsingPost = (data: District, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/districts/new`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags flat-controller
+   * @name CreateFlatUsingPost
+   * @summary Coздание новой квартиры
+   * @request POST:/api/flat/new
+   */
+  createFlatUsingPost = (data: Flat, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/flat/new`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags flat-controller
+   * @name EditFlatUsingPost
+   * @summary Редактирование сущестувующей квартиры
+   * @request POST:/api/flat/{id}
+   */
+  editFlatUsingPost = (id: number, data: Flat, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/flat/${id}`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags flat-controller
+   * @name DeleteFlatUsingDelete
+   * @summary Удаление квартиры
+   * @request DELETE:/api/flat/{id}
+   */
+  deleteFlatUsingDelete = (id: number, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/flat/${id}`,
+      method: "DELETE",
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
    * @tags greeting-controller
    * @name GreetingUsingGet
    * @summary greeting
@@ -63,6 +188,23 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
     this.request<Greeting, void>({
       path: `/api/greeting`,
       method: "GET",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags metro-controller
+   * @name CreateMetroUsingPost
+   * @summary Создать новую станцию метро
+   * @request POST:/api/metros/new
+   */
+  createMetroUsingPost = (data: Metro, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/metros/new`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
       ...params,
     });
   /**

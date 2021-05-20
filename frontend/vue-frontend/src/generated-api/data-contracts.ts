@@ -44,19 +44,6 @@ export interface Article {
   title?: string;
 }
 
-export interface Authority {
-  authority?: string;
-
-  /**
-   * Уникальный идентификатор
-   * @format int64
-   */
-  id?: number;
-
-  /** Название права */
-  name?: string;
-}
-
 export interface City {
   /**
    * Уникальный идентификатор города
@@ -280,10 +267,6 @@ export interface Flat {
   square?: number;
 }
 
-export interface GrantedAuthority {
-  authority?: string;
-}
-
 export interface Greeting {
   text?: string;
 }
@@ -473,9 +456,6 @@ export interface Response {
 }
 
 export interface Role {
-  /** Список прав роли */
-  authorities?: Authority[];
-
   /**
    * Уникальный идентификатор
    * @format int64
@@ -484,9 +464,6 @@ export interface Role {
 
   /** Название роли */
   name?: string;
-
-  /** Список пользователей с ролью */
-  users?: User[];
 }
 
 export interface Sort {
@@ -516,12 +493,6 @@ export interface Tariff {
 }
 
 export interface User {
-  accountNonExpired?: boolean;
-  accountNonLocked?: boolean;
-  authorities?: GrantedAuthority[];
-  credentialsNonExpired?: boolean;
-  enabled?: boolean;
-
   /**
    * Уникальный идентификатор
    * @format int64
@@ -533,7 +504,6 @@ export interface User {
 
   /** Роль пользователя */
   role?: Role;
-  username?: string;
 }
 
 export interface UserDto {
