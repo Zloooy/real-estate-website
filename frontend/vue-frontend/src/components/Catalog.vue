@@ -1,7 +1,6 @@
 <template>
 
   <div class="catalog">
-      <edit-button/>
     <div class="main">
     <div class="sidebar_content"><!--поиск в каталоге-->
       <!--сортировка по: возрастанию цены и т.п-->
