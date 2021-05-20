@@ -14,19 +14,27 @@ type AugmentActionContext = {
 export interface Actions {
     GET_CITIES({ commit }: AugmentActionContext,
     payload: null): Promise<City[]>,
+    GET_CITIES_REDACTOR({ commit }: AugmentActionContext,
+    payload: null): Promise<City[]>,
     GET_ADVERTIZED_COMPLEXES({ commit }: AugmentActionContext,
                payload: void): Promise<void>
     GET_SEARCHED_COMPLEXES({ commit }: AugmentActionContext,
                              payload: void): Promise<void>
     GET_METROS({ commit }: AugmentActionContext,
-               payload: void): Promise<Metro[]>
+               payload: void): Promise<Metro[]>,
+    GET_METROS_REDACTOR({ commit }: AugmentActionContext,
+               payload: number): Promise<Metro[]>
     GET_DISTRICTS({ commit }: AugmentActionContext,
                payload: void): Promise<District[]>
+
+    GET_DISTRICTS_REDACTOR({ commit }: AugmentActionContext,
+               payload: number): Promise<District[]>
+
     GET_COMPLEX({ commit }: AugmentActionContext,
                   payload: number): Promise<Complex>
     GET_COMPLEX_FLATS({commit, state}: AugmentActionContext,
                       payload:number): Promise<Flat[]>,
-    GET_FLAT({commit, state}: AugmentActionContext,
+    GET_FLAT({commit, state}: AugmentActionContext, //1
                       payload:number): Promise<Flat>,
     GET_AUTH_TOKEN({commit, state}: AugmentActionContext, payload: Request ): Promise<void>,
     GET_USERS({commit, state}: AugmentActionContext, payload: void): Promise<void>,
@@ -86,11 +94,11 @@ export const actions: ActionTree<State, State> & Actions = {
             .then(data=>commit('SET_USER_ROLES', data))
     },
 
-    GET_FLAT({commit, state}: AugmentActionContext, payload: number): Promise<Flat> {
+    GET_FLAT({commit, state}: AugmentActionContext, payload: number): Promise<Flat> {// сама реализация, payload id,
         return state.public_api.getFlatByIdUsingGet(payload)
-            .then(resp=>resp.data)
-            .catch(()=>undefined)
-            .then(d=>commit('SET_FLAT', d));
+            .then(resp=>resp.data)//полученная стр.
+            .catch(()=>undefined)//ошибка
+            .then(d=>commit('SET_FLAT', d));//мы вызываем сеттор для сохранения
     },
     GET_COMPLEX_FLATS({commit, state}: AugmentActionContext, payload: number): Promise<Flat[]> {
         return state.public_api.getComplexFlatsUsingGet(payload)
@@ -102,8 +110,15 @@ export const actions: ActionTree<State, State> & Actions = {
         .catch(()=>[])
             .then(d=>commit('SET_COMPLEX_FLATS', d));
     },
+
     GET_DISTRICTS({commit, state}: AugmentActionContext, payload: void): Promise<District[]> {
         return state.public_api.getDistrictsByCityUsingGet({city_id: state.city?.id || 9})
+            .then(response => response.data)
+            .catch(()=>[])
+            .then(d=>commit('SET_DISTRICTS', d));
+    },
+    GET_DISTRICTS_REDACTOR({commit, state}: AugmentActionContext, payload: number): Promise<District[]> {
+        return state.public_api.getDistrictsByCityUsingGet({city_id: payload || 9})
             .then(response => response.data)
             .catch(()=>[])
             .then(d=>commit('SET_DISTRICTS', d));
@@ -114,9 +129,28 @@ export const actions: ActionTree<State, State> & Actions = {
             .catch(err=>[])
             .then(d=>commit('SET_METROS', d));
     },
+    GET_METROS_REDACTOR({commit, state}: AugmentActionContext, payload: number): Promise<Metro[]> {
+        return state.public_api.getCityMetrosUsingGet({city_id: payload || 9})
+            .then(response => response.data)
+            .catch(err=>[])
+            .then(d=>commit('SET_METROS', d));
+    },
     GET_CITIES(context: AugmentActionContext, payload: null): Promise<City[]> {
-        return context.getters.public_api.getAllCitiesUsingGet().then(response => response.data).catch(err => [])
+        return context.getters.public_api.getAllCitiesUsingGet()
+            .then(response => response.data)
+            .catch(err => [])
             .then(d=>context.commit('SET_CITIES', d));
+    },
+    GET_CITIES_REDACTOR(context: AugmentActionContext, payload: null): Promise<City[]> {
+        return context.getters.public_api.getAllCitiesUsingGet()
+            .then(response => response.data)
+            .then(data => {
+                return data;
+            })
+            .catch(err => {
+                return[];
+            })
+            .then(d=>context.commit('SET_CITIES_REDACTOR', d));
     },
     GET_SEARCHED_COMPLEXES({ commit, state }: AugmentActionContext,
                              payload: void): Promise<void> {

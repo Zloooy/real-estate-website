@@ -1,7 +1,9 @@
 <template>
   <div class="complex-page" v-if="complex">
     <div class="complex-name">{{complex.name}}</div>
-    <edit-button/>
+    <edit-button
+        @click="goToRedactor(complex)"
+    />
     <div class="intro-complex">
       <div class="img-complex">
         <img :src="complex.image">
@@ -46,6 +48,7 @@ import {Store, useStore} from "@/store/index";
 import {Flat} from "@/generated-api/data-contracts";
 import AddButton from "@/components/AddButton.vue";
 import EditButton from "@/components/EditButton.vue";
+import {Complex} from "@/generated-api/data-contracts";
 
 @Options({
   name:"complex-page",
@@ -75,6 +78,9 @@ export default class ComplexPage extends Vue{
   goToFlat({id}:Flat){
     this.$router.push(`/flat/${id}`)
   }
+  goToRedactor({id}:Complex){
+    this.$router.push(`/complex/${id}/edit`)
+  }
 }
 
 </script>
@@ -86,11 +92,6 @@ export default class ComplexPage extends Vue{
   padding: 0;
 }
 
-.btn{
-  margin: 0 auto;
-  max-width: 1060px;
-
-}
 
 .complex-page{
 

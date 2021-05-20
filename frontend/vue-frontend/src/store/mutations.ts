@@ -71,7 +71,6 @@ export const mutations: MutationTree<State> & Mutations = {
         state.cities = payload;
     },
     SET_CITIES_REDACTOR(state: State, payload: City[]) {
-        alert(payload);
         state.citiesRedactor = payload;
     },
     SET_TOKEN(state: State, payload: string | null) {

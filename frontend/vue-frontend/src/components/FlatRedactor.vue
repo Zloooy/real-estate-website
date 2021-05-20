@@ -2,11 +2,6 @@
 <div class="redactor-page">
 
   <div class="block">
-    ID
-    <input class="id-input" type="number" placeholder="id квартиры" v-model="flat.id">
-  </div>
-
-  <div class="block">
     Цена
     <input class="price-input" type="number" placeholder="Введите стоимость" v-model="flat.price">
   </div>
@@ -47,7 +42,6 @@
 import {Options, Vue} from "vue-class-component";
 import MiniFlatCard from "@/components/MiniFlatCard.vue";
 import {Store, useStore} from "@/store/index";
-import {Flat} from "@/generated-api/data-contracts";
 import DropdownSelector from "@/components/DropdownSelector.vue";
 
 @Options({
@@ -56,21 +50,29 @@ import DropdownSelector from "@/components/DropdownSelector.vue";
     MiniFlatCard,
   },
   computed: {
+    flat() {
+      return this.store.getters.flat;//возвращает геттер, который возр квартиру
+    }
   }
 })
 
 export default class FlatRedactor extends Vue {
   store: Store = useStore();
-  flat: Flat ={
-    square: 72,
-    price: 9000000,
-    complex:{id:1},
-    id: 1,
-    floor: 7,
-    image:"https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000",
-    about:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laboru",
-    numberOfRooms: 2,
+
+  created(){
+    this.store.dispatch('GET_FLAT', Number(this.$route.params.id));//1
   }
+
+  // flat: Flat ={
+  //   square: 72,
+  //   price: 9000000,
+  //   complex:{id:1},
+  //   id: 1,
+  //   floor: 7,
+  //   image:"https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000",
+  //   about:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laboru",
+  //   numberOfRooms: 2,
+  // }
 }
 </script>
 

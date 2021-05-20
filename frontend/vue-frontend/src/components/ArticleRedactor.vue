@@ -42,7 +42,9 @@ import {Article} from '@/generated-api/data-contracts';
 
 export default class ArticleRedactor extends Vue {
   store: Store = useStore();
-
+  created(){
+    this.store.dispatch('GET_ARTICLE', Number(this.$route.params.id));
+  }
   article: Article={
     id:1,
     title:"А кому сейчас легко?",
