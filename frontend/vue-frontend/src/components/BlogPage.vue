@@ -3,7 +3,6 @@
     <div class="header">
       БЛОГ
     </div>
-    <edit-button/>
     <div class="blog-articles">
       <div class="articles-list">
         <mini-Article-card
