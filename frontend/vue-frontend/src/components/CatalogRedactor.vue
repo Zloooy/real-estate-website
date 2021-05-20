@@ -71,11 +71,12 @@
       <textarea name="img-input" type="text" placeholder="Введите url изображения" v-model="complex.image"></textarea>
     </div>
 
-
-    <div class="block">
+    <div class="contacts">
       Контакты
-      <input class="idС-input" type="number" placeholder="id контактного лица" v-model="complex.contacts.id">
-      <input class="nameС-input" type="text" placeholder="ФИО контактного лица" v-model="complex.contacts.name">
+      <div class="block2"> Имя <input class="nameС-input" type="text" placeholder="Имя" v-model="complex.contacts.name"></div>
+      <div class="block2"> Телефон<input class="phone-input" type="text" placeholder="Телефон" v-model="complex.contacts.phone"></div>
+      <div class="block2"> Почта<input class="emailC-input" type="text" placeholder="почта" v-model="complex.contacts.email"></div>
+      <div class="block2"> Фото <textarea name="img-input" type="text" placeholder="Введите url фотографии" v-model="complex.contacts.photo"></textarea></div>
     </div>
 
     <div class="block">
@@ -208,6 +209,17 @@ export default class CatalogRedactor extends Vue {
   color: steelblue;
 }
 
+.block2{
+  margin-top: 15px;
+ color: gray;
+}
+
+.contacts{
+  margin-top: 15px;
+  color: steelblue;
+  padding: 10px;
+  border: 1px solid steelblue;
+}
 input[type=text],[type=number]{
   margin-top: 15px;
   width: 100%;

@@ -13,7 +13,7 @@
       <img :src="img">
     </div>
     <div class="data">
-      {{data}}
+      {{new Date(data)}}
     </div>
     <div class="description">
       {{description}}
