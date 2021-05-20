@@ -8,8 +8,7 @@
       {{header}}
     </div>
     <div class="img">
-      <img src="https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000">
-      {{img}}
+      <img :src="img">
     </div>
     <div class="data">
       {{data}}
@@ -60,9 +59,7 @@ export default class MiniArticleCard extends Vue {
   height: auto;
   border: 2px solid black;
   text-align:left;
-  overflow: hidden;
   border-radius: 10px;
-  text-decoration: none;
   transition: color 0.2s linear;
 }
 
@@ -105,10 +102,14 @@ export default class MiniArticleCard extends Vue {
 
 .description{
   margin: 10px 0px 15px 10px;
-  width: 100%;
-  max-width: 300px;
+  width: 95%;
   text-align: left;
   font-size: 15px;
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
 
 }
 
