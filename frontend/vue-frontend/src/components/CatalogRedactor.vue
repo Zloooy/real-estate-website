@@ -1,10 +1,5 @@
 <template>
-  <div class="redactor-page" v-if="complex">
-
-    <div class="block">
-      ID
-      <input class="id-input" type="number" placeholder="id" v-model="complex.id">
-    </div>
+  <div class="redactor-page">
 
     <div class="block">
       Название
@@ -78,12 +73,6 @@
 
 
     <div class="block">
-      Риэлтор
-      <input class="idr-input" type="number" placeholder="id Риэлтора" v-model="complex.author.id">
-      <input class="name-input" type="text" placeholder="Риэлтор" v-model="complex.author.username">
-    </div>
-
-    <div class="block">
       Контакты
       <input class="idС-input" type="number" placeholder="id контактного лица" v-model="complex.contacts.id">
       <input class="nameС-input" type="text" placeholder="ФИО контактного лица" v-model="complex.contacts.name">
@@ -91,22 +80,22 @@
 
     <div class="block">
       Текст-описание
-      <textarea name="about-input" type="text" placeholder="Ввдите описание" v-model="complex.comment"></textarea>
+      <textarea name="about-input" type="text" placeholder="Ввeдите описание" v-model="complex.comment"></textarea>
     </div>
 
     <div class="block">
       <div class="headers">КВАРТИРЫ КОМПЛЕКСА</div>
-<!--      <div class="flats-list">-->
-<!--        <mini-flat-card-->
-<!--            @click="goToFlat(flat)"-->
-<!--            v-for="flat in complex_flats"-->
-<!--            :key="flat.id"-->
-<!--            :rooms="flat.numberOfRooms"-->
-<!--            :price="flat.price"-->
-<!--            :square="flat.square"-->
-<!--            :floor="flat.floor"-->
-<!--        />-->
-<!--      </div>-->
+      <div class="flats-list">
+        <mini-flat-card
+            @click="goToFlat(flat)"
+            v-for="flat in complex_flats"
+            :key="flat.id"
+            :rooms="flat.numberOfRooms"
+            :price="flat.price"
+            :square="flat.square"
+            :floor="flat.floor"
+        />
+      </div>
       <add-button/>
     </div>
 
@@ -119,14 +108,18 @@ import MiniFlatCard from "@/components/MiniFlatCard.vue";
 import {Store, useStore} from "@/store/index";
 import {Flat} from "@/generated-api/data-contracts";
 import DropdownSelector from "@/components/DropdownSelector.vue";
-import {Complex, City} from '@/generated-api/data-contracts';
+import {City} from '@/generated-api/data-contracts';
 
 @Options({
+  name:"complex",
   components: {
     DropdownSelector,
     MiniFlatCard,
   },
   computed:{
+    complex(){
+      return this.store.getters.complex;
+    },
     cities_redactor(){
       return this.store.getters.cities_redactor;
     },
@@ -138,10 +131,11 @@ import {Complex, City} from '@/generated-api/data-contracts';
     },
     complex_category(){
       return this.store.getters.complex_category;
+    },
+
+    complex_flats(){
+      return this.store.getters.complexFlats;
     }
-    // complex_flats(){
-    //   return this.store.getters.complexFlats;
-    // }
   }
 
 })
@@ -150,35 +144,37 @@ export default class CatalogRedactor extends Vue {
   store: Store = useStore();
   created(){
     this.store.dispatch('GET_CITIES_REDACTOR', null);
+    this.store.dispatch('GET_COMPLEX', Number(this.$route.params.id));
   }
   setCity(value:City){
 
     // if(this.complex.address?.city) {
-
+    //@ts-ignore
     console.log(JSON.stringify(this.complex.address));
     //@ts-ignore
     this.complex.address.city = value;
     if(value.id){
       this.store.dispatch("GET_METROS_REDACTOR", value.id);
       this.store.dispatch("GET_DISTRICTS_REDACTOR", value.id);
-      // this.store.dispatch('GET_COMPLEX_FLATS', Number(this.$route.params.id));
+      this.store.dispatch('GET_COMPLEX_FLATS', Number(this.$route.params.id));
     }
   }
   goToFlat({id}:Flat){
     this.$router.push(`/flat/${id}`)
   }
 
-  complex: Complex = {
-    address:{city:{name:"Spb"}},
-   // address:{street:"Наличная 25"},
-    author: {username: "Шмяка"},
-    contacts: {name: "Шмяка"},
-    name: "Pampushki",
-    image:"https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000",
-    comment:" огогого",
-    advertized: true,
-    deliveryDate: "2022"
-  }
+   // complex: Complex
+  //   id:20,
+  //   address:{city:{name:"Spb"}},
+  //  // address:{street:"Наличная 25"},
+  //   author: {username: "Шмяка"},
+  //   contacts: {name: "Шмяка"},
+  //   name: "Pampushki",
+  //   image:"https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000",
+  //   comment:" огогого",
+  //   advertized: true,
+  //   deliveryDate: "2022"
+  // }
 
   complex_category=[
     {

@@ -1,7 +1,9 @@
 <template>
   <div class="flat-page" v-if="flat">
     <div class="complex-name">{{flat.complex.name}}</div>
-    <edit-button/>
+    <edit-button
+        @click="goToRedactor(flat)"
+    />
     <div class="intro-flat">
         <div class="img-flat">
           <img :src="flat.image">
@@ -39,6 +41,7 @@ import MainDataFlat from "@/components/MainDataFlat.vue";
 import DataRealtor from "@/components/DataRealtor.vue";
 import {Store, useStore} from "@/store/index";
 import EditButton from "@/components/EditButton.vue";
+import {Flat} from "@/generated-api/data-contracts";
 
 @Options({
   name:"flat-page",
@@ -50,15 +53,22 @@ import EditButton from "@/components/EditButton.vue";
   },
   computed:{
     flat() {
-      return this.store.getters.flat;
+      return this.store.getters.flat;//возвращает геттер, который возр квартиру
     }
   }
 })
 export default class FlatPage extends Vue{
   store: Store = useStore();
   created(){
-    this.store.dispatch('GET_FLAT', Number(this.$route.params.id));
+    this.store.dispatch('GET_FLAT', Number(this.$route.params.id));//1
   }
+  goToFlat({id}:Flat){
+    this.$router.push(`/flat/${id}`)
+  }
+  goToRedactor({id}:Flat){
+    this.$router.push(`/flat/${id}/edit`)
+  }
+
 }
 
 </script>

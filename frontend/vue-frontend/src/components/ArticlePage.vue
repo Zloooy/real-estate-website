@@ -1,6 +1,8 @@
 <template>
   <div class="article-page" v-if="article">
-    <edit-button/>
+    <edit-button
+        @click="goToRedactor(article)"
+    />
     <div class="header-article">
       {{article.title}}
       <div class="article-date">
@@ -25,6 +27,7 @@
   import TextAbout from "@/components/TextAbout.vue";
   import EditButton from "@/components/EditButton.vue";
   import {Store, useStore} from "@/store";
+  import {Article} from "@/generated-api/data-contracts";
 
   @Options({
     name: "article-page",
@@ -48,6 +51,9 @@
     store: Store = useStore();
     created(){
       this.store.dispatch('GET_ARTICLE', Number(this.$route.params.id));
+    }
+    goToRedactor({id}:Article){
+      this.$router.push(`/article/${id}/edit`)
     }
 }
 

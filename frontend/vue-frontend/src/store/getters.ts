@@ -18,6 +18,7 @@ export type Getters = {
     complexSearchParamsChanged(state: State): boolean
     complex_category(state: State): State['complex_category']
     complex(state: State): Complex | null,
+    estateType(state: State): State['complexFlats'],
     complexFlats(state: State): State['complexFlats'],
     flat(state: State): State['flat'], //1 !!!
     users(state: State): State['users'],

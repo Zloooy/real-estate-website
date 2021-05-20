@@ -133,7 +133,7 @@ import AddButton from "@/components/AddButton.vue";
     },
     metros(): Metro[]{
       return [{name: "Любая", id: null} as unknown as Metro].concat(this.store.getters.metros);
-    },
+    },//return [{name: "Любая", id: null}];
     districts(){
       return [{name: "Любой", id: null} as unknown as District].concat(this.store.getters.districts);
     },
