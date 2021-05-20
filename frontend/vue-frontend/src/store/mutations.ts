@@ -23,7 +23,7 @@ export type Mutations<S = State> = {
     SET_MIN_COMPLEX_PRICE(state: S, payload: number)
     SET_MAX_COMPLEX_PRICE(state: S, payload: number)
     SET_COMPLEX_DELIVERY_DATE(state: S, payload: string | undefined)
-    SET_COMPLEX(state: S, payload: Complex);
+    SET_COMPLEX(state: S, payload: State['complex']);
     SET_COMPLEX_FLATS(state: State, payload: Flat[]);
     SET_FLAT(state: State, payload: State['flat']);//1
     SET_USERS(state: State, payload: State['users'])
@@ -125,7 +125,7 @@ export const mutations: MutationTree<State> & Mutations = {
         state.complexSearchParamsChanged = !compareObjects(state.district, payload);
         state.district = payload;
     },
-    SET_COMPLEX(state: State, payload: Complex) {
+    SET_COMPLEX(state: State, payload: State['complex']) {
         state.complex = payload;
     },
     SET_COMPLEX_FLATS(state: State, payload: Flat[]) {

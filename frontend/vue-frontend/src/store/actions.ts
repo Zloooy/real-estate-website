@@ -45,9 +45,21 @@ export interface Actions {
     GET_ARTICLES({state, commit}: AugmentActionContext, payload: void) : Promise<void>
     GET_ARTICLE({state, commit}: AugmentActionContext, payload: number) : Promise<void>
     GET_AUTHORITIES({state, commit}: AugmentActionContext, payload: void): Promise<void>,
-    LOGOUT({state, commit}: AugmentActionContext, payload: void): Promise<void>
+    LOGOUT({state, commit}: AugmentActionContext, payload: void): Promise<void>,
+    DELETE_COMPLEX({state, commit}: AugmentActionContext, payload: number): Promise<void>,
+    DELETE_FLAT({state, commit}: AugmentActionContext, payload: number): Promise<void>
 }
 export const actions: ActionTree<State, State> & Actions = {
+    DELETE_COMPLEX({state, commit}: AugmentActionContext, payload: number): Promise<void> {
+        return state.api.deleteComplexUsingDelete(payload)
+            .then(r=>r.data)
+            .then(()=>commit('SET_COMPLEX', undefined));
+    },
+    DELETE_FLAT({state, commit, dispatch}: AugmentActionContext, payload: number): Promise<void> {
+        return state.api.deleteFlatUsingDelete(payload)
+            .then(()=>commit('SET_FLAT', undefined))
+            .then(()=>dispatch('GET_COMPLEX_FLATS', state.complex?.id));
+    },
     LOGOUT({state, commit}: AugmentActionContext, payload: void): Promise<void> {
         return Promise.resolve(undefined)
             .then(()=>commit('SET_TOKEN', null))
