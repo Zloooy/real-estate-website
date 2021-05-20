@@ -13,4 +13,5 @@ public interface IUserService extends UserDetailsService
     User findById(Long id);
     List<UserDto> getAll();
     boolean save(UserDto userDto);
+    List<String> getUserAuthorities(String login);
 }

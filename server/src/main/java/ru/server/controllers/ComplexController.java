@@ -42,7 +42,7 @@ public class ComplexController {
     public ResponseEntity<Complex> findById(@PathVariable("id") Long id){
         return ResponseEntity.of(complexService.findById(id));
     }
-    @Secured({Authority.CAN_EDIT_COMPLEXES})
+    @Secured({Authority.CAN_MANAGE_COMPLEXES})
     @ApiOperation(value = "Создание комплекса")
     @PostMapping(value = "/api/complexes/new", produces = "application/json")
     public ResponseEntity<Boolean> createNewComplex(@RequestHeader("Authorization") String token, @RequestBody Complex newComplex){
@@ -50,7 +50,7 @@ public class ComplexController {
         newComplex.setAuthor((User) userService.loadUserByUsername(tokenService.getLoginFromToken(token.substring(7))));
         return ResponseEntity.ok(complexService.create(newComplex));
     }
-    @Secured({Authority.CAN_EDIT_COMPLEXES})
+    @Secured({Authority.CAN_MANAGE_COMPLEXES})
     @ApiOperation(value="Редактирование комплекса")
     @PostMapping(value = "/api/complexes/{id}", produces = "application/json")
     public ResponseEntity<Boolean> editComplex(@RequestHeader("Authorization") String token, @PathVariable("id") Long id, @RequestBody Complex toReplace){
@@ -58,7 +58,7 @@ public class ComplexController {
         toReplace.setAuthor((User) userService.loadUserByUsername(tokenService.getLoginFromToken(token.substring(7))));
         return ResponseEntity.ok(complexService.update(toReplace));
     }
-    @Secured({Authority.CAN_EDIT_COMPLEXES})
+    @Secured({Authority.CAN_MANAGE_COMPLEXES})
     @ApiOperation("Удаление комплекса")
     @DeleteMapping(value = "/api/complexes/{id}", produces = "application/json")
     public ResponseEntity<Boolean> deleteComplex(@RequestHeader("Authorization") String token, @PathVariable("id") Long id){
