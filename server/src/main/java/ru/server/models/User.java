@@ -1,18 +1,11 @@
 package ru.server.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,7 +38,7 @@ public class User implements UserDetails {
     public User() {}
     @JsonIgnore
     @Override
-    public Collection<Role.Authority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();
     }
 
@@ -53,27 +46,28 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
-
+    @JsonIgnore
     @Override
     public String getUsername() {
         return login;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;
@@ -122,8 +116,6 @@ public class User implements UserDetails {
         @ApiModelProperty(notes = "Список пользователей с ролью")
         @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY, orphanRemoval = true)
         private Set<User> users = new HashSet<>();
-        @JsonIgnore
-        //@JsonDeserialize(using=Authority.CustomAuthorityDeserializer.class)
         @ApiModelProperty(notes = "Список прав роли")
         @ManyToMany(fetch = FetchType.EAGER)
         private Set<Authority> authorities;
@@ -156,45 +148,27 @@ public class User implements UserDetails {
         public void setName(String name) {
             this.name = name;
         }
-
         @JsonIgnore
         public Set<Authority> getAuthorities() {
             return authorities;
         }
-
         @JsonIgnore
         public void setAuthorities(Set<Authority> authorities) {
             this.authorities = authorities;
         }
-
+        @JsonIgnore
         public Set<User> getUsers() {
             return users;
         }
-
+        @JsonIgnore
         public void setUsers(Set<User> users) {
             this.users = users;
         }
 
 
-       @Entity
+        @Entity
        @Table(name="granted_authorities")
         public static class Authority implements GrantedAuthority {
-            public static class CustomAuthorityDeserializer extends JsonDeserializer {
-                @Override
-                public Object deserialize(JsonParser jp, DeserializationContext ctx) throws IOException {
-                    ObjectMapper om = (ObjectMapper) jp.getCodec();
-                    JsonNode jsonNode = om.readTree(jp);
-                    Set<Authority> authorities = new HashSet<>();
-                    Iterator<JsonNode> elements = jsonNode.elements();
-                    while (elements.hasNext()){
-                        JsonNode next = elements.next();
-                        System.out.println("got element");
-                        System.out.println(next.toPrettyString());
-                        authorities.add(new Authority(next.get("name").asText()));
-                    }
-                    return authorities;
-                }
-            }
            @Id
            @GeneratedValue(strategy = GenerationType.AUTO)
            @ApiModelProperty(notes = "Уникальный идентификатор")
