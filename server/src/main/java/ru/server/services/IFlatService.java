@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface IFlatService {
     Optional<List<Flat>> findComplexFlats(Long complexId);
     Optional<Flat> findById(Long flatId);
+    boolean create(Flat flat);
+    boolean edit(Flat flat);
+    boolean delete(Long id);
 }

@@ -4,10 +4,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.server.models.Flat;
+import ru.server.models.User;
 import ru.server.services.IFlatService;
 
 import java.util.List;
@@ -37,5 +36,21 @@ public class FlatController {
         }
         return ResponseEntity.of(res);
         //return ResponseEntity.of(flatService.findComplexFlats(complexId));
+    }
+    @ApiOperation("Удаление квартиры")
+    @DeleteMapping(value = "/api/flat/{id}", produces = "application/json")
+    ResponseEntity<Boolean> deleteFlat(@RequestHeader("Authorization") String token, @PathVariable("id") Long id){
+        return ResponseEntity.ok(flatService.delete(id));
+    }
+    @ApiOperation("Coздание новой квартиры")
+    @PostMapping(value = "/api/flat/new", produces = "application/json")
+    ResponseEntity<Boolean> createFlat(@RequestHeader("Authorization") String token, @RequestBody Flat newFlat){
+        return ResponseEntity.ok(flatService.create(newFlat));
+    }
+    @ApiOperation(("Редактирование сущестувующей квартиры"))
+    @PostMapping(value="/api/flat/{id}", produces = "application/json")
+    ResponseEntity<Boolean> editFlat(@RequestHeader("Authorization") String token, @PathVariable("id") Long id, @RequestBody Flat toModify){
+        toModify.setId(id);
+        return ResponseEntity.ok(flatService.edit(toModify));
     }
 }

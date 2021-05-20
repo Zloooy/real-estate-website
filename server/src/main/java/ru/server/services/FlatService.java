@@ -27,4 +27,28 @@ public class FlatService implements IFlatService {
     public Optional<Flat> findById(Long flatId) {
         return repository.findById(flatId);
     }
+
+    @Override
+    public boolean create(Flat flat) {
+        if (flat.getComplex() == null || !complexRepository.existsById(flat.getComplex().getId()))
+            return false;
+        repository.save(flat);
+        return true;
+    }
+
+    @Override
+    public boolean edit(Flat flat) {
+        if (!repository.existsById(flat.getId()) || flat.getComplex() == null || !complexRepository.existsById(flat.getComplex().getId()))
+            return false;
+        repository.save(flat);
+        return true;
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        if (!repository.existsById(id))
+        return false;
+        repository.deleteById(id);
+        return true;
+    }
 }

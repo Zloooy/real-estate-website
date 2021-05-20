@@ -1,6 +1,9 @@
 package ru.server.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
@@ -32,7 +35,7 @@ public class Complex {
     @ApiModelProperty(notes = "Уникальный идентификатор комплекса")
     @Column(name="id")
     private Long id;
-    @ApiModelProperty(name="Пользователь, опубликовавший информациб об обьекте")
+    @ApiModelProperty(name="Пользователь, опубликовавший информацию об обьекте")
     @ManyToOne(fetch = FetchType.EAGER)
     private User author;
     @ApiModelProperty(notes = "Название комплекса")

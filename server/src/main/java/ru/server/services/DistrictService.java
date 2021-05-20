@@ -26,4 +26,12 @@ public class DistrictService implements IDistrictService {
     public Optional<District> getDistrictByName(String name) {
         return repository.findByName(name);
     }
+
+    @Override
+    public boolean create(District district) {
+        if (district.getCity() == null || !cityRepository.existsById(district.getCity().getId()))
+        return false;
+        repository.save(district);
+        return true;
+    }
 }

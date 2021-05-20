@@ -6,9 +6,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
+import ru.server.enums.Authority;
 import ru.server.models.District;
 import ru.server.services.IDistrictService;
 
@@ -28,5 +28,11 @@ public class DistrictRestController {
     })
 public ResponseEntity<List<District>> getDistrictsByCity(@RequestParam(name="city_id") Long cityId){
     return ResponseEntity.of(districtService.getDistrictsByCityId(cityId));
+}
+    @Secured({Authority.CAN_EDIT_DISTRICTS})
+    @ApiOperation(value="Создать новый район")
+    @PostMapping(value = "/api/districts/new", produces = "application/json")
+    public ResponseEntity<Boolean> createNewDistrict(@RequestHeader("Authorization") String token, @RequestBody District newDistrict){
+        return ResponseEntity.ok(districtService.create(newDistrict));
 }
 }

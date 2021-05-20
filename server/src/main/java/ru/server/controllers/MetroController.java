@@ -6,9 +6,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
+import ru.server.enums.Authority;
 import ru.server.models.Metro;
 import ru.server.services.IMetroService;
 
@@ -30,5 +30,12 @@ public class MetroController {
     ResponseEntity<List<Metro>> getCityMetros(@RequestParam(name="city_id", required = true) Long cityId){
         Optional<List<Metro>> result = metroService.getByCityId(cityId);
         return ResponseEntity.of(result);
+    }
+    @Secured({Authority.CAN_EDIT_METROS})
+    @ApiOperation(value="Создать новую станцию метро")
+    @PostMapping(value = "/api/metros/new", produces = "application/json")
+    ResponseEntity<Boolean> createMetro(@RequestHeader("Authorization") String token, @RequestBody Metro newMetro){
+        newMetro.setId(null);
+        return ResponseEntity.ok(metroService.create(newMetro));
     }
 }

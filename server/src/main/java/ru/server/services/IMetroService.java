@@ -9,4 +9,5 @@ import java.util.Optional;
 @Service
 public interface IMetroService {
     Optional<List<Metro>> getByCityId(Long id);
+    boolean create(Metro newMetro);
 }
