@@ -100,4 +100,12 @@ private Specification<Complex> generateSpecification(ComplexQuery query){
         repository.save(complex);
         return true;
     }
+
+    @Override
+    public boolean delete(Long id) {
+        if (!repository.existsById(id))
+        return false;
+        repository.deleteById(id);
+        return true;
+    }
 }

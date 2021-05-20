@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface IDistrictService {
     Optional<List<District>> getDistrictsByCityId(Long cityId);
     Optional<District> getDistrictByName(String name);
+    boolean create(District district);
 }

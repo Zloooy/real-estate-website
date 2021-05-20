@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.server.data.ComplexQuery;
 import ru.server.enums.Authority;
 import ru.server.models.Complex;
+import ru.server.models.User;
 import ru.server.services.IComplexService;
+import ru.server.services.ITokenService;
+import ru.server.services.IUserService;
 
 import java.util.List;
 
@@ -20,6 +23,10 @@ import java.util.List;
 public class ComplexController {
     @Autowired
     IComplexService complexService;
+    @Autowired
+    IUserService userService;
+    @Autowired
+    ITokenService tokenService;
     @ApiOperation(value = "Получение рекламируемых городов")
     @PostMapping(value = "/public_api/advertized_complexes/", produces = "application/json")
     public ResponseEntity<List<Complex>> getAdvertized(@RequestBody ComplexQuery query){
@@ -40,7 +47,7 @@ public class ComplexController {
     @PostMapping(value = "/api/complexes/new", produces = "application/json")
     public ResponseEntity<Boolean> createNewComplex(@RequestHeader("Authorization") String token, @RequestBody Complex newComplex){
         newComplex.setId(null);
-        newComplex.setAuthor(null);
+        newComplex.setAuthor((User) userService.loadUserByUsername(tokenService.getLoginFromToken(token.substring(7))));
         return ResponseEntity.ok(complexService.create(newComplex));
     }
     @Secured({Authority.CAN_EDIT_COMPLEXES})
@@ -48,6 +55,13 @@ public class ComplexController {
     @PostMapping(value = "/api/complexes/{id}", produces = "application/json")
     public ResponseEntity<Boolean> editComplex(@RequestHeader("Authorization") String token, @PathVariable("id") Long id, @RequestBody Complex toReplace){
         toReplace.setId(id);
+        toReplace.setAuthor((User) userService.loadUserByUsername(tokenService.getLoginFromToken(token.substring(7))));
         return ResponseEntity.ok(complexService.update(toReplace));
+    }
+    @Secured({Authority.CAN_EDIT_COMPLEXES})
+    @ApiOperation("Удаление комплекса")
+    @DeleteMapping(value = "/api/complexes/{id}", produces = "application/json")
+    public ResponseEntity<Boolean> deleteComplex(@RequestHeader("Authorization") String token, @PathVariable("id") Long id){
+        return ResponseEntity.ok(complexService.delete(id));
     }
 }

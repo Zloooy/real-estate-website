@@ -7,4 +7,7 @@ public final class Authority {
     public static final String CAN_MANAGE_USERS = DEFAULT_PREFIX + "CAN_MANAGE_USERS";
     public static final String CAN_EDIT_ARTICLES = DEFAULT_PREFIX + "CAN_EDIT_ARTICLES";
     public static final String CAN_EDIT_COMPLEXES = DEFAULT_PREFIX + "CAN_MANAGE_COMPLEXES";
+    public static final String CAN_EDIT_FLATS = DEFAULT_PREFIX + "CAN_EDIT_FLATS";
+    public static final String CAN_EDIT_METROS = DEFAULT_PREFIX + "CAN_EDIT_METROS";
+    public static final String CAN_EDIT_DISTRICTS = DEFAULT_PREFIX + "CAN_EDIT_DISTRICTS";
 }

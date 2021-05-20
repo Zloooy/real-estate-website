@@ -16,4 +16,5 @@ public interface IComplexService {
     Optional<Complex> findById(Long id);
     boolean create(Complex newComplex);
     boolean update(Complex complex);
+    boolean delete(Long id);
 }

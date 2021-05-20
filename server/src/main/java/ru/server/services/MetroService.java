@@ -21,4 +21,12 @@ public class MetroService implements IMetroService {
             return Optional.empty();
         return Optional.of(repository.findAllByCityIdOrderByName(id));
     }
+
+    @Override
+    public boolean create(Metro newMetro) {
+        if (newMetro.getCity() == null || !cityRepository.existsById(newMetro.getCity().getId()))
+        return false;
+        repository.save(newMetro);
+        return true;
+    }
 }
