@@ -3,6 +3,7 @@ package ru.server.services;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.server.data.CreationResponse;
 import ru.server.models.Article;
 
 import java.util.Optional;
@@ -13,5 +14,5 @@ public interface IArticleService {
     Optional<Article> findById(Long id);
     boolean deleteById(Long id);
     boolean editById(Article toEdit);
-    boolean create(Article newArticle);
+    CreationResponse create(Article newArticle);
 }

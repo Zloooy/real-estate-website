@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import ru.server.data.CreationResponse;
 import ru.server.enums.Authority;
 import ru.server.models.Article;
 import ru.server.services.IArticleService;
@@ -31,7 +32,7 @@ public class ArticleController {
     @Secured({Authority.CAN_EDIT_ARTICLES})
     @ApiOperation(value = "Обновить статью с id")
     @PostMapping(value = "/api/article/new", produces = "application/json")
-    public ResponseEntity<Boolean> createArticle(@RequestHeader("Authorization") String token, @RequestBody Article article){
+    public ResponseEntity<CreationResponse> createArticle(@RequestHeader("Authorization") String token, @RequestBody Article article){
         return ResponseEntity.ok(articleService.create(article));
     }
     @Secured({Authority.CAN_EDIT_ARTICLES})

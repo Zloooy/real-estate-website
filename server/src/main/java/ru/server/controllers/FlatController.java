@@ -5,8 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.server.data.CreationResponse;
 import ru.server.models.Flat;
-import ru.server.models.User;
 import ru.server.services.IFlatService;
 
 import java.util.List;
@@ -44,7 +44,7 @@ public class FlatController {
     }
     @ApiOperation("Coздание новой квартиры")
     @PostMapping(value = "/api/flat/new", produces = "application/json")
-    ResponseEntity<Boolean> createFlat(@RequestHeader("Authorization") String token, @RequestBody Flat newFlat){
+    ResponseEntity<CreationResponse> createFlat(@RequestHeader("Authorization") String token, @RequestBody Flat newFlat){
         return ResponseEntity.ok(flatService.create(newFlat));
     }
     @ApiOperation(("Редактирование сущестувующей квартиры"))

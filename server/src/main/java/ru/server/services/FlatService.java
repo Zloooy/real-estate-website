@@ -2,6 +2,7 @@ package ru.server.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.server.data.CreationResponse;
 import ru.server.models.Flat;
 import ru.server.repositories.IComplexRepository;
 import ru.server.repositories.IFlatRepository;
@@ -29,11 +30,11 @@ public class FlatService implements IFlatService {
     }
 
     @Override
-    public boolean create(Flat flat) {
+    public CreationResponse create(Flat flat) {
         if (flat.getComplex() == null || !complexRepository.existsById(flat.getComplex().getId()))
-            return false;
+            return new CreationResponse(false, null);
         repository.save(flat);
-        return true;
+        return new CreationResponse(true, flat.getId());
     }
 
     @Override

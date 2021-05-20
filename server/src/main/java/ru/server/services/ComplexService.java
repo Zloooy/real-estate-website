@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.server.data.ComplexQuery;
+import ru.server.data.CreationResponse;
 import ru.server.models.Complex;
 import ru.server.repositories.IComplexRepository;
 
@@ -88,9 +89,9 @@ private Specification<Complex> generateSpecification(ComplexQuery query){
     }
 
     @Override
-    public boolean create(Complex newComplex) {
+    public CreationResponse create(Complex newComplex) {
         repository.save(newComplex);
-        return true;
+        return new CreationResponse(true, newComplex.getId());
     }
 
     @Override
