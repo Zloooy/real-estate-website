@@ -210,25 +210,25 @@ export const actions: ActionTree<State, State> & Actions = {
     },
 
     GET_DISTRICTS({commit, state}: AugmentActionContext, payload: void): Promise<District[]> {
-        return state.public_api.getDistrictsByCityUsingGet({city_id: state.city?.id || 9})
+        return state.public_api.getDistrictsByCityUsingGet({city_id: state.city?.id || 17})
             .then(response => response.data)
             .catch(()=>[])
             .then(d=>commit('SET_DISTRICTS', d));
     },
     GET_DISTRICTS_REDACTOR({commit, state}: AugmentActionContext, payload: number): Promise<District[]> {
-        return state.public_api.getDistrictsByCityUsingGet({city_id: payload || 9})
+        return state.public_api.getDistrictsByCityUsingGet({city_id: payload || 17})
             .then(response => response.data)
             .catch(()=>[])
             .then(d=>commit('SET_DISTRICTS', d));
     },
     GET_METROS({commit, state}: AugmentActionContext, payload: void): Promise<Metro[]> {
-        return state.public_api.getCityMetrosUsingGet({city_id: state.city?.id || 9})
+        return state.public_api.getCityMetrosUsingGet({city_id: state.city?.id || 17})
             .then(response => response.data)
             .catch(err=>[])
             .then(d=>commit('SET_METROS', d));
     },
     GET_METROS_REDACTOR({commit, state}: AugmentActionContext, payload: number): Promise<Metro[]> {
-        return state.public_api.getCityMetrosUsingGet({city_id: payload || 9})
+        return state.public_api.getCityMetrosUsingGet({city_id: payload || 17})
             .then(response => response.data)
             .catch(err=>[])
             .then(d=>commit('SET_METROS', d));
@@ -265,7 +265,7 @@ export const actions: ActionTree<State, State> & Actions = {
         state.complexesLoading = true;
         return state.public_api.getComplexesUsingPost(
             {
-                cityId: state.city?.id || 9,
+                cityId: state.city?.id || 17,
                 estateCategory: state.complex_category,
                 metroId: state.metro?.id,
                 districtId: state.district?.id,
@@ -290,7 +290,7 @@ export const actions: ActionTree<State, State> & Actions = {
     GET_ADVERTIZED_COMPLEXES({commit, state}: AugmentActionContext, payload: void): Promise<void> {
         return state.public_api.getAdvertizedUsingPost(
             {
-                cityId: state.city?.id || 9,
+                cityId: state.city?.id || 17,
                 estateCategory:state.complex_category
             })
             .then(response => {

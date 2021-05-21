@@ -202,6 +202,7 @@ export default class CatalogRedactor extends Vue {
         } as Flat);
   }
   deleteFlat({id}: Flat){
+    console.debug("DELITING FLAT");
     this.store.dispatch('DELETE_FLAT', id || 47);
   }
 

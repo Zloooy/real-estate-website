@@ -1,14 +1,14 @@
 <template>
   <div class="mini-flat-card">
 
-    <div class="box1">
+    <div class="box1" @click="$emit('click')">
       <div class="rooms">{{rooms}}к</div>
 
       <div class="price">{{price}} Р</div>
     </div>
-    <div class="btn">
-      <delete-button v-if="store.getters.CAN_EDIT_FLATS"
-      @click="$emit('delete-flat')"/>
+    <div class="btn" v-if="store.getters.CAN_EDIT_FLATS">
+
+      <delete-button @click="$emit('delete-flat')"/>
     </div>
     <div class="box2" @click="$emit('click')">
       <div class="square">{{square}} м2</div>

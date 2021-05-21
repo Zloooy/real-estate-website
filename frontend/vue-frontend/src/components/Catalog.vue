@@ -143,14 +143,14 @@ import AddButton from "@/components/AddButton.vue";
     },
     creation_response(){
       return this.store.getters.creation_response;
-    }
+    },
+
   },
-  watch: {
+  watch:{
     creation_response({id, created}: CreationResponse){
       if (this.waitingForComplex){
-        if (created){
-          this.$router.push(`/complex/${id}/edit`)
-        }
+        if (created)
+          this.$router.push(`/complex/${id}/edit`);
         this.waitingForComplex = false;
       }
     }
@@ -269,7 +269,8 @@ export default class Catalog extends Vue {
         address: {city: this.store.getters.city},
         name: "Новый комплекс",
         category: this.store.getters.complex_category || "NEW",
-        status: "ACCEPTED"
+        status: "ACCEPTED",
+        price: 1000,
     } as Complex);
   }
 }

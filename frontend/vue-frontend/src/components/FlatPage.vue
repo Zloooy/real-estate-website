@@ -11,6 +11,7 @@
       <div class="data-flat">
         <div class="realtor-data">
           <data-realtor
+              v-if="flat.complex.contacts"
               :fio= "flat.complex.contacts.name"
               :phone = "flat.complex.contacts.phone"
               :email = "flat.complex.contacts.email"
@@ -20,8 +21,8 @@
         <main-data-flat
             :price="flat.price"
             :address="flat.complex.address.street"
-            :metro = "flat.complex.address.metro.name"
-            :district = "flat.complex.address.district.name"
+            :metro = "flat.complex.address?.metro?.name || ''"
+            :district = "flat.complex.address?.district?.name || ''"
         />
       </div>
   </div>
