@@ -51,7 +51,7 @@ public class DataInitializer implements ApplicationRunner {
     private PasswordEncoder passwordEncoder;
     private static final List<String>
             roleNames = Arrays.asList(ru.server.enums.UserRole.ADMIN, UserRole.CONTENT_MANAGER, UserRole.REALTOR, UserRole.CLIENT),
-            authorityNames = Arrays.asList(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS, Authority.CAN_EDIT_ARTICLES,  Authority.CAN_MANAGE_COMPLEXES, Authority.CAN_EDIT_FLATS, Authority.CAN_EDIT_METROS, Authority.CAN_EDIT_DISTRICTS),
+            authorityNames = Arrays.asList(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS, Authority.CAN_EDIT_ARTICLES,  Authority.CAN_MANAGE_COMPLEXES, Authority.CAN_EDIT_FLATS, Authority.CAN_EDIT_METROS, Authority.CAN_EDIT_DISTRICTS, Authority.CAN_EDIT_TARIFFS),
             userLogins=Arrays.asList("admin", "manager"),
             userPasswords=Arrays.asList("password", "password"),
             userRoles=Arrays.asList(UserRole.ADMIN, UserRole.CONTENT_MANAGER),
@@ -147,7 +147,7 @@ public class DataInitializer implements ApplicationRunner {
                             15000.00
                     );
             private static final List<Float> flatSquares= Arrays.asList(80f, 100f);
-            private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS), Set.of(Authority.CAN_EDIT_ARTICLES, Authority.CAN_MANAGE_COMPLEXES, Authority.CAN_EDIT_FLATS, Authority.CAN_EDIT_METROS, Authority.CAN_EDIT_DISTRICTS), new HashSet<>(), new HashSet<>());
+            private static final List<Set<String>> authorityNameGroups = Arrays.asList(Set.of(Authority.CAN_ENTER, Authority.CAN_VIEW_ROLES, Authority.CAN_MANAGE_USERS), Set.of(Authority.CAN_EDIT_ARTICLES, Authority.CAN_MANAGE_COMPLEXES, Authority.CAN_EDIT_FLATS, Authority.CAN_EDIT_METROS, Authority.CAN_EDIT_DISTRICTS, Authority.CAN_EDIT_TARIFFS), new HashSet<>(), new HashSet<>());
     private static final List<Tariff.TariffPriceType> tariffPriceTypes = Arrays.asList(
             Tariff.TariffPriceType.ROUBLES,
             Tariff.TariffPriceType.ROUBLES,
