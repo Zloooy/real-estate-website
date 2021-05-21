@@ -3,28 +3,40 @@
     <div class="header">
       Тарифы
     </div>
-    <edit-button/>
+    <div class="tariff-form">
+      <tariff-form
+          :tariff="selectedTariff"
+          @tariff-changed="saveTariff"
+      />
+    </div>
     <div class="tariffs-list">
       <tariff
       v-for="tariff in tariffs"
-      :key="tariff.if"
+      :key="tariff.id"
       :tariff="tariff"
+      @click="selectTariff(tariff)"
       />
+      <add-button/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import Tariff from "@/components/Tariff.vue";
+import {Tariff as TariffData} from "@/generated-api/data-contracts";
+import Tariff  from "@/components/Tariff.vue";
 import {Store, useStore} from "@/store/index";
 import EditButton from "@/components/EditButton.vue";
+import AddButton from "@/components/AddButton.vue";
+import TariffForm from '@/components/TariffForm.vue';
 
 @Options({
   name:"tariffs-page",
   components:{
+    TariffForm,
     Tariff,
-    EditButton
+    EditButton,
+    AddButton
   },
   computed: {
     tariffs(){
@@ -33,10 +45,23 @@ import EditButton from "@/components/EditButton.vue";
   }
 })
 export default class TariffsPage extends Vue{
+  store: Store = useStore();
   created(){
     this.store.dispatch('GET_TARIFFS', undefined);
   }
-  store: Store = useStore();
+  selectedTariff: TariffData | null = null;
+
+  selectTariff(tariff: TariffData){
+    this.selectedTariff = Object.assign({}, tariff);
+  }
+  saveTariff(tariff: TariffData){
+    if (tariff.id == -1){
+      // this.store.dispatch(, tariff);
+    }
+    else {
+      // this.store.dispatch(, tariff);
+    }
+  }
 }
 </script>
 

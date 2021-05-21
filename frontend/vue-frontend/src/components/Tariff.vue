@@ -51,7 +51,7 @@ export default class Tariff extends Vue {
 <style scoped>
 
 .tariff{
-
+  padding: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 15px;
