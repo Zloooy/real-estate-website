@@ -5,6 +5,7 @@
     </div>
     <div class="tariff-form">
       <tariff-form
+          v-if="selectedTariff"
           :tariff="selectedTariff"
           @tariff-changed="saveTariff"
       />
@@ -16,7 +17,10 @@
       :tariff="tariff"
       @click="selectTariff(tariff)"
       />
-      <add-button/>
+      <add-button
+          @click="createTariff"
+      v-if="store.getters.CAN_EDIT_TARIFFS"
+      />
     </div>
   </div>
 </template>
@@ -50,16 +54,19 @@ export default class TariffsPage extends Vue{
     this.store.dispatch('GET_TARIFFS', undefined);
   }
   selectedTariff: TariffData | null = null;
-
+  createTariff(){
+    this.selectedTariff = {id: -1, priceType: "PERCENT_OF_MONTHLY_RENT_RATE"} as TariffData;
+  }
   selectTariff(tariff: TariffData){
+    if (this.store.getters.CAN_EDIT_TARIFFS)
     this.selectedTariff = Object.assign({}, tariff);
   }
   saveTariff(tariff: TariffData){
     if (tariff.id == -1){
-      // this.store.dispatch(, tariff);
+      this.store.dispatch('CREATE_TARIFF', tariff);
     }
     else {
-      // this.store.dispatch(, tariff);
+      this.store.dispatch('EDIT_TARIFF', tariff);
     }
   }
 }

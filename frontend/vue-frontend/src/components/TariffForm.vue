@@ -1,9 +1,11 @@
 <template>
-  <div class="tariff-form">
-    <input placeholder="Название" v-model="tariff.name">
-    <input placeholder="Цена" v-model="tariff.price">
-    <dropdown-selector
+  <div class="tariff-form" v-if="tariff">
+    <input type="text" placeholder="Название" v-model="tariff.name">
+    <input  type="number" placeholder="Цена" v-model="tariff.price">
+   <dropdown-selector
         :options="priceType"
+        :firstSelectedIndex="findFirstSelectionIndex()"
+        @select="onPriceTypeSelect"
     />
     <button @click="emitTariff">
       Записать
@@ -15,7 +17,7 @@
 import {Vue, Options} from 'vue-class-component';
 import {Store, useStore} from "@/store";
 import DropdownSelector from "@/components/DropdownSelector.vue";
-import Tariff from "@/generated-api/data-contracts";
+import {Tariff} from "@/generated-api/data-contracts";
 
 @Options({
       name: "tariff-form",
@@ -23,29 +25,25 @@ import Tariff from "@/generated-api/data-contracts";
         DropdownSelector
       },
      props:['tariff'],
-    //   emits:['tariff-changed'],
-    //   computed:{
-    //   //   (): [] {
-    //   //     return this.store.getters.;
-    //   //   }
-    //   // }
-    // }*/
+      emits:['tariff-changed'],
 })
 export default class TariffForm extends Vue {
-  store: Store = useStore();
-  // $props!: {
-  //   user: UserDto;
-  // }
-  tariff: Tariff| null = null;
-/*  mounted(){
-    console.debug(JSON.stringify(this.$props.tariff));
+  $props!:{
+    tariff: Tariff;
   }
+
+  tariff: Tariff | null = null;
+  store: Store = useStore();
   findFirstSelectionIndex(): number{
-    return this.store.getters.Tariff.findIndex(tariff>this.tariff?.id == tariff.id);
+    return this.store.getters.tariffs.findIndex(tarif=>this.$props.tariff.id == tarif.id);
   }
   emitTariff(){
     this.$emit('tariff-changed', this.tariff)
-  }*/
+  }
+  onPriceTypeSelect(option: {name:string, value:Tariff['priceType']}){
+    if (this.tariff)
+    this.tariff.priceType = option.value;
+  }
   priceType=[
     {
       name:"Комиссия",

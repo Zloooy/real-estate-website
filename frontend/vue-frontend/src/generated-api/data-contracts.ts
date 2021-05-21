@@ -211,6 +211,20 @@ export interface Contacts {
   photo?: string;
 }
 
+export interface CreationResponse {
+  /**
+   * Удачно ли создался
+   * @example false
+   */
+  created?: boolean;
+
+  /**
+   * id созданной сущности
+   * @format int64
+   */
+  id?: number;
+}
+
 export interface District {
   /** Город района */
   city?: City;

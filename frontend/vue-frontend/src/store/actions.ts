@@ -47,9 +47,20 @@ export interface Actions {
     GET_AUTHORITIES({state, commit}: AugmentActionContext, payload: void): Promise<void>,
     LOGOUT({state, commit}: AugmentActionContext, payload: void): Promise<void>,
     DELETE_COMPLEX({state, commit}: AugmentActionContext, payload: number): Promise<void>,
-    DELETE_FLAT({state, commit}: AugmentActionContext, payload: number): Promise<void>
+    DELETE_FLAT({state, commit}: AugmentActionContext, payload: number): Promise<void>,
+    CREATE_TARIFF({state, commit}: AugmentActionContext, payload: Tariff): Promise<void>
+    EDIT_TARIFF({state, commit}: AugmentActionContext, payload: Tariff): Promise<void>
 }
 export const actions: ActionTree<State, State> & Actions = {
+    CREATE_TARIFF({state, commit, dispatch}: AugmentActionContext, payload: Tariff): Promise<void> {
+        return state.api.createNewTariffUsingPost(payload)
+            .then(()=>dispatch('GET_TARIFFS', undefined));
+    },
+    EDIT_TARIFF({state, commit, dispatch}: AugmentActionContext, payload: Tariff): Promise<void> {
+        // @ts-ignore
+        return state.api.updateTariffUsingPost(payload?.id | 30, payload)
+            .then(()=>dispatch('GET_TARIFFS', undefined));
+    },
     DELETE_COMPLEX({state, commit}: AugmentActionContext, payload: number): Promise<void> {
         return state.api.deleteComplexUsingDelete(payload)
             .then(r=>r.data)

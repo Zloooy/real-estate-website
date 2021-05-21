@@ -1,11 +1,14 @@
 import {
   Article,
   Complex,
+  Contacts,
+  CreationResponse,
   District,
   Flat,
   Greeting,
   Metro,
   RepresentationModelObject,
+  Tariff,
   UserDto,
   UserRoleDto,
 } from "./data-contracts";
@@ -21,7 +24,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    * @request POST:/api/article/new
    */
   createArticleUsingPost = (data: Article, params: RequestParams = {}) =>
-    this.request<boolean, void>({
+    this.request<CreationResponse, void>({
       path: `/api/article/new`,
       method: "POST",
       body: data,
@@ -70,7 +73,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    * @request POST:/api/complexes/new
    */
   createNewComplexUsingPost = (data: Complex, params: RequestParams = {}) =>
-    this.request<boolean, void>({
+    this.request<CreationResponse, void>({
       path: `/api/complexes/new`,
       method: "POST",
       body: data,
@@ -113,6 +116,52 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
   /**
    * No description
    *
+   * @tags contacts-controller
+   * @name GetAllContactsUsingGet
+   * @summary Получение списка всех контактов
+   * @request GET:/api/contacts
+   */
+  getAllContactsUsingGet = (params: RequestParams = {}) =>
+    this.request<Contacts[], void>({
+      path: `/api/contacts`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags contacts-controller
+   * @name CreateNewContactsUsingPost
+   * @summary Создание нового контакта
+   * @request POST:/api/contacts/new
+   */
+  createNewContactsUsingPost = (data: Contacts, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/contacts/new`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags contacts-controller
+   * @name DeleteContactUsingDelete
+   * @summary Удаление контактов
+   * @request DELETE:/api/contacts/{id}
+   */
+  deleteContactUsingDelete = (id: number, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/contacts/${id}`,
+      method: "DELETE",
+      ...params,
+    });
+  /**
+   * No description
+   *
    * @tags district-rest-controller
    * @name CreateNewDistrictUsingPost
    * @summary Создать новый район
@@ -136,7 +185,7 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    * @request POST:/api/flat/new
    */
   createFlatUsingPost = (data: Flat, params: RequestParams = {}) =>
-    this.request<boolean, void>({
+    this.request<CreationResponse, void>({
       path: `/api/flat/new`,
       method: "POST",
       body: data,
@@ -233,6 +282,55 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
     this.request<object, void>({
       path: `/api/profile`,
       method: "OPTIONS",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags tariff-rest-controller
+   * @name CreateNewTariffUsingPost
+   * @summary Создание нового тарифа
+   * @request POST:/api/tariffs/new
+   */
+  createNewTariffUsingPost = (data: Tariff, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/tariffs/new`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags tariff-rest-controller
+   * @name UpdateTariffUsingPost
+   * @summary Обновление информации по тарифу
+   * @request POST:/api/tariffs/{id}
+   */
+  updateTariffUsingPost = (id: number, data: Tariff, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/tariffs/${id}`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags tariff-rest-controller
+   * @name DeleteTariffUsingDelete
+   * @summary Удаление тарифа
+   * @request DELETE:/api/tariffs/{id}
+   */
+  deleteTariffUsingDelete = (id: number, params: RequestParams = {}) =>
+    this.request<boolean, void>({
+      path: `/api/tariffs/${id}`,
+      method: "DELETE",
+      format: "json",
       ...params,
     });
   /**

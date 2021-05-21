@@ -37,7 +37,7 @@ export type Getters = {
     CAN_EDIT_FLATS(state: State): boolean,
     CAN_EDIT_METROS(state: State): boolean,
     CAN_EDIT_DISTRICTS(state: State): boolean,
-
+    CAN_EDIT_TARIFFS(state: State): boolean,
 }
 
 export const getters: GetterTree<State, State> & Getters = {
@@ -104,5 +104,6 @@ export const getters: GetterTree<State, State> & Getters = {
     CAN_EDIT_FLATS: authority_checker("CAN_EDIT_FLATS"),
     CAN_EDIT_ARTICLES: authority_checker("CAN_EDIT_ARTICLES"),
     CAN_EDIT_DISTRICTS: authority_checker("CAN_EDIT_DISTRICTS"),
-    CAN_EDIT_METROS: authority_checker("CAN_EDIT_METROS")
+    CAN_EDIT_METROS: authority_checker("CAN_EDIT_METROS"),
+    CAN_EDIT_TARIFFS: authority_checker("CAN_EDIT_TARIFFS")
 } as Getters;
