@@ -1,7 +1,18 @@
 import {Mutations} from "@/store/mutations";
 import {ActionContext, ActionTree} from "vuex";
 import {State} from "@/store/state";
-import {Article, City, Complex, District, Flat, Metro, Request, Tariff, UserDto} from "@/generated-api/data-contracts";
+import {
+    Article,
+    City,
+    Complex,
+    CreationResponse,
+    District,
+    Flat,
+    Metro,
+    Request,
+    Tariff,
+    UserDto
+} from "@/generated-api/data-contracts";
 
 
 type AugmentActionContext = {
@@ -52,9 +63,23 @@ export interface Actions {
     EDIT_TARIFF({state, commit}: AugmentActionContext, payload: Tariff): Promise<void>
     EDIT_ARTICLE({state, commit}: AugmentActionContext, payload: Article): Promise<void>,
     CREATE_ARTICLE({state, commit}: AugmentActionContext, payload: Article): Promise<void>
-    DELETE_ARTICLE({state, commit}: AugmentActionContext, payload: number): Promise<void>
+    DELETE_ARTICLE({state, commit}: AugmentActionContext, payload: number): Promise<void>,
+    EDIT_FLAT({state, commit}: AugmentActionContext, payload: Flat): Promise<void>,
+    CREATE_FLAT({state, commit}: AugmentActionContext, payload: Flat): Promise<void>;
 }
 export const actions: ActionTree<State, State> & Actions = {
+    CREATE_FLAT({state, commit}: AugmentActionContext, payload: Flat): Promise<void> {
+        return state.api.createFlatUsingPost(payload)
+            .then(resp=>resp.data)
+            .then(d=>commit('SET_CREATION_RESPONSE', d))
+            .then(()=>undefined);
+    },
+    EDIT_FLAT({state, commit}: AugmentActionContext, payload: Flat): Promise<void> {
+        return state.api.editFlatUsingPost(payload.id || 20, payload)
+            .then((resp)=>resp.data)
+            .catch(()=>undefined)
+            .then(()=>undefined);
+    },
     DELETE_ARTICLE({state, commit, dispatch}: AugmentActionContext, payload: number): Promise<void> {
         return state.api.deleteArticleByIdUsingDelete(payload)
             .then(()=>commit('SET_ARTICLE_PAGE', 0))
@@ -64,7 +89,8 @@ export const actions: ActionTree<State, State> & Actions = {
         return state.api.createArticleUsingPost(payload)
             .then(resp=>resp.data)
             .then(d=>commit('SET_CREATION_RESPONSE', d));
-    }, EDIT_ARTICLE({state, commit, dispatch}: AugmentActionContext, payload: Article): Promise<void> {
+    },
+    EDIT_ARTICLE({state, commit, dispatch}: AugmentActionContext, payload: Article): Promise<void> {
         return state.api.editArticleByIdUsingPost(payload.id || 20, payload)
             .then(()=>undefined)
             //.then(()=>dispatch(''));

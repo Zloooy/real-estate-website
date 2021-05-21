@@ -89,6 +89,7 @@
       <div class="flats-list">
         <mini-flat-card
             @click="goToFlat(flat)"
+            @delete-flat="deleteFlat(flat)"
             v-for="flat in complex_flats"
             :key="flat.id"
             :rooms="flat.numberOfRooms"
@@ -97,7 +98,8 @@
             :floor="flat.floor"
         />
       </div>
-      <add-button v-if="store.getters.CAN_EDIT_FLATS"/>
+      <add-button v-if="store.getters.CAN_EDIT_FLATS"
+      @click="createFlat"/>
     </div>
 
   </div>
@@ -110,12 +112,14 @@ import {Store, useStore} from "@/store/index";
 import {Flat} from "@/generated-api/data-contracts";
 import DropdownSelector from "@/components/DropdownSelector.vue";
 import {City} from '@/generated-api/data-contracts';
+import AddButton from "@/components/AddButton.vue";
 
 @Options({
   name:"complex",
   components: {
     DropdownSelector,
     MiniFlatCard,
+    AddButton
   },
   computed:{
     complex(){
@@ -136,13 +140,26 @@ import {City} from '@/generated-api/data-contracts';
 
     complex_flats(){
       return this.store.getters.complexFlats;
-    }
-  }
+    },
 
+    creation_response(){
+      return this.store.getters.creation_response;
+    }
+    },
+    watch: {
+      creation_response({id, created}) {
+        if (this.waitingForFlat) {
+          if (created)
+            this.$router.push(`/flat/${id}/edit`);
+          this.waitingForFlat = false;
+        }
+      }
+    }
 })
 
 export default class CatalogRedactor extends Vue {
   store: Store = useStore();
+  waitingForFlat: boolean = false;
   created(){
     this.store.dispatch('GET_CITIES_REDACTOR', null);
     this.store.dispatch('GET_COMPLEX', Number(this.$route.params.id));
@@ -162,6 +179,17 @@ export default class CatalogRedactor extends Vue {
   }
   goToFlat({id}:Flat){
     this.$router.push(`/flat/${id}`)
+  }
+  createFlat(){
+    this.waitingForFlat = true;
+    this.store.dispatch('CREATE_FLAT',
+        {
+          complex: this.store.getters.complex,
+          estateType: "FLAT"
+        } as Flat);
+  }
+  deleteFlat({id}: Flat){
+    this.store.dispatch('DELETE_FLAT', id || 47);
   }
 
    // complex: Complex

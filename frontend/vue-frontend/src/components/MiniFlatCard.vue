@@ -7,9 +7,10 @@
       <div class="price">{{price}} Р</div>
     </div>
     <div class="btn">
-      <delete-button v-if="store.getters.CAN_EDIT_FLATS"/>
+      <delete-button v-if="store.getters.CAN_EDIT_FLATS"
+      @click="$emit('delete-flat')"/>
     </div>
-    <div class="box2">
+    <div class="box2" @click="$emit('click')">
       <div class="square">{{square}} м2</div>
 
       <div class="floor">{{floor}} этаж</div>
@@ -27,6 +28,7 @@ import {Store, useStore} from "@/store/index";
 
 @Options({
   name: "mini-flat-card",
+  emits: ['click', 'delete-flat'],
   props: {
     rooms:{
       type: Number

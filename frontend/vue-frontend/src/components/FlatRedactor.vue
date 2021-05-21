@@ -1,5 +1,5 @@
 <template>
-<div class="redactor-page">
+<div class="redactor-page" v-if="flat">
 
   <div class="block">
     Цена
@@ -11,10 +11,10 @@
     <input class="square-input" type="number" placeholder="Введите площадь" v-model="flat.square">
   </div>
 
-  <div class="block">
+<!--  <div class="block">
     ID КОМПЛЕКСА
     <input class="idC-input" type="number" placeholder="id" v-model="flat.complex.id">
-  </div>
+  </div>-->
 
   <div class="block">
     Изображение
@@ -35,6 +35,9 @@
     Количество комнат
     <input class="floor-input" type="number" placeholder="Введите колличество комнат" v-model="flat.numberOfRooms">
   </div>
+  <button @click="saveFlat">
+    Записать
+  </button>
 </div>
 </template>
 
@@ -61,6 +64,10 @@ export default class FlatRedactor extends Vue {
 
   created(){
     this.store.dispatch('GET_FLAT', Number(this.$route.params.id));//1
+  }
+  saveFlat(){
+    if (this.store.getters.flat)
+    this.store.dispatch('EDIT_FLAT', this.store.getters.flat);
   }
 
   // flat: Flat ={
