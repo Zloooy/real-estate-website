@@ -1,5 +1,5 @@
 <template>
-  <div class="redactor-page">
+  <div class="redactor-page" v-if="complex">
 
     <div class="block">
       Название
@@ -21,12 +21,12 @@
       </div>
     </div>
 
-    <div class="block">
+<!--    <div class="block">
       Метро
       <dropdown-selector
           :options="metros"
       />
-    </div>
+    </div>-->
 
     <div class="block">
       Район
@@ -73,10 +73,13 @@
 
     <div class="contacts">
       Контакты
+      <dropdown-selector v-if="contacts" :options="contacts" :firstSelectedIndex="0" @select="setContacts"/>
+      <div v-if="complex.contacts">
       <div class="block2"> Имя <input class="nameС-input" type="text" placeholder="Имя" v-model="complex.contacts.name"></div>
       <div class="block2"> Телефон<input class="phone-input" type="text" placeholder="Телефон" v-model="complex.contacts.phone"></div>
       <div class="block2"> Почта<input class="emailC-input" type="text" placeholder="почта" v-model="complex.contacts.email"></div>
       <div class="block2"> Фото <textarea name="img-input" type="text" placeholder="Введите url фотографии" v-model="complex.contacts.photo"></textarea></div>
+      </div>
     </div>
 
     <div class="block">
@@ -101,7 +104,9 @@
       <add-button v-if="store.getters.CAN_EDIT_FLATS"
       @click="createFlat"/>
     </div>
-
+      <button @click="saveComplex">
+        Записать
+      </button>
   </div>
 </template>
 
@@ -109,7 +114,7 @@
 import {Options, Vue} from "vue-class-component";
 import MiniFlatCard from "@/components/MiniFlatCard.vue";
 import {Store, useStore} from "@/store/index";
-import {Flat} from "@/generated-api/data-contracts";
+import {Contacts, Flat} from "@/generated-api/data-contracts";
 import DropdownSelector from "@/components/DropdownSelector.vue";
 import {City} from '@/generated-api/data-contracts';
 import AddButton from "@/components/AddButton.vue";
@@ -144,6 +149,9 @@ import AddButton from "@/components/AddButton.vue";
 
     creation_response(){
       return this.store.getters.creation_response;
+    },
+    contacts() {
+      return this.store.getters.contacts;
     }
     },
     watch: {
@@ -163,6 +171,7 @@ export default class CatalogRedactor extends Vue {
   created(){
     this.store.dispatch('GET_CITIES_REDACTOR', null);
     this.store.dispatch('GET_COMPLEX', Number(this.$route.params.id));
+    this.store.dispatch('GET_CONTACTS', undefined);
   }
   setCity(value:City){
 
@@ -177,6 +186,10 @@ export default class CatalogRedactor extends Vue {
       this.store.dispatch('GET_COMPLEX_FLATS', Number(this.$route.params.id));
     }
   }
+  setContacts(value: Contacts){
+    //@ts-ignore
+    this.complex.contacts = value;
+  }
   goToFlat({id}:Flat){
     this.$router.push(`/flat/${id}`)
   }
@@ -190,6 +203,11 @@ export default class CatalogRedactor extends Vue {
   }
   deleteFlat({id}: Flat){
     this.store.dispatch('DELETE_FLAT', id || 47);
+  }
+
+  saveComplex(){
+    if (this.store.getters.complex)
+    this.store.dispatch('EDIT_COMPLEX', this.store.getters.complex);
   }
 
    // complex: Complex

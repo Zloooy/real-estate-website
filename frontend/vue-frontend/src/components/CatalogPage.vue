@@ -85,7 +85,7 @@
         По вашему запросу ничего не найдено
       </div>
     </div>
-
+    <add-button v-if="store.getters.CAN_MANAGE_COMPLEXES"/>
   </div>
 </template>
 
@@ -96,13 +96,15 @@ import MyCard from "@/components/MyCard.vue";
 import DropdownSelector from "@/components/DropdownSelector.vue";
 import {Complex, District, Metro} from "@/generated-api/data-contracts";
 import RangeSlider from "@/components/RangeSlider.vue";
+import AddButton from "@/components/AddButton.vue";
 
 @Options({
   name:"catalog",
   components: {
     MyCard,
     DropdownSelector,
-    RangeSlider
+    RangeSlider,
+    AddButton
   },
   computed:{
     complexes(): Complex[]{

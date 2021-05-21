@@ -10,9 +10,9 @@
         <img :src="complex.image">
       </div>
       <main-data-complex
-          :address="complex.address.street"
-          :metro = "complex.address.metro.name"
-          :district = "complex.address.district.name"
+          :address="complex?.address?.street || ''"
+          :metro = "complex?.address?.metro?.name || ''"
+          :district = "complex?.address?.district?.name || ''"
       />
     </div>
     <div class="about-complex">
@@ -34,7 +34,6 @@
             :floor="flat.floor"
         />
       </div>
-      <add-button v-if="store.getters.CAN_EDIT_COMPLEXES"/>
     </div>
   </div>
 </template>

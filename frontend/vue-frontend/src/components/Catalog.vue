@@ -91,7 +91,7 @@
           <my-card
               :image="complex.image"
               :title="complex.name"
-              :metro="complex.address.metro.name || ''"
+              :metro="complex.address?.metro?.name || ''"
               :price="complex.price"
               @click="goToComplex(complex.id)"
           />
@@ -100,7 +100,9 @@
       <div v-else>
         По вашему запросу ничего не найдено
       </div>
-        <add-button v-if="store.getters.CAN_EDIT_COMPLEXES"/>
+        <add-button v-if="store.getters.CAN_MANAGE_COMPLEXES"
+        @click="createComplex"
+        />
     </div>
     </div>
 
@@ -112,7 +114,7 @@ import {Options, Vue} from "vue-class-component";
 import {Store, useStore} from "@/store/index";
 import MyCard from "@/components/MyCard.vue";
 import DropdownSelector from "@/components/DropdownSelector.vue";
-import {Complex, District, Metro} from "@/generated-api/data-contracts";
+import {Complex, CreationResponse, District, Metro} from "@/generated-api/data-contracts";
 import RangeSlider from "@/components/RangeSlider.vue";
 import EditButton from "@/components/EditButton.vue";
 import AddButton from "@/components/AddButton.vue";
@@ -138,6 +140,19 @@ import AddButton from "@/components/AddButton.vue";
     },
     complexSearchParamsChanged(){
       return this.store.getters.complexSearchParamsChanged;
+    },
+    creation_response(){
+      return this.store.getters.creation_response;
+    }
+  },
+  watch: {
+    creation_response({id, created}: CreationResponse){
+      if (this.waitingForComplex){
+        if (created){
+          this.$router.push(`/complex/${id}/edit`)
+        }
+        this.waitingForComplex = false;
+      }
     }
   }
 })
@@ -206,6 +221,7 @@ export default class Catalog extends Vue {
   ]
   minTempPrice: number = 0;
   maxTempPrice: number = 300000;
+  waitingForComplex: boolean = false;
   created(){
     this.store.dispatch('GET_METROS', undefined);
     this.store.dispatch('GET_DISTRICTS', undefined);
@@ -246,6 +262,15 @@ export default class Catalog extends Vue {
     console.debug(id);
     console.debug("going to card");
     this.$router.push(`/complex/${id}`);
+  }
+  createComplex(){
+      this.waitingForComplex = true;
+      this.store.dispatch('CREATE_COMPLEX', {
+        address: {city: this.store.getters.city},
+        name: "Новый комплекс",
+        category: this.store.getters.complex_category || "NEW",
+        status: "ACCEPTED"
+    } as Complex);
   }
 }
 </script>

@@ -11,7 +11,7 @@
     <my-card
         :image="complex.image"
         :title="complex.name"
-        :metro="complex.address.metro.name || ''"
+        :metro="complex.address?.metro?.name || ''"
         :price="complex.price"
         @click="goToComplex(complex.id)"
     />

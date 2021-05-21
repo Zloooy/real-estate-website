@@ -35,6 +35,7 @@ export type Mutations<S = State> = {
     SET_ARTICLE(state: State, payload: State['article'])
     SET_AUTHORITIES(state: State, payload: State['authorities'])
     SET_CREATION_RESPONSE(state: State, payload: State['creation_response'])
+    SET_CONTACTS(state: State, payload: State['contacts'])
 }
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -144,5 +145,8 @@ export const mutations: MutationTree<State> & Mutations = {
     },
     SET_USER_ROLES(state, payload: State["userRoles"]) {
         state.userRoles = payload;
+    },
+    SET_CONTACTS(state, payload: State['contacts']){
+        state.contacts = payload;
     }
 }

@@ -65,9 +65,28 @@ export interface Actions {
     CREATE_ARTICLE({state, commit}: AugmentActionContext, payload: Article): Promise<void>
     DELETE_ARTICLE({state, commit}: AugmentActionContext, payload: number): Promise<void>,
     EDIT_FLAT({state, commit}: AugmentActionContext, payload: Flat): Promise<void>,
-    CREATE_FLAT({state, commit}: AugmentActionContext, payload: Flat): Promise<void>;
+    CREATE_FLAT({state, commit}: AugmentActionContext, payload: Flat): Promise<void>,
+    EDIT_COMPLEX({state, commit}: AugmentActionContext, payload: Complex): Promise<void>,
+    CREATE_COMPLEX({state, commit}: AugmentActionContext, payload: Complex): Promise<void>,
+    GET_CONTACTS({state, commit}: AugmentActionContext, payload: void): Promise<void>
 }
 export const actions: ActionTree<State, State> & Actions = {
+    GET_CONTACTS({state, commit}: AugmentActionContext, payload: void): Promise<void> {
+        return state.api.getAllContactsUsingGet()
+            .then(r=>r.data)
+            .catch(()=>[])
+            .then(d=>commit('SET_CONTACTS', d));
+    },
+    CREATE_COMPLEX({state, commit}: AugmentActionContext, payload: Complex): Promise<void> {
+        return state.api.createNewComplexUsingPost(payload)
+            .then(r=>r.data)
+            .then(d=>commit('SET_CREATION_RESPONSE', d));
+    },
+    EDIT_COMPLEX({state, commit}: AugmentActionContext, payload: Complex): Promise<void> {
+        return state.api.editComplexUsingPost(payload.id || 10, payload)
+            .then(({data})=>data)
+            .then(()=>undefined);
+    },
     CREATE_FLAT({state, commit}: AugmentActionContext, payload: Flat): Promise<void> {
         return state.api.createFlatUsingPost(payload)
             .then(resp=>resp.data)
