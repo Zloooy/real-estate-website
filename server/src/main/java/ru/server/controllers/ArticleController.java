@@ -13,6 +13,7 @@ import ru.server.enums.Authority;
 import ru.server.models.Article;
 import ru.server.services.IArticleService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @Api(value="Статьи", description = "Получение статей", produces = "application/json")
 public class ArticleController {

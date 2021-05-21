@@ -10,6 +10,7 @@ import ru.server.services.IContactsService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @Api(value="Контакты", description = "Работа с контактами")
 public class ContactsController {

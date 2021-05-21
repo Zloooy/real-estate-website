@@ -1,7 +1,7 @@
 import {Mutations} from "@/store/mutations";
 import {ActionContext, ActionTree} from "vuex";
 import {State} from "@/store/state";
-import {City, Complex, District, Flat, Metro, Request, Tariff, UserDto} from "@/generated-api/data-contracts";
+import {Article, City, Complex, District, Flat, Metro, Request, Tariff, UserDto} from "@/generated-api/data-contracts";
 
 
 type AugmentActionContext = {
@@ -50,8 +50,25 @@ export interface Actions {
     DELETE_FLAT({state, commit}: AugmentActionContext, payload: number): Promise<void>,
     CREATE_TARIFF({state, commit}: AugmentActionContext, payload: Tariff): Promise<void>
     EDIT_TARIFF({state, commit}: AugmentActionContext, payload: Tariff): Promise<void>
+    EDIT_ARTICLE({state, commit}: AugmentActionContext, payload: Article): Promise<void>,
+    CREATE_ARTICLE({state, commit}: AugmentActionContext, payload: Article): Promise<void>
+    DELETE_ARTICLE({state, commit}: AugmentActionContext, payload: number): Promise<void>
 }
 export const actions: ActionTree<State, State> & Actions = {
+    DELETE_ARTICLE({state, commit, dispatch}: AugmentActionContext, payload: number): Promise<void> {
+        return state.api.deleteArticleByIdUsingDelete(payload)
+            .then(()=>commit('SET_ARTICLE_PAGE', 0))
+            .then(()=>dispatch('GET_ARTICLES', undefined));
+    },
+    CREATE_ARTICLE({state, commit}: AugmentActionContext, payload: Article): Promise<void> {
+        return state.api.createArticleUsingPost(payload)
+            .then(resp=>resp.data)
+            .then(d=>commit('SET_CREATION_RESPONSE', d));
+    }, EDIT_ARTICLE({state, commit, dispatch}: AugmentActionContext, payload: Article): Promise<void> {
+        return state.api.editArticleByIdUsingPost(payload.id || 20, payload)
+            .then(()=>undefined)
+            //.then(()=>dispatch(''));
+    },
     CREATE_TARIFF({state, commit, dispatch}: AugmentActionContext, payload: Tariff): Promise<void> {
         return state.api.createNewTariffUsingPost(payload)
             .then(()=>dispatch('GET_TARIFFS', undefined));

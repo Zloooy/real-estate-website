@@ -34,9 +34,13 @@ export type Mutations<S = State> = {
     SET_ARTICLE_SIZE(state: State, payload: number)
     SET_ARTICLE(state: State, payload: State['article'])
     SET_AUTHORITIES(state: State, payload: State['authorities'])
+    SET_CREATION_RESPONSE(state: State, payload: State['creation_response'])
 }
 
 export const mutations: MutationTree<State> & Mutations = {
+    SET_CREATION_RESPONSE(state: State, payload: State["creation_response"]) {
+        state.creation_response = payload;
+    },
     SET_AUTHORITIES(state: State, payload: State["authorities"]) {
         state.authorities = payload;
         state.authorization_set = state.got_token;

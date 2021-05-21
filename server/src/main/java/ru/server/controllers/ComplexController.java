@@ -19,6 +19,7 @@ import ru.server.services.IUserService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @Api(value = "Комплексы", description = "Поиск комплексов", produces = "application/json")
 public class ComplexController {

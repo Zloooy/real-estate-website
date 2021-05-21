@@ -14,6 +14,11 @@
             :data="article.publishDate"
             :img="article.image"
             :description="article.text"
+            @delete-article="deleteArticle(article)"
+        />
+        <add-button
+            v-if="store.getters.CAN_EDIT_ARTICLES"
+            @click="createArticle"
         />
 <!--        <mini-Article-card
             header="Новостройки у метро Звездная"
@@ -38,23 +43,46 @@ import {Options, Vue} from "vue-class-component";
 import MiniArticleCard from "@/components/MiniArticleCard.vue";
 import {Store, useStore} from "@/store/index";
 import EditButton from "@/components/EditButton.vue";
+import {Article} from "@/generated-api/data-contracts";
+import AddButton from "@/components/AddButton.vue";
 
 @Options({
   name:"blog-page",
   components:{
+    AddButton,
     MiniArticleCard,
     EditButton
   },
   computed: {
     articles(){
       return this.store.getters.articles;
+    },
+    creation_response(){
+      return this.store.getters.creation_response;
+    }
+  },
+  watch:{
+    creation_response({id, created}){
+      if(this.waitingForArticle){
+        if (created)
+        this.$router.push(`/article/${id}/edit`)
+        this.waitingForArticle = false;
+      }
     }
   }
 })
 export default class BLogPage extends Vue{
   store: Store = useStore();
+  waitingForArticle: boolean = false;
   created(){
     this.store.dispatch('GET_ARTICLES', undefined);
+  }
+  deleteArticle({id}: Article){
+    this.store.dispatch('DELETE_ARTICLE', id || 100);
+  }
+  createArticle(){
+    this.waitingForArticle = true;
+    this.store.dispatch('CREATE_ARTICLE', {name: "Введите название статьи"} as Article);
   }
 }
 

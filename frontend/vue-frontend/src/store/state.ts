@@ -9,7 +9,7 @@ import {
     Flat,
     UserDto,
     UserRoleDto,
-    Tariff, Article
+    Tariff, Article, CreationResponse
 } from "@/generated-api/data-contracts";
 import {PublicApi} from "@/generated-api/PublicApi";
 import {ApiConfig} from "@/generated-api/http-client";
@@ -60,7 +60,8 @@ export const state = {
     articleSize: 1 as number,
     article: null as Article | null,
     authorities: [] as string[],
-    got_token: false as boolean
+    got_token: false as boolean,
+    creation_response: null as CreationResponse | null
 };
 
 export type State = typeof state;

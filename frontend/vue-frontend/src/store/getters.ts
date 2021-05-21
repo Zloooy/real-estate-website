@@ -30,6 +30,7 @@ export type Getters = {
     tariffs(state: State): State['tariffs']
     articles(state: State): State['articles'],
     article(state: State): State['article'],
+    creation_response(state: State): State['creation_response']
     CAN_MANAGE_USERS(state: State): boolean,
     CAN_VIEW_ROLES(state: State): boolean,
     CAN_EDIT_ARTICLES(state: State): boolean,
@@ -97,6 +98,9 @@ export const getters: GetterTree<State, State> & Getters = {
     },
     article(state): State["article"] {
         return state.article;
+    },
+    creation_response(state: State): State['creation_response'] {
+        return state.creation_response;
     },
     CAN_MANAGE_USERS: authority_checker("CAN_MANAGE_USERS"),
     CAN_VIEW_ROLES: authority_checker("CAN_VIEW_ROLES"),

@@ -3,9 +3,10 @@
     <div class="btn">
       <delete-button
           v-if="store.getters.CAN_EDIT_ARTICLES"
+          @click="$emit('delete-article')"
       />
     </div>
-
+<div class="content" @click="$emit('click')">
     <div class="header">
       {{header}}
     </div>
@@ -20,6 +21,7 @@
     </div>
 
   </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -29,6 +31,7 @@ import {Store, useStore} from "@/store/index";
 
 @Options({
   name: "mini-article-card",
+  emits: ['delete-article', 'click'],
   props: {
     header:{
       type: String

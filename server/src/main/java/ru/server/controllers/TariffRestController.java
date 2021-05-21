@@ -11,6 +11,7 @@ import ru.server.services.ITariffService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class TariffRestController {
     @Autowired

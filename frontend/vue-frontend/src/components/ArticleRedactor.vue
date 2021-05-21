@@ -1,10 +1,10 @@
 <template>
-  <div class="redactor-page">
+  <div class="redactor-page" v-if="article">
 
-    <div class="block">
+<!--    <div class="block">
       ID
       <input class="id-input" type="number" placeholder="id" v-model="article.id">
-    </div>
+    </div>-->
 
     <div class="block">
       Заголовок
@@ -18,12 +18,12 @@
       <textarea name="img-input" type="text" placeholder="Введите url изображения" v-model="article.image"></textarea>
     </div>
 
-    <div class="block">
+<!--    <div class="block">
       Дата публикации
       <div class="complex-street">
         <input class="date-input" type="text" placeholder="Введите дату публикации" v-model="article.publishDate">
       </div>
-    </div>
+    </div>-->
 
     <div class="block">
       Текст статьи
@@ -31,28 +31,43 @@
     </div>
 
   </div>
+  <button @click="saveArticle">
+    Записать
+  </button>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import {Store, useStore} from "@/store/index";
-import {Article} from '@/generated-api/data-contracts';
+//import {Article} from '@/generated-api/data-contracts';
 
-@Options({})
+@Options({
+  name: "article-redactor",
+  computed: {
+    article(){
+      return this.store.getters.article;
+    }
+  }
+})
 
 export default class ArticleRedactor extends Vue {
   store: Store = useStore();
   created(){
     this.store.dispatch('GET_ARTICLE', Number(this.$route.params.id));
   }
-  article: Article={
+  saveArticle(){
+    console.debug("SAVING ARTICLE");
+    if (this.store.getters.article)
+    this.store.dispatch('EDIT_ARTICLE', this.store.getters.article);
+  }
+  /*article: Article={
     id:1,
     title:"А кому сейчас легко?",
     publishDate: "20.05.2021",
     text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laboru",
     image:"https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000",
 
-  }
+  }*/
 }
 
 </script>

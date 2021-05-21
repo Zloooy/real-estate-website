@@ -12,6 +12,8 @@ import ru.server.services.IFlatService;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
+
 @RestController
 @Api(value="Квартиры", description = "Поиск квартир", produces = "application/json")
 public class FlatController {
