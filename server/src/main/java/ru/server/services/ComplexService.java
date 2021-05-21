@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.server.data.ComplexQuery;
 import ru.server.data.CreationResponse;
+import ru.server.models.Address;
 import ru.server.models.Complex;
 import ru.server.repositories.IComplexRepository;
 
@@ -21,6 +22,8 @@ import java.util.Optional;
 public class ComplexService implements IComplexService{
     @Autowired
     IComplexRepository repository;
+    @Autowired
+    IAddressService addressService;
     private interface ExprBuilder {
         Expression<Boolean> apply(Root<Complex> complex, CriteriaBuilder cb, Object value);
     }
@@ -90,8 +93,15 @@ private Specification<Complex> generateSpecification(ComplexQuery query){
 
     @Override
     public CreationResponse create(Complex newComplex) {
-        repository.save(newComplex);
-        return new CreationResponse(true, newComplex.getId());
+        Optional<Address> oaddr = addressService.saveAddress(newComplex.getAddress());
+        if (oaddr.isPresent()) {
+            newComplex.setAddress(oaddr.get());
+            repository.save(newComplex);
+            return new CreationResponse(true, newComplex.getId());
+        }
+        else {
+            return new CreationResponse(false, null);
+        }
     }
 
     @Override
