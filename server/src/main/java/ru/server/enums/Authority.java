@@ -10,4 +10,5 @@ public final class Authority {
     public static final String CAN_EDIT_FLATS = DEFAULT_PREFIX + "CAN_EDIT_FLATS";
     public static final String CAN_EDIT_METROS = DEFAULT_PREFIX + "CAN_EDIT_METROS";
     public static final String CAN_EDIT_DISTRICTS = DEFAULT_PREFIX + "CAN_EDIT_DISTRICTS";
+    public static final String CAN_EDIT_TARIFFS = DEFAULT_PREFIX + "CAN_EDIT_TARIFFS";
 }
