@@ -1,5 +1,5 @@
 <template>
-  <div class="card" @click="$emit('click', null)">
+  <div class="card">
     <div class="btn">
       <delete-button
       v-if="store.getters.CAN_MANAGE_COMPLEXES"
@@ -7,19 +7,19 @@
       />
     </div>
 
-    <div class="card__image">
+    <div class="card__image" @click="$emit('click', null)">
       <img :src="image"
       v-if="image">
       <div v-else/>
     </div>
-    <div class="card__desk">
+    <div class="card__desk" @click="$emit('click', null)">
       <div class="title">
         {{title}}
       </div>
-      <div class="metro">
+      <div class="metro" @click="$emit('click', null)">
         {{metro}}
       </div>
-      <div class="price">
+      <div class="price" @click="$emit('click', null)">
         от {{price}} руб/m²
       </div>
     </div>

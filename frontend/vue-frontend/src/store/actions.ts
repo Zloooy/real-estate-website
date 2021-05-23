@@ -68,9 +68,15 @@ export interface Actions {
     CREATE_FLAT({state, commit}: AugmentActionContext, payload: Flat): Promise<void>,
     EDIT_COMPLEX({state, commit}: AugmentActionContext, payload: Complex): Promise<void>,
     CREATE_COMPLEX({state, commit}: AugmentActionContext, payload: Complex): Promise<void>,
-    GET_CONTACTS({state, commit}: AugmentActionContext, payload: void): Promise<void>
+    GET_CONTACTS({state, commit}: AugmentActionContext, payload: void): Promise<void>,
+    DELETE_ADVERTIZED_COMPLEX({state, commit, dispatch}: AugmentActionContext, payload: number): Promise<void>,
 }
 export const actions: ActionTree<State, State> & Actions = {
+    DELETE_ADVERTIZED_COMPLEX({state, commit, dispatch}: AugmentActionContext, payload: number): Promise<void> {
+        return state.api.deleteComplexUsingDelete(payload!)
+            .then(()=>state.complexSearchParamsChanged=true)
+            .then(()=>dispatch('GET_ADVERTIZED_COMPLEXES'));
+    },
     GET_CONTACTS({state, commit}: AugmentActionContext, payload: void): Promise<void> {
         return state.api.getAllContactsUsingGet()
             .then(r=>r.data)
@@ -124,10 +130,12 @@ export const actions: ActionTree<State, State> & Actions = {
         return state.api.updateTariffUsingPost(payload?.id | 30, payload)
             .then(()=>dispatch('GET_TARIFFS', undefined));
     },
-    DELETE_COMPLEX({state, commit}: AugmentActionContext, payload: number): Promise<void> {
+    DELETE_COMPLEX({state, commit, dispatch}: AugmentActionContext, payload: number): Promise<void> {
         return state.api.deleteComplexUsingDelete(payload)
             .then(r=>r.data)
-            .then(()=>commit('SET_COMPLEX', undefined));
+            .then(()=>commit('SET_COMPLEX', undefined))
+            .then(()=>state.complexSearchParamsChanged=true)
+            .then(()=>dispatch('GET_COMPLEXES'));
     },
     DELETE_FLAT({state, commit, dispatch}: AugmentActionContext, payload: number): Promise<void> {
         return state.api.deleteFlatUsingDelete(payload)

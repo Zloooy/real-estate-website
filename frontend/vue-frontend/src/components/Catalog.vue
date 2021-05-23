@@ -97,6 +97,7 @@
               :title="complex.name"
               :metro="complex.address?.metro?.name || ''"
               :price="complex.price"
+              @delete-complex="deleteComplex"
               @click="goToComplex(complex.id)"
           />
         </li>
@@ -279,6 +280,9 @@ export default class Catalog extends Vue {
         status: "ACCEPTED",
         price: 1000,
     } as Complex);
+    }
+  deleteComplex(id: number){
+    this.store.dispatch('DELETE_COMPLEX', id);
   }
 }
 </script>
