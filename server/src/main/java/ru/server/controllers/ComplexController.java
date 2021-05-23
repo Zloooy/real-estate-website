@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import ru.server.data.ComplexQuery;
 import ru.server.data.CreationResponse;
 import ru.server.enums.Authority;
+import ru.server.models.Address;
 import ru.server.models.Complex;
 import ru.server.models.User;
+import ru.server.services.IAddressService;
 import ru.server.services.IComplexService;
 import ru.server.services.ITokenService;
 import ru.server.services.IUserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -52,6 +55,7 @@ public class ComplexController {
 
     public ResponseEntity<CreationResponse> createNewComplex(@RequestHeader("Authorization") String token, @RequestBody Complex newComplex){
         newComplex.setId(null);
+
         newComplex.setAuthor((User) userService.loadUserByUsername(tokenService.getLoginFromToken(token.substring(7))));
         return ResponseEntity.ok(complexService.create(newComplex));
     }
