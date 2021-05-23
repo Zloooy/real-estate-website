@@ -102,7 +102,8 @@ export const actions: ActionTree<State, State> & Actions = {
     DELETE_ARTICLE({state, commit, dispatch}: AugmentActionContext, payload: number): Promise<void> {
         return state.api.deleteArticleByIdUsingDelete(payload)
             .then(()=>commit('SET_ARTICLE_PAGE', 0))
-            .then(()=>dispatch('GET_ARTICLES', undefined));
+            .then(()=>dispatch('SET_ARTICLE_PAGE', 0))
+            .then(()=>dispatch('GET_ARTICLES', undefined))
     },
     CREATE_ARTICLE({state, commit}: AugmentActionContext, payload: Article): Promise<void> {
         return state.api.createArticleUsingPost(payload)

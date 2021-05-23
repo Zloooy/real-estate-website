@@ -1,10 +1,14 @@
 <template>
   <div id="login-form">
-    <div>
-    <input ref="login-field" v-model="this.login"/>
+    <div class="first-block">Логин</div>
+    <div class="block">
+      <input ref="login-field" v-model="this.login"/>
     </div>
-    <div>
-    <input type="password" v-model="this.password"/>
+    <div class="block">
+      Пароль
+    </div>
+    <div class="block">
+      <input type="password" v-model="this.password"/>
     </div>
     <button @click="enter">Войти</button>
     <div v-if="errorT">{{errorT}}</div>
@@ -68,7 +72,33 @@
 
 <style>
 #login-form {
+  margin-top: 35px;
   display: block;
   text-align: center;
+  color: steelblue;
+  font-size: 16px;
+
 }
+
+.block{
+  margin: 10px 0;
+}
+
+button{
+  background: white;
+  padding: 10px 15px;
+  border: 2px solid #76ACDA;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #333333;
+  transition: color 0.2s linear;
+}
+
+button:hover{
+  color: lightsalmon;
+  background-color: #E6EDF2;
+
+}
+
 </style>

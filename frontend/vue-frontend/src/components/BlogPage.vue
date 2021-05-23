@@ -1,9 +1,8 @@
 <template>
   <div class="blog-page">
-    <div class="header">
+    <div class="header-page">
       БЛОГ
     </div>
-    <edit-button v-if="store.getters.CAN_EDIT_ARTICLES"/>
     <div class="blog-articles">
       <div class="articles-list">
         <mini-Article-card
@@ -16,23 +15,12 @@
             :description="article.text"
             @delete-article="deleteArticle(article)"
         />
-        <add-button
-            v-if="store.getters.CAN_EDIT_ARTICLES"
-            @click="createArticle"
-        />
-<!--        <mini-Article-card
-            header="Новостройки у метро Звездная"
-            data="14.05.2021"
-        />
-        <mini-Article-card
-            header="Новостройки у метро Звездная"
-            data="14.05.2021"
-        />
-        <mini-Article-card
-            header="Новостройки у метро Звездная"
-            data="14.05.2021"
-        />-->
+
       </div>
+      <add-button
+          v-if="store.getters.CAN_EDIT_ARTICLES"
+          @click="createArticle"
+      />
     </div>
 
   </div>
@@ -97,14 +85,16 @@ export default class BLogPage extends Vue{
   color: #333333;
   max-width: 1060px;
   margin: 0 auto;
+  padding-top: 60px;
 }
 
-.header{
-  margin-top: 60px;
+
+.header-page{
   width: 100%;
   text-align: center;
   font-size: 30px;
   font-weight: 700;
+  background-color: #E6EDF2;
 }
 
 .articles-list{

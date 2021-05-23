@@ -18,5 +18,7 @@ export default class LogoutButton extends Vue{
 </script>
 
 <style scoped>
-
+img{
+  cursor: pointer;
+}
 </style>

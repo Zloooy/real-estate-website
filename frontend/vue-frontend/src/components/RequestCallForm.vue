@@ -66,8 +66,25 @@ export default class RequestCallForm extends Vue {
 <style>
   .request-call-form {
     display: block;
+    text-align: center;
+    max-width: 1060px;
+    margin: 0 auto;
   }
   .request-call-form > * {
     box-sizing: border-box;
+  }
+  .subscribe__input{
+    border: 2px solid #76ACDA;
+    border-radius: 5px;
+    margin-top: 15px;
+    max-width: 530px;
+    padding: 12px;
+    box-sizing: border-box;
+    resize: vertical;
+    height: 50px;
+  }
+
+  button{
+    margin-top:15px ;
   }
 </style>

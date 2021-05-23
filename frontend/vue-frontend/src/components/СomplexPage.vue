@@ -1,6 +1,10 @@
 <template>
   <div class="complex-page" v-if="complex">
+    <back-button
+        @click="goBack()"
+    />
     <div class="complex-name">{{complex.name}}</div>
+
     <edit-button
         @click="goToRedactor(complex)"
         v-if="store.getters.CAN_MANAGE_COMPLEXES"
@@ -49,10 +53,12 @@ import {Flat} from "@/generated-api/data-contracts";
 import AddButton from "@/components/AddButton.vue";
 import EditButton from "@/components/EditButton.vue";
 import {Complex} from "@/generated-api/data-contracts";
+import BackButton from "@/components/BackButton.vue";
 
 @Options({
   name:"complex-page",
   components: {
+    BackButton,
     HorizontalCategorySelect,
     MainDataComplex,
     TextAbout,
@@ -81,6 +87,9 @@ export default class ComplexPage extends Vue{
   goToRedactor({id}:Complex){
     this.$router.push(`/complex/${id}/edit`)
   }
+  goBack(){
+    history.go(-1);
+  }
 }
 
 </script>
@@ -92,21 +101,19 @@ export default class ComplexPage extends Vue{
   padding: 0;
 }
 
-
 .complex-page{
-
-  text-align: center;
-  font-family: 'HelveticaNeueCyr', sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
-  color: #333333;
   max-width: 1060px;
   margin: 0 auto;
 }
 
+.back-button{
+  text-align: center;
+  margin: 10px 0 10px ;
+}
+
 .complex-name{
   margin: 0 auto;
-  margin-top: 60px;
+  margin-top: 35px;
   width: 100%;
   text-align: left;
   max-width: 1060px;

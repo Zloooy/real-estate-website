@@ -1,5 +1,8 @@
 <template>
   <div class="article-page" v-if="article">
+    <back-button
+        @click="goBack()"
+    />
     <edit-button
         v-if="store.getters.CAN_EDIT_ARTICLES"
         @click="goToRedactor(article)"
@@ -29,6 +32,7 @@
   import EditButton from "@/components/EditButton.vue";
   import {Store, useStore} from "@/store";
   import {Article} from "@/generated-api/data-contracts";
+  import BackButton from "@/components/BackButton.vue";
 
   @Options({
     name: "article-page",
@@ -38,6 +42,7 @@
       }
     },
     components:{
+      BackButton,
       TextAbout,
       EditButton
     },
@@ -56,6 +61,9 @@
     goToRedactor({id}:Article){
       this.$router.push(`/article/${id}/edit`)
     }
+    goBack(){
+      history.go(-1);
+    }
 }
 
 </script>
@@ -70,6 +78,10 @@
   color: #333333;
   max-width: 1060px;
   margin: 0 auto;
+}
+
+.back-button{
+  margin: 10px 0 10px ;
 }
 
 .header-article{

@@ -7,6 +7,7 @@ import java.util.List;
 
 @Service
 public interface IContactsService {
+    Contacts getOne();
     List<Contacts> getAll();
     boolean create(Contacts contacts);
     boolean delete(Long id);

@@ -1,8 +1,13 @@
 <template>
   <div class="flat-page" v-if="flat">
+    <back-button
+        @click="goBack()"
+    />
+
     <div class="complex-name">{{flat.complex.name}}</div>
     <edit-button
         @click="goToRedactor(flat)"
+        v-if="store.getters.CAN_EDIT_FLATS"
     />
     <div class="intro-flat">
         <div class="img-flat">
@@ -43,10 +48,12 @@ import DataRealtor from "@/components/DataRealtor.vue";
 import {Store, useStore} from "@/store/index";
 import EditButton from "@/components/EditButton.vue";
 import {Flat} from "@/generated-api/data-contracts";
+import BackButton from "@/components/BackButton.vue";
 
 @Options({
   name:"flat-page",
   components: {
+    BackButton,
     MainDataFlat,
     TextAbout,
     DataRealtor,
@@ -69,6 +76,9 @@ export default class FlatPage extends Vue{
   goToRedactor({id}:Flat){
     this.$router.push(`/flat/${id}/edit`)
   }
+  goBack(){
+    history.go(-1);
+  }
 
 }
 
@@ -83,8 +93,6 @@ export default class FlatPage extends Vue{
 
 .flat-page{
   text-align: center;
-  font-family: 'HelveticaNeueCyr', sans-serif;
-  font-size: 15px;
   line-height: 1.6;
   color: #333333;
   max-width: 1060px;
@@ -93,9 +101,13 @@ export default class FlatPage extends Vue{
 
 }
 
+.back-button{
+  margin: 10px 0 10px ;
+}
+
 .complex-name{
   margin: 0 auto;
-  margin-top: 60px;
+  margin-top: 35px;
   width: 100%;
   text-align: left;
   max-width: 1060px;
@@ -119,7 +131,6 @@ export default class FlatPage extends Vue{
   height: auto;
   text-align: center;
   width: 100%;
-
 }
 
 .img-flat>img{

@@ -19,7 +19,7 @@ import ru.server.services.IUserService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @Api(value = "Комплексы", description = "Поиск комплексов", produces = "application/json")
 public class ComplexController {
@@ -44,9 +44,12 @@ public class ComplexController {
     public ResponseEntity<Complex> findById(@PathVariable("id") Long id){
         return ResponseEntity.of(complexService.findById(id));
     }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @Secured({Authority.CAN_MANAGE_COMPLEXES})
     @ApiOperation(value = "Создание комплекса")
     @PostMapping(value = "/api/complexes/new", produces = "application/json")
+
     public ResponseEntity<CreationResponse> createNewComplex(@RequestHeader("Authorization") String token, @RequestBody Complex newComplex){
         newComplex.setId(null);
         newComplex.setAuthor((User) userService.loadUserByUsername(tokenService.getLoginFromToken(token.substring(7))));

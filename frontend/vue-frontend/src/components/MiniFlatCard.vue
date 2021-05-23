@@ -7,8 +7,9 @@
       <div class="price">{{price}} Р</div>
     </div>
     <div class="btn" v-if="store.getters.CAN_EDIT_FLATS">
+      <delete-button
+          @click="$emit('delete-flat')"/>
 
-      <delete-button @click="$emit('delete-flat')"/>
     </div>
     <div class="box2" @click="$emit('click')">
       <div class="square">{{square}} м2</div>
@@ -60,7 +61,7 @@ export default class MiniFlatCard extends Vue {
 .mini-flat-card {
   width: 200px;
   height: 100px;
-  border: 2px solid black;
+  border: 2px solid #76ACDA;
   text-align:left;
   overflow: hidden;
   border-radius: 10px;
@@ -68,6 +69,7 @@ export default class MiniFlatCard extends Vue {
   transition: color 0.2s linear;
 }
 .mini-flat-card:hover{
+  cursor: pointer;
   background-color: #E6EDF2;
 }
 

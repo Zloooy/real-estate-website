@@ -1,6 +1,11 @@
 <template>
 
   <div class="catalog">
+
+    <back-button
+        @click="goBack()"
+    />
+
     <div class="main">
     <div class="sidebar_content"><!--поиск в каталоге-->
       <!--сортировка по: возрастанию цены и т.п-->
@@ -118,10 +123,12 @@ import {Complex, CreationResponse, District, Metro} from "@/generated-api/data-c
 import RangeSlider from "@/components/RangeSlider.vue";
 import EditButton from "@/components/EditButton.vue";
 import AddButton from "@/components/AddButton.vue";
+import BackButton from "@/components/BackButton.vue";
 
 @Options({
   name:"catalog",
   components: {
+    BackButton,
     MyCard,
     DropdownSelector,
     RangeSlider,
@@ -258,6 +265,9 @@ export default class Catalog extends Vue {
   setMaxTempPrice(maxTempPrice: number){
     this.maxTempPrice=maxTempPrice;
   }
+  goBack(){
+    history.go(-1);
+  }
   goToComplex(id: number){
     console.debug(id);
     console.debug("going to card");
@@ -294,17 +304,16 @@ export default class Catalog extends Vue {
 
 .main{
   width: 100%;
-  padding-top: 30px;
+  padding-top: 35px;
   display: grid;
   grid-template-columns: 1fr 3fr;
 }
 
 .list-grid {
-
   font-size: 15px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px,auto));
-  grid-gap: 15px;
+  grid-gap: 30px;
   grid-auto-rows: minmax(150px, auto);
 }
 
@@ -315,7 +324,19 @@ export default class Catalog extends Vue {
   list-style-position: inside;
   text-transform: none;
 }
+.back-button{
+  margin: 10px 0 10px ;
+}
 
+.price-range {
+  display: block;
+}
+.sidebar_content {
+  text-align: left;
+}
+.sidebar_content > * {
+  margin-top: 10px;
+}
 @media (max-width: 349px){
   .catalog{
     grid-template-columns: 1fr;
@@ -346,15 +367,6 @@ export default class Catalog extends Vue {
     grid-template-columns: repeat(2, minmax(250px, 3fr));
   }
 
-}
-.price-range {
-  display: block;
-}
-.sidebar_content {
-  text-align: left;
-}
-.sidebar_content > * {
-  margin-top: 10px;
 }
 
 </style>

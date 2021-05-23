@@ -74,10 +74,13 @@ export default class TariffsPage extends Vue{
 
 <style scoped>
 .tariffs-page{
+  text-align: center;
+  line-height: 1.6;
+  font-family: 'HelveticaNeueCyr', sans-serif;
   max-width: 1060px;
   margin: 0 auto;
   text-align: center;
-  padding-top: 30px;
+  padding-top: 60px;
   font-size: 15px;
 }
 .header{

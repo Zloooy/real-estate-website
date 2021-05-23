@@ -1,7 +1,6 @@
 <template>
   <header class="navigation-header">
-    <div class="header__container"></div>
-    <div class="header__inner">
+    <div class="box">
       <div class="header__logo">
         <router-link to="/">Real-Estate</router-link>
       </div>
@@ -14,10 +13,14 @@
         />
         <router-link to="/tariffs">Тарифы</router-link>
         <router-link to="/blog">Блог</router-link>
-        911
-        <request-call-button @click="$router.push('/request_call/')"/>
-        <logout-button v-if="store.getters.authorization_set"/>
       </nav>
+    </div>
+    <div class="box">
+        <div class ="phone">+7-911-772-17-22</div>
+
+        <request-call-button @click="$router.push('/request_call/')"/>
+
+        <logout-button v-if="store.getters.authorization_set"/>
     </div>
   </header>
 </template>
@@ -53,31 +56,28 @@ export default class NavigationHeader extends Vue {
 </script>
 
 <style scoped>
+
 .navigation-header{
   width: 100%;
   max-width: 1060px;
   margin: 0 auto;
-}
-
-.header__container {
-  width: 100%;
-  max-width: 1060px;
-  margin: 0 auto;
-}
-
-.header__inner {
   display: flex;
   justify-content: space-between;
+}
+
+.box{
+  display: flex;
   align-items: center;
   text-decoration: none;
 }
 
 .header__logo {
-
-  font-size: 30px;
+  float: left;
+  font-size: 33px;
   font-weight: 700;
   color: #333333;
 }
+
 .header__logo>*{
   color: #333333;
   text-decoration: none;
@@ -90,6 +90,7 @@ export default class NavigationHeader extends Vue {
 
 .nav>* {
   margin: 0 15px;
+  float: left;
   color: #333333;
   text-decoration: none;
   transition: color 0.2s linear;
@@ -99,27 +100,41 @@ export default class NavigationHeader extends Vue {
   color: lightsalmon;
 }
 
-@media (max-width: 600px) {
-  .nav>* {
-    display: flex;
-    flex-direction: column;
-  }
+request-call-button:hover{
+  color: #E6EDF2;
 }
-@media (min-width: 601px) {
-  .nav>* {
-    display: inline-block;
+
+.phone{
+  margin: 0 15px;
+  font-size: 14px;
+  color: steelblue;
+  text-decoration: none;
+  transition: none;
+}
+
+img{
+  margin: 0 15px;
+}
+
+
+
+@media (max-width: 1000px){
+  .phone{
+    display: none;
   }
 }
 
-.nav>* {
-   margin: 0 15px;
-   color: #333333;
-   text-decoration: none;
-   transition: color 0.2s linear;
- }
 
-.nav>*:hover{
-  color: lightsalmon;
+@media (min-width: 350px) and (max-width: 600px) {
+
+
 }
+
+@media (min-width: 601px) and (max-width: 1000px) {
+  .phone{
+    display: none;
+  }
+}
+
 
 </style>

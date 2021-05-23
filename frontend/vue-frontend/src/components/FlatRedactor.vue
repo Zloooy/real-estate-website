@@ -1,7 +1,11 @@
 <template>
 <div class="redactor-page" v-if="flat">
 
-  <div class="block">
+  <back-button
+      @click="goBack()"
+  />
+
+  <div class="first-block">
     Цена
     <input class="price-input" type="number" placeholder="Введите стоимость" v-model="flat.price">
   </div>
@@ -46,9 +50,11 @@ import {Options, Vue} from "vue-class-component";
 import MiniFlatCard from "@/components/MiniFlatCard.vue";
 import {Store, useStore} from "@/store/index";
 import DropdownSelector from "@/components/DropdownSelector.vue";
+import BackButton from "@/components/BackButton.vue";
 
 @Options({
   components: {
+    BackButton,
     DropdownSelector,
     MiniFlatCard,
   },
@@ -69,17 +75,9 @@ export default class FlatRedactor extends Vue {
     if (this.store.getters.flat)
     this.store.dispatch('EDIT_FLAT', this.store.getters.flat);
   }
-
-  // flat: Flat ={
-  //   square: 72,
-  //   price: 9000000,
-  //   complex:{id:1},
-  //   id: 1,
-  //   floor: 7,
-  //   image:"https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000",
-  //   about:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laboru",
-  //   numberOfRooms: 2,
-  // }
+  goBack(){
+    history.go(-1);
+  }
 }
 </script>
 
@@ -88,9 +86,17 @@ export default class FlatRedactor extends Vue {
   text-align: left;
   max-width: 1060px;
   margin: 0 auto;
-  margin-top: 30px;
 }
 
+.back-button{
+  text-align: center;
+  margin: 10px 0 10px ;
+}
+
+.first-block{
+  margin-top: 35px;
+  color: steelblue;
+}
 .block{
   margin-top: 15px;
   color: steelblue;
@@ -116,6 +122,23 @@ textarea{
   box-sizing: border-box;
   resize: vertical;
   height: 100px;
+}
+
+button{
+  background: white;
+  padding: 10px 15px;
+  border: 2px solid #76ACDA;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #333333;
+  transition: color 0.2s linear;
+}
+
+button:hover{
+  color: lightsalmon;
+  background-color: #E6EDF2;
+
 }
 
 </style>

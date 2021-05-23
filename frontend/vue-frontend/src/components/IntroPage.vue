@@ -1,11 +1,12 @@
 <template>
   <div class="intro-page">
+<!--    <div class="intro-img">-->
+<!--    </div>-->
   <horizontal-category-select
     :categories="categories"
     :firstSelectedIndex="0"
     @select="changeCategory"
   />
-    <div class="centered">
   <ul class="list-grid" v-if="complexes && complexes.length > 0">
   <li v-for="(complex, i) in complexes" :key="i">
     <my-card
@@ -20,12 +21,13 @@
   <div v-else>
     По вашему запросу ничего не найдено
   </div>
-      <div class="link">
-        <router-link to="/search">
-          перейти ко {{getCategoryDatelny()}}
-        </router-link>
-      </div>
+  <div class="sec-grid">
+    <div class="link">
+      <router-link to="/search">
+        перейти ко {{getCategoryDatelny()}}
+      </router-link>
     </div>
+  </div>
   <intro-footer/>
   </div>
 </template>
@@ -107,6 +109,15 @@ export default class IntroPage extends Vue {
 
 <style scoped>
 
+.intro-page {
+  max-width: 1060px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333333;
+}
   .footer__social-content a{
     display: inline-block;
     vertical-align: middle;
@@ -117,8 +128,7 @@ export default class IntroPage extends Vue {
   }
 
   .list-grid {
-    max-width: 1060px;
-    margin: 0 auto;
+
     padding-top: 30px;
     font-size: 15px;
     display: grid;
@@ -135,19 +145,36 @@ export default class IntroPage extends Vue {
     text-transform: none;
   }
 
-  .intro-page {
-    text-align: center;
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
-    color: #333333;
+  /*.intro-img{*/
+  /*  height: auto;*/
+  /*  text-overflow: ellipsis;*/
+  /*  overflow: hidden;*/
+  /*  border-radius: 5px;*/
+  /*  max-height: 300px;*/
+  /*}*/
+  /*.intro-img>img{*/
+  /*  top: 100px;*/
+  /*  max-width: 100%;*/
+  /*}*/
+  .link{
+    margin: 0 auto;
+    margin-top: 30px;
   }
-  .centered {
-    text-align: center;
+  .link>*{
+
+    padding: 10px 15px;
+    border: 2px solid #76ACDA;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333333;
+    transition: color 0.2s linear;
   }
 
-  .link{
-    padding-top: 30px;
+  .link:hover>*{
+    color: lightsalmon;
+    background-color: #E6EDF2;
+
   }
 
   @media (max-width: 600px){

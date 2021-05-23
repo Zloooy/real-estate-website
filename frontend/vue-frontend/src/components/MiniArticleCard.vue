@@ -63,7 +63,6 @@ export default class MiniArticleCard extends Vue {
 .mini-article-card {
   width: auto;
   height: auto;
-  border: 2px solid black;
   text-align:left;
   border-radius: 10px;
   transition: color 0.2s linear;
@@ -76,25 +75,30 @@ export default class MiniArticleCard extends Vue {
 
 .header{
   margin-top: 15px;
-  width: 100%;
+  max-width: 100%;
   text-align: center;
   font-size: 20px;
   font-weight: 700;
 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
 }
 .btn{
   float: right;
 }
 .img{
+  overflow: hidden;
+  border-radius: 5px;
+  max-width: 100%;
   margin-top: 10px;
-  height: auto;
-  text-align: center;
-  width: 100%;
 }
 
 .img>img{
   max-width: 100%;
-  max-height: 200px;
+  max-height: 350px;
+  border-radius: 5px;
 }
 
 .data{

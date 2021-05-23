@@ -1,7 +1,9 @@
 <template>
   <div class="redactor-page" v-if="complex">
-
-    <div class="block">
+    <back-button
+        @click="goBack()"
+    />
+    <div class="first-block">
       Название
       <div class="complex-name">
         <input class="name-input" type="text" placeholder="Введите название комплекса" v-model="complex.name">
@@ -118,10 +120,12 @@ import {Contacts, Flat} from "@/generated-api/data-contracts";
 import DropdownSelector from "@/components/DropdownSelector.vue";
 import {City} from '@/generated-api/data-contracts';
 import AddButton from "@/components/AddButton.vue";
+import BackButton from "@/components/BackButton.vue";
 
 @Options({
   name:"complex",
   components: {
+    BackButton,
     DropdownSelector,
     MiniFlatCard,
     AddButton
@@ -210,19 +214,10 @@ export default class CatalogRedactor extends Vue {
     if (this.store.getters.complex)
     this.store.dispatch('EDIT_COMPLEX', this.store.getters.complex);
   }
+  goBack(){
+    history.go(-1);
+  }
 
-   // complex: Complex
-  //   id:20,
-  //   address:{city:{name:"Spb"}},
-  //  // address:{street:"Наличная 25"},
-  //   author: {username: "Шмяка"},
-  //   contacts: {name: "Шмяка"},
-  //   name: "Pampushki",
-  //   image:"https://cn-med.ru/media/1107/kvartira_u_metro_zvezdnaya.jpg?anchor=center&mode=crop&width=1920&rnd=132176877150000000",
-  //   comment:" огогого",
-  //   advertized: true,
-  //   deliveryDate: "2022"
-  // }
 
   complex_category=[
     {
@@ -244,13 +239,25 @@ export default class CatalogRedactor extends Vue {
 
 <style scoped>
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .redactor-page{
   text-align: left;
   max-width: 1060px;
   margin: 0 auto;
-  margin-top: 30px;
 }
 
+.back-button{
+  text-align: center;
+  margin: 10px 0 10px ;
+}
+.first-block{
+  margin-top: 35px;
+  color: steelblue;
+}
 .block{
   margin-top: 15px;
   color: steelblue;
@@ -266,6 +273,9 @@ export default class CatalogRedactor extends Vue {
   color: steelblue;
   padding: 10px;
   border: 1px solid steelblue;
+}
+.headers{
+  margin-bottom: 15px;
 }
 input[type=text],[type=number]{
   margin-top: 15px;
@@ -287,6 +297,31 @@ textarea{
   box-sizing: border-box;
   resize: vertical;
   height: 100px;
+}
+
+.flats-list{
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px,auto));
+  grid-gap: 15px;
+}
+
+button{
+
+  background: white;
+  padding: 10px 15px;
+  border: 2px solid #76ACDA;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #333333;
+  transition: color 0.2s linear;
+}
+
+button:hover{
+  color: lightsalmon;
+  background-color: #E6EDF2;
+
 }
 
 @media screen and (max-width: 600px) {
