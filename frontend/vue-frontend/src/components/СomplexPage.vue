@@ -1,7 +1,6 @@
 <template>
   <div class="complex-page" v-if="complex">
     <back-button
-        @click="goBack()"
     />
     <div class="complex-name">{{complex.name}}</div>
 
@@ -86,9 +85,6 @@ export default class ComplexPage extends Vue{
   }
   goToRedactor({id}:Complex){
     this.$router.push(`/complex/${id}/edit`)
-  }
-  goBack(){
-    history.go(-1);
   }
 }
 

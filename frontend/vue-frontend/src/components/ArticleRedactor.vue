@@ -2,7 +2,6 @@
   <div class="redactor-page" v-if="article">
 
     <back-button
-        @click="goBack()"
     />
 <!--    <div class="block">
       ID
@@ -66,9 +65,6 @@ export default class ArticleRedactor extends Vue {
     console.debug("SAVING ARTICLE");
     if (this.store.getters.article)
     this.store.dispatch('EDIT_ARTICLE', this.store.getters.article);
-  }
-  goBack(){
-    history.go(-1);
   }
 }
 

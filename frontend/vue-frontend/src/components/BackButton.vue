@@ -1,6 +1,6 @@
 <template>
-  <div class="back-button">
-<!--    <img src="frontend/vue-frontend/public/back.svg">-->
+  <div class="back-button" @click="$router.back()" >
+    <img src="/back.svg" alt="Назад" width="20">
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default class BackButton extends Vue {}
   cursor: pointer;
 }
 
-.back-button:before{
+.back-button > img{
   content: '<';
   color: steelblue;
   position: absolute;

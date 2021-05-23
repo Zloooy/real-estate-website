@@ -1,7 +1,6 @@
 <template>
   <div class="flat-page" v-if="flat">
     <back-button
-        @click="goBack()"
     />
 
     <div class="complex-name">{{flat.complex.name}}</div>
@@ -75,9 +74,6 @@ export default class FlatPage extends Vue{
   }
   goToRedactor({id}:Flat){
     this.$router.push(`/flat/${id}/edit`)
-  }
-  goBack(){
-    history.go(-1);
   }
 
 }

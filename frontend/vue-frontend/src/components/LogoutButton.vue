@@ -1,5 +1,5 @@
 <template>
-<img src="logout.svg" alt="Выход" @click="logout" width="20">
+<img src="/logout.svg" alt="Выход" @click="logout" width="20">
 </template>
 
 <script lang="ts">
@@ -13,6 +13,7 @@ export default class LogoutButton extends Vue{
   store: Store = useStore();
   logout(){
     this.store.dispatch('LOGOUT', undefined);
+    this.$router.push("/");
   }
 }
 </script>

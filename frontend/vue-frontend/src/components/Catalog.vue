@@ -3,7 +3,6 @@
   <div class="catalog">
 
     <back-button
-        @click="goBack()"
     />
 
     <div class="main">
@@ -232,6 +231,7 @@ export default class Catalog extends Vue {
   created(){
     this.store.dispatch('GET_METROS', undefined);
     this.store.dispatch('GET_DISTRICTS', undefined);
+    this.setMinPrice(this.minTempPrice);
     this.store.dispatch("GET_SEARCHED_COMPLEXES", undefined);
   }
   setSort({value, ascending}){
@@ -264,9 +264,6 @@ export default class Catalog extends Vue {
   }
   setMaxTempPrice(maxTempPrice: number){
     this.maxTempPrice=maxTempPrice;
-  }
-  goBack(){
-    history.go(-1);
   }
   goToComplex(id: number){
     console.debug(id);

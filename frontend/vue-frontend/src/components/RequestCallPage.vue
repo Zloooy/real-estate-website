@@ -2,7 +2,6 @@
 
   <div class="request-call-page">
     <back-button
-      @click="goBack()"
     />
 <request-call-form
 show-intent-select
@@ -27,9 +26,6 @@ import {Store, useStore} from "@/store/index";
 
 export default class RequestCallPage extends Vue{
   store: Store = useStore();
-  goBack(){
-    history.go(-1);
-  }
 
 }
 

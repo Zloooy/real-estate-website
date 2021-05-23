@@ -2,7 +2,6 @@
 <div class="redactor-page" v-if="flat">
 
   <back-button
-      @click="goBack()"
   />
 
   <div class="first-block">
@@ -74,9 +73,6 @@ export default class FlatRedactor extends Vue {
   saveFlat(){
     if (this.store.getters.flat)
     this.store.dispatch('EDIT_FLAT', this.store.getters.flat);
-  }
-  goBack(){
-    history.go(-1);
   }
 }
 </script>

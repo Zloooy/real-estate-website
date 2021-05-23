@@ -1,7 +1,6 @@
 <template>
   <div class="redactor-page" v-if="complex">
     <back-button
-        @click="goBack()"
     />
     <div class="first-block">
       Название
@@ -213,9 +212,6 @@ export default class CatalogRedactor extends Vue {
   saveComplex(){
     if (this.store.getters.complex)
     this.store.dispatch('EDIT_COMPLEX', this.store.getters.complex);
-  }
-  goBack(){
-    history.go(-1);
   }
 
 

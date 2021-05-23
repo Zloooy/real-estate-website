@@ -8,7 +8,9 @@
     </div>
 
     <div class="card__image">
-      <img :src="image">
+      <img :src="image"
+      v-if="image">
+      <div v-else/>
     </div>
     <div class="card__desk">
       <div class="title">
@@ -88,6 +90,9 @@ export default class MyCard extends Vue {
   max-width: 100%;
   max-height: 350px;
   border-radius: 5px;
+}
+.card__image div{
+  height: 350px;
 }
 
 .card__desk{

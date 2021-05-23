@@ -1,7 +1,6 @@
 <template>
   <div class="article-page" v-if="article">
     <back-button
-        @click="goBack()"
     />
     <edit-button
         v-if="store.getters.CAN_EDIT_ARTICLES"
@@ -60,9 +59,6 @@
     }
     goToRedactor({id}:Article){
       this.$router.push(`/article/${id}/edit`)
-    }
-    goBack(){
-      history.go(-1);
     }
 }
 
