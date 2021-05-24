@@ -201,7 +201,7 @@ public class DataInitializer implements ApplicationRunner {
         assert articleNames.size() == articleTexts.size();
         assert  articleNames.size() == articleImages.size();
         addArticles();
-        addZerroAddress();
+        //addZerroAddress();
     }
     private void addAuthorities(){
         new ListInserter<User.Role.Authority>().insertFromList(authorityRepository, User.Role.Authority::new, authorityNames);
@@ -286,7 +286,7 @@ private void addArticles(){
         );
 }
 
-private void addZerroAddress(){
+/*private void addZerroAddress(){
        Address resault = addressRepository.save(new Address(
                 " ",
                 " ",
@@ -296,5 +296,5 @@ private void addZerroAddress(){
 
         ));
        addressService.setZerroId(resault.getId());
-}
+}*/
 }
