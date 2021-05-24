@@ -10,6 +10,7 @@ import ru.server.enums.Authority;
 import ru.server.models.*;
 import ru.server.repositories.*;
 import ru.server.enums.UserRole;
+import ru.server.services.IAddressService;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
@@ -23,6 +24,9 @@ import java.util.stream.LongStream;
 
 @Component
 public class DataInitializer implements ApplicationRunner {
+    @Autowired
+    private IAddressService addressService;
+
     @Autowired
     private IRoleRepository roleRepository;
     @Autowired
@@ -197,6 +201,7 @@ public class DataInitializer implements ApplicationRunner {
         assert articleNames.size() == articleTexts.size();
         assert  articleNames.size() == articleImages.size();
         addArticles();
+        //addZerroAddress();
     }
     private void addAuthorities(){
         new ListInserter<User.Role.Authority>().insertFromList(authorityRepository, User.Role.Authority::new, authorityNames);
@@ -280,4 +285,16 @@ private void addArticles(){
                 articleDates.size()
         );
 }
+
+/*private void addZerroAddress(){
+       Address resault = addressRepository.save(new Address(
+                " ",
+                " ",
+                districtRepository.findByName("Приморский").get(),
+                cityRepository.findByName("Санкт-Петербург").get(),
+                metroRepository.findByName("Комендантский проспект").get()
+
+        ));
+       addressService.setZerroId(resault.getId());
+}*/
 }
