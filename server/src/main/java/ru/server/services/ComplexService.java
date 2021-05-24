@@ -9,6 +9,7 @@ import ru.server.data.ComplexQuery;
 import ru.server.data.CreationResponse;
 import ru.server.models.Address;
 import ru.server.models.Complex;
+import ru.server.models.Flat;
 import ru.server.repositories.IComplexRepository;
 
 import javax.persistence.criteria.*;
@@ -24,6 +25,8 @@ public class ComplexService implements IComplexService{
     IComplexRepository repository;
     @Autowired
     IAddressService addressService;
+    @Autowired
+    IFlatService flatService;
     private interface ExprBuilder {
         Expression<Boolean> apply(Root<Complex> complex, CriteriaBuilder cb, Object value);
     }
@@ -116,6 +119,7 @@ private Specification<Complex> generateSpecification(ComplexQuery query){
     public boolean delete(Long id) {
         if (!repository.existsById(id))
         return false;
+        flatService.findComplexFlats(id).get().stream().map(Flat::getId).forEach(flatService::delete);
         repository.deleteById(id);
         return true;
     }
