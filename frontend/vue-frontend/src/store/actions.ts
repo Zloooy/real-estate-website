@@ -135,7 +135,7 @@ export const actions: ActionTree<State, State> & Actions = {
             .then(r=>r.data)
             .then(()=>commit('SET_COMPLEX', undefined))
             .then(()=>state.complexSearchParamsChanged=true)
-            .then(()=>dispatch('GET_COMPLEXES'));
+            .then(()=>dispatch('GET_SEARCHED_COMPLEXES'));
     },
     DELETE_FLAT({state, commit, dispatch}: AugmentActionContext, payload: number): Promise<void> {
         return state.api.deleteFlatUsingDelete(payload)

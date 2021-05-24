@@ -97,14 +97,14 @@
               :title="complex.name"
               :metro="complex.address?.metro?.name || ''"
               :price="complex.price"
-              @delete-complex="deleteComplex"
-              @click="goToComplex(complex.id)"
-          />
-        </li>
-      </ul>
-      <div v-else>
-        По вашему запросу ничего не найдено
-      </div>
+            @delete-complex="deleteComplex(complex)"
+            @click="goToComplex(complex.id)"
+        />
+      </li>
+    </ul>
+    <div v-else>
+      По вашему запросу ничего не найдено
+    </div>
         <add-button v-if="store.getters.CAN_MANAGE_COMPLEXES"
         @click="createComplex"
         />
@@ -281,7 +281,8 @@ export default class Catalog extends Vue {
         price: 1000,
     } as Complex);
     }
-  deleteComplex(id: number){
+  deleteComplex({id}: Complex){
+    if (id)
     this.store.dispatch('DELETE_COMPLEX', id);
   }
 }

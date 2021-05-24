@@ -34,7 +34,7 @@ import {Store, useStore} from "@/store/index";
 
 @Options({
   name: "my-card",
-  emits: ['delete-article'],
+  emits: ['click', 'delete-article'],
   props: {
     image: {
       type: String

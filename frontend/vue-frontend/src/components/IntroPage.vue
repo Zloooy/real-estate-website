@@ -15,6 +15,7 @@
         :metro="complex.address?.metro?.name || ''"
         :price="complex.price"
         @click="goToComplex(complex.id)"
+        @delete-complex="deleteComplex(complex)"
     />
   </li>
   </ul>
@@ -38,7 +39,7 @@ import HorizontalCategorySelect from "@/components/HorizontalCategorySelect.vue"
 import IntroFooter from "@/components/IntroFooter.vue";
 import {Store, useStore} from "@/store/index";
 import MyCard from "@/components/MyCard.vue";
-import {ComplexQuery} from "@/generated-api/data-contracts";
+import {ComplexQuery, Complex} from "@/generated-api/data-contracts";
 import {MutationPayload} from "vuex";
 
 @Options({
@@ -102,6 +103,10 @@ export default class IntroPage extends Vue {
  goToComplex(id: number){
    console.debug("going to card");
    this.$router.push(`/complex/${id}`);
+ }
+ deleteComplex({id}:Complex) {
+   if (id)
+  this.store.dispatch('DELETE_ADVERTIZED_COMPLEX', id);
  }
 }
 
